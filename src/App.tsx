@@ -1,12 +1,13 @@
 import './App.css'
+import { Footer, Main, Nav } from './components/layouts'
 
 function App() {
 
     return (
         <>
-            <h1 className="text-3xl font-bold underline">
-                Hello world!
-            </h1>
+            <Nav></Nav>
+            <Main></Main>
+            <Footer></Footer>
         </>
     )
 }
