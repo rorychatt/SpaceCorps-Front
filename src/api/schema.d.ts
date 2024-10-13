@@ -27,7 +27,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["UserCredentials_GetUser"];
+        get: operations["UserCredentials_GetUserCredentials"];
         put?: never;
         post?: never;
         delete?: never;
@@ -56,9 +56,21 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        CreateUserResponse: {
+            email?: string;
+            isCreated?: boolean;
+        };
         CreateUserRequest: {
             email?: string;
             password?: string;
+        };
+        GetUserCredentialsResponse: {
+            email?: string;
+            hashedPassword?: string;
+        };
+        VerifyPasswordResponse: {
+            email?: string;
+            isLoggedIn?: boolean;
         };
         VerifyPasswordRequest: {
             email?: string;
@@ -91,12 +103,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/octet-stream": string;
+                    "application/json": components["schemas"]["CreateUserResponse"];
                 };
             };
         };
     };
-    UserCredentials_GetUser: {
+    UserCredentials_GetUserCredentials: {
         parameters: {
             query?: never;
             header?: never;
@@ -112,7 +124,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/octet-stream": string;
+                    "application/json": components["schemas"]["GetUserCredentialsResponse"];
                 };
             };
         };
@@ -135,7 +147,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/octet-stream": string;
+                    "application/json": components["schemas"]["VerifyPasswordResponse"];
                 };
             };
         };
