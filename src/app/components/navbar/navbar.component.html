@@ -1,12 +1,17 @@
 <header class="navbar bg-base-300 h-16">
   <nav class="flex justify-between w-full">
     <a routerLink="/">SpaceCorps Open Beta 2025</a>
-    @if (isLoggedIn$ | async) {
-      <ul class="flex space-x-4">
+    <ul class="flex space-x-4">
+      @if (isLoggedIn$ | async) {
         <a class="btn btn-neutral" routerLink="/" (click)="logOut()">
           Log Out
         </a>
-      </ul>
-    }
+      } @else {
+        <a class="btn btn-neutral" routerLink="/login">
+          Log In / Sign Up
+        </a>
+      }
+    </ul>
+
   </nav>
 </header>
