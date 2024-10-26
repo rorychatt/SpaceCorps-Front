@@ -1,1 +1,33 @@
-<p>login works!</p>
+<div class="container mx-auto p-4">
+  <h2>{{ isRegistering ? 'Register' : 'Login' }}</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" class="form-control"/>
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        <small class="text-danger">Valid email is required</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" class="form-control"/>
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        <small class="text-danger">Password must be at least 6 characters</small>
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="isRegistering">
+      <label for="confirmPassword">Confirm Password</label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control"/>
+      <div *ngIf="loginForm.errors?.['mismatch'] && loginForm.get('confirmPassword')?.touched">
+        <small class="text-danger">Passwords must match</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ isRegistering ? 'Register' : 'Login' }}</button>
+    <button type="button" class="btn btn-secondary" (click)="toggleMode()">
+      {{ isRegistering ? 'Switch to Login' : 'Switch to Register' }}
+    </button>
+  </form>
+</div>
