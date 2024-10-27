@@ -1,0 +1,29 @@
+<form
+  [formGroup]="loginForm"
+  (ngSubmit)="handleLogin()"
+  class="flex flex-col gap-4 align-middle justify-between max-w-xs mx-auto mt-4"
+>
+  <input
+    type="text"
+    placeholder="Enter your username..."
+    formControlName="username"
+    class="input input-bordered"
+  >
+  <input
+    type="password"
+    placeholder="Enter your password..."
+    formControlName="password"
+    class="input input-bordered">
+
+  <button
+    class="btn max-w-16 mx-auto"
+    [ngClass]="{
+    'btn-disabled':
+      !loginForm.get('username')?.value ||
+      !loginForm.get('password')?.value,
+    }"
+  >
+    Login
+  </button>
+
+</form>
