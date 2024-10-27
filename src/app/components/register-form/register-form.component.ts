@@ -3,18 +3,18 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-auth-form',
+  selector: 'app-register-form',
   standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     NgClass
   ],
-  templateUrl: './auth-form.component.html',
-  styleUrl: './auth-form.component.scss'
+  templateUrl: './register-form.component.html',
+  styleUrl: './register-form.component.scss'
 })
-export class AuthFormComponent {
-  authForm = new FormGroup({
+export class RegisterFormComponent {
+  registerForm = new FormGroup({
     username: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
@@ -22,6 +22,6 @@ export class AuthFormComponent {
   })
 
   handleRegister() {
-    console.log(this.authForm.value)
+    console.log(this.registerForm.value)
   }
 }

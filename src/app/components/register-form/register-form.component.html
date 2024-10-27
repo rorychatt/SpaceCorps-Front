@@ -1,5 +1,5 @@
 <form
-  [formGroup]="authForm"
+  [formGroup]="registerForm"
   (ngSubmit)="handleRegister()"
   class="flex flex-col gap-4 align-middle justify-between max-w-xs mx-auto mt-4"
 >
@@ -32,10 +32,10 @@
     class="btn max-w-16 mx-auto"
     [ngClass]="{
     'btn-disabled':
-      !authForm.get('username')?.value ||
-      !authForm.get('email')?.value ||
-      !authForm.get('password')?.value ||
-      !authForm.get('confirmPassword')?.value,
+      !registerForm.get('username')?.value ||
+      !registerForm.get('email')?.value ||
+      !registerForm.get('password')?.value ||
+      !registerForm.get('confirmPassword')?.value,
     }"
   >
     Register
