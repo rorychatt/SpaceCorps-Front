@@ -13,7 +13,7 @@ export class ApiService {
     }
 
     createNewUser (request: UserCredentialsCreateRequest) {
-        return this.http.post(`${this.url}/users`, request);
+        return this.http.post(`${this.url}/UserCredentials/create`, request);
     }
 
 

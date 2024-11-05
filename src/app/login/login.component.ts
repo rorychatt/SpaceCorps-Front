@@ -25,6 +25,8 @@ export class LoginComponent {
 
   onRegister ($event: UserCredentialsCreateRequest) {
     const result = this.authService.register($event);
-
+    result.subscribe((response) => {
+      console.log(response)
+    });
   }
 }
