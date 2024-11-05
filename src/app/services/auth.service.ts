@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { AuthState } from '../models/authState';
+import { AuthState } from '../models/auth/AuthState';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends ComponentStore<AuthState>{
+export class AuthService extends ComponentStore<AuthState> {
 
-  constructor() {
-    super({
-      isLoggedIn: false
-  })
+  constructor () {
+    super(new AuthState());
   }
 
   readonly isLoggedIn$ = this.select((state) => state.isLoggedIn);
 
-  logIn() {
+  logIn () {
     this.patchState({ isLoggedIn: true });
   }
 
-  logOut() {
-    this.patchState({ isLoggedIn: false });
+  logOut () {
+    this.patchState(new AuthState());
   }
 
 }
