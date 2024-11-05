@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, output, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
@@ -20,6 +20,12 @@ export class RegisterFormComponent {
     password: new FormControl(''),
     confirmPassword: new FormControl('')
   })
+
+  toggleViewEvent = output<void>();
+
+  toggleView () {
+    this.toggleViewEvent.emit();
+  }
 
   handleRegister() {
     console.log(this.registerForm.value)

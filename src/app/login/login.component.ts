@@ -13,4 +13,9 @@ import { RegisterFormComponent } from '../components/register-form/register-form
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  isLoginView = true;
+
+  onToggleView(){
+    this.isLoginView = !this.isLoginView;
+  }
 }

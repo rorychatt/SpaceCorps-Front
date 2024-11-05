@@ -1,7 +1,11 @@
 <form
   [formGroup]="loginForm"
   (ngSubmit)="handleLogin()"
-  class="flex flex-col gap-4 align-middle justify-between max-w-xs mx-auto mt-4"
+  class="
+    flex flex-col gap-4 align-middle
+    justify-between max-w-xs mx-auto
+    mt-4
+  "
 >
   <input
     type="text"
@@ -15,15 +19,26 @@
     formControlName="password"
     class="input input-bordered">
 
-  <button
-    class="btn max-w-16 mx-auto"
-    [ngClass]="{
+  <span
+    class="flex flex-row justify-around"
+  >
+      <button
+        class="btn max-w-32"
+        [ngClass]="{
     'btn-disabled':
       !loginForm.get('username')?.value ||
       !loginForm.get('password')?.value,
     }"
-  >
-    Login
-  </button>
+      >
+        Login
+      </button>
+
+      <button
+        class="btn max-w-32"
+        (click)="toggleView()"
+      >
+        To Register
+      </button>
+  </span>
 
 </form>

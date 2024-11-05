@@ -28,17 +28,29 @@
     class="input input-bordered"
   >
 
-  <button
-    class="btn max-w-16 mx-auto"
-    [ngClass]="{
-    'btn-disabled':
-      !registerForm.get('username')?.value ||
-      !registerForm.get('email')?.value ||
-      !registerForm.get('password')?.value ||
-      !registerForm.get('confirmPassword')?.value,
-    }"
+  <span
+    class="flex flex-row justify-around"
   >
-    Register
-  </button>
+    <button
+      class="btn max-w-32"
+      [ngClass]="{
+            'btn-disabled':
+            !registerForm.get('username')?.value ||
+            !registerForm.get('email')?.value ||
+            !registerForm.get('password')?.value ||
+            !registerForm.get('confirmPassword')?.value,
+          }"
+    >
+      Register
+    </button>
+
+    <button
+      class="btn max-w-32"
+      (click)="toggleView()"
+    >
+      To Login
+    </button>
+  </span>
+
 
 </form>
