@@ -13,4 +13,18 @@ describe('AuthService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should log in', () => {
+    service.logIn();
+    service.authState$.subscribe(state => {
+      expect(state.isLoggedIn).toBeTrue();
+    });
+  });
+
+  it('should log out', () => {
+    service.logOut();
+    service.authState$.subscribe(state => {
+      expect(state.isLoggedIn).toBeFalse();
+    });
+  });
 });

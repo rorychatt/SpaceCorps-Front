@@ -11,7 +11,7 @@ export class AuthService extends ComponentStore<AuthState> {
     super(new AuthState());
   }
 
-  readonly isLoggedIn$ = this.select((state) => state.isLoggedIn);
+  readonly authState$ = this.select((state) => state);
 
   logIn () {
     this.patchState({ isLoggedIn: true });
