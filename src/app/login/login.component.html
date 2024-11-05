@@ -1,5 +1,8 @@
 @if (isLoginView) {
   <app-login-form (toggleViewEvent)="onToggleView()"/>
 } @else {
-  <app-register-form (toggleViewEvent)="onToggleView()"/>
+  <app-register-form
+    (toggleViewEvent)="onToggleView()"
+    (toggleRegisterEvent)="onRegister($event)"
+  />
 }

@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { AuthState } from '../models/auth/AuthState';
+import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCreateRequest';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends ComponentStore<AuthState> {
+
+  apiService = inject(ApiService);
 
   constructor () {
     super(new AuthState());
@@ -19,6 +23,10 @@ export class AuthService extends ComponentStore<AuthState> {
 
   logOut () {
     this.patchState(new AuthState());
+  }
+
+  register (userCredentialsCreateRequest: UserCredentialsCreateRequest) {
+    return this.apiService.createNewUser(userCredentialsCreateRequest);
   }
 
 }
