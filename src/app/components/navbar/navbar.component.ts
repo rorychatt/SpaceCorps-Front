@@ -16,7 +16,7 @@ import { AsyncPipe } from '@angular/common';
 export class NavbarComponent {
 
   authService = inject(AuthService)
-  isLoggedIn$ = this.authService.authState$;
+  authState$ = this.authService.authState$;
 
   logOut() {
     this.authService.logOut();

@@ -2,7 +2,7 @@
   <nav class="flex justify-between w-full">
     <a routerLink="/">SpaceCorps Open Beta 2025</a>
     <ul class="flex space-x-4">
-      @if (isLoggedIn$ | async) {
+      @if ((authState$ | async)?.isLoggedIn) {
         <a class="btn btn-neutral" routerLink="/" (click)="logOut()">
           Log Out
         </a>
