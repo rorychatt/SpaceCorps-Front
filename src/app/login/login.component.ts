@@ -25,6 +25,7 @@ export class LoginComponent {
 
   onToggleView () {
     this.isLoginView = !this.isLoginView;
+    this.clearLoginError();
   }
 
   onRegister ($event: UserCredentialsCreateRequest) {
