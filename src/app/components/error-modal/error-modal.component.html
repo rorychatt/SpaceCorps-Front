@@ -3,7 +3,7 @@
     <h2 class="font-bold text-lg">Error</h2>
     <p><strong>Status:</strong> {{ error().status }} - {{ error().statusText }}</p>
     <p><strong>Message:</strong> {{ error().message }}</p>
-    <p><strong>Error:</strong> {{ error().error }}</p>
+    <p><strong>Error:</strong> {{ JSON.stringify(error().error) }}</p>
     <p><strong>URL:</strong> {{ error().url }}</p>
     <form method="dialog">
       <button class="btn btn-primary mt-4">Close me</button>

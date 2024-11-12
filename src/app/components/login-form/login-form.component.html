@@ -9,8 +9,8 @@
 >
   <input
     type="text"
-    placeholder="Enter your username..."
-    formControlName="username"
+    placeholder="Enter your email..."
+    formControlName="email"
     class="input input-bordered"
   >
   <input
@@ -26,7 +26,7 @@
         class="btn max-w-32"
         [ngClass]="{
     'btn-disabled':
-      !loginForm.get('username')?.value ||
+      !loginForm.get('email')?.value ||
       !loginForm.get('password')?.value,
     }"
       >

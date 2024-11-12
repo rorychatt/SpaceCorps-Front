@@ -1,4 +1,4 @@
 export type UserCredentialsLoginRequest = {
-  username: string;
+  email: string;
   password: string;
 }

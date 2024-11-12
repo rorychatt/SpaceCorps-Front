@@ -10,24 +10,25 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ErrorModalComponent {
 
-  constructor(private viewContainerRef: ViewContainerRef) {}
+  constructor (private viewContainerRef: ViewContainerRef) {
+  }
 
   error = input.required<HttpErrorResponse>();
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges (changes: SimpleChanges) {
     if (changes['error'] && this.error()) {
       this.openModal();
     }
   }
 
-  openModal() {
+  openModal () {
     const modal = document.getElementById('login-form__errorModal') as HTMLDialogElement;
     if (modal) {
       modal.showModal();
     }
   }
 
-  closeModal() {
+  closeModal () {
     const modal = document.getElementById('login-form__errorModal') as HTMLDialogElement;
     if (modal) {
       modal.close();
@@ -35,4 +36,5 @@ export class ErrorModalComponent {
     this.viewContainerRef.clear();
   }
 
+  protected readonly JSON = JSON;
 }

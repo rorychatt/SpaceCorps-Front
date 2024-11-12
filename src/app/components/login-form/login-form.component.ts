@@ -16,7 +16,7 @@ import { UserCredentialsLoginRequest } from '../../models/auth/UserCredentialsLo
 export class LoginFormComponent {
 
   loginForm = new FormGroup({
-    username: new FormControl(''),
+    email: new FormControl(''),
     password: new FormControl('')
   })
 
@@ -29,7 +29,7 @@ export class LoginFormComponent {
 
   handleLogin() {
     const userCredentialsLoginRequest: UserCredentialsLoginRequest = {
-      username: this.loginForm.get('username')!.value!,
+      email: this.loginForm.get('email')!.value!,
       password: this.loginForm.get('password')!.value!
     }
     this.toggleLoginEvent.emit(userCredentialsLoginRequest);

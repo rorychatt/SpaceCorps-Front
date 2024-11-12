@@ -37,7 +37,7 @@ export class LoginComponent {
     const result = this.authService.register($event);
     result.subscribe({
       next: (response) => {
-        this.clearLoginError();
+        this.onToggleView();
         console.log(response);
       },
       error: (err: HttpErrorResponse) => {
@@ -52,6 +52,7 @@ export class LoginComponent {
     result.subscribe({
       next: (response) => {
         this.clearLoginError();
+        this.authService.patchState({ isLoggedIn: true });
         console.log(response);
       },
       error: (err: HttpErrorResponse) => {

@@ -18,6 +18,6 @@ export class ApiService {
   }
 
   logIn (request: UserCredentialsLoginRequest) {
-    return this.http.post(`${this.url}/UserCredentials/login`, request);
+    return this.http.post(`${this.url}/UserCredentials/verify`, request);
   }
 }
