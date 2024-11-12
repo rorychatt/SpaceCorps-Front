@@ -3,6 +3,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { AuthState } from '../models/auth/AuthState';
 import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCreateRequest';
 import { ApiService } from './api.service';
+import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class AuthService extends ComponentStore<AuthState> {
 
   readonly authState$ = this.select((state) => state);
 
-  logIn () {
+  logIn (userCredentialsLoginRequest: UserCredentialsLoginRequest) {
     this.patchState({ isLoggedIn: true });
+    return this.apiService.logIn(userCredentialsLoginRequest);
   }
 
   logOut () {
@@ -28,5 +30,7 @@ export class AuthService extends ComponentStore<AuthState> {
   register (userCredentialsCreateRequest: UserCredentialsCreateRequest) {
     return this.apiService.createNewUser(userCredentialsCreateRequest);
   }
+
+
 
 }
