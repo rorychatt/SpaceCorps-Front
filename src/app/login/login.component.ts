@@ -6,6 +6,7 @@ import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCrea
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent {
   authService = inject(AuthService);
   isLoginView = true;
   error: HttpErrorResponse | null = null;
+  router = inject(Router);
 
   clearLoginError () {
     this.error = null;
@@ -38,7 +40,6 @@ export class LoginComponent {
     result.subscribe({
       next: (response) => {
         this.onToggleView();
-        console.log(response);
       },
       error: (err: HttpErrorResponse) => {
         this.error = err;
@@ -52,8 +53,9 @@ export class LoginComponent {
     result.subscribe({
       next: (response) => {
         this.clearLoginError();
-        this.authService.patchState({ isLoggedIn: true });
-        console.log(response);
+        console.log({ ...response, isLoggedIn: true });
+        this.authService.patchState({ ...response, isLoggedIn: true });
+        void this.router.navigate(['lobby']);
       },
       error: (err: HttpErrorResponse) => {
         this.error = err;

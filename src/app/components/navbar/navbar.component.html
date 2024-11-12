@@ -3,6 +3,9 @@
     <a routerLink="/">SpaceCorps Open Beta 2025</a>
     <ul class="flex space-x-4">
       @if ((authState$ | async)?.isLoggedIn) {
+        <a class="btn btn-neutral" routerLink="/profile">
+          Welcome, {{ (authState$ | async)?.username }}
+        </a>
         <a class="btn btn-neutral" routerLink="/" (click)="logOut()">
           Log Out
         </a>
