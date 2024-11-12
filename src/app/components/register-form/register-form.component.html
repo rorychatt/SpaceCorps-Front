@@ -1,0 +1,56 @@
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="handleRegister()"
+  class="flex flex-col gap-4 align-middle justify-between max-w-xs mx-auto mt-4"
+>
+  <input
+    type="text"
+    placeholder="Enter your username..."
+    formControlName="username"
+    class="input input-bordered"
+  >
+  <input
+    type="email"
+    placeholder="Enter your email..."
+    formControlName="email"
+    class="input input-bordered"
+  >
+  <input
+    type="password"
+    placeholder="Enter your password..."
+    formControlName="password"
+    class="input input-bordered"
+  >
+  <input
+    type="password"
+    placeholder="Confirm your password..."
+    formControlName="confirmPassword"
+    class="input input-bordered"
+  >
+
+  <span
+    class="flex flex-row justify-around"
+  >
+    <button
+      class="btn max-w-32"
+      [ngClass]="{
+            'btn-disabled':
+            !registerForm.get('username')?.value ||
+            !registerForm.get('email')?.value ||
+            !registerForm.get('password')?.value ||
+            !registerForm.get('confirmPassword')?.value,
+          }"
+    >
+      Register
+    </button>
+
+    <a
+      class="btn max-w-32"
+      (click)="toggleView()"
+    >
+      To Login
+    </a>
+  </span>
+
+
+</form>

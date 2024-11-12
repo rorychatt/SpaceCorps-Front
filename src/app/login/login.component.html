@@ -1,0 +1,14 @@
+@if (error) {
+  <app-error-modal [error]="error"></app-error-modal>
+}
+@if (isLoginView) {
+  <app-login-form
+    (toggleViewEvent)="onToggleView()"
+    (toggleLoginEvent)="onLogin($event)"
+  />
+} @else {
+  <app-register-form
+    (toggleViewEvent)="onToggleView()"
+    (toggleRegisterEvent)="onRegister($event)"
+  />
+}
