@@ -14,8 +14,8 @@ export class GameComponent {
   hubConnection?: SignalR.HubConnection;
 
   ngOnInit(): void {
-    this.initializeThreeJs();
     this.initializeSignalR();
+    this.initializeThreeJs();
   }
 
   private initializeThreeJs(): void {
@@ -44,7 +44,7 @@ export class GameComponent {
 
   private initializeSignalR(): void {
     this.hubConnection = new SignalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hub')
+      .withUrl('/gameHub')
       .build();
 
     this.hubConnection.start()
