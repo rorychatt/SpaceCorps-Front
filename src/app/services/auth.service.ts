@@ -4,6 +4,7 @@ import { AuthState } from '../models/auth/AuthState';
 import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCreateRequest';
 import { ApiService } from './api.service';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
+import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,23 @@ export class AuthService extends ComponentStore<AuthState> {
     return this.apiService.createNewUser(userCredentialsCreateRequest);
   }
 
+  fetchUserAfterSuccessfulLogin (response: any) {
 
-
+    const getPlayerInfoRequest: GetPlayerInfoRequest = {
+      username: response.username
+    }
+    this.apiService.getPlayerInfo(getPlayerInfoRequest).subscribe({
+      next: (response) => {
+        this.patchState({
+          isLoggedIn: true,
+          username: response.username,
+          playerData: response
+        });
+        console.log(this.state());
+      },
+      error: (err) => {
+        throw err;
+      }
+    });
+  }
 }
