@@ -1,6 +1,6 @@
 import { Position3 } from '../entity/Position3';
 
 export type PlayerData = {
-  username: string;
+  userName: string;
   position: Position3;
 }

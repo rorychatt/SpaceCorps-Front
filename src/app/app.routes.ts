@@ -28,5 +28,12 @@ export const routes: Routes = [{
       const module = await import('./pilot-info/pilot-info.component');
       return module.PilotInfoComponent;
     }
+  },
+  {
+    path: 'game',
+    loadComponent: async () => {
+      const module = await import('./game/game.component');
+      return module.GameComponent;
+    }
   }
 ];

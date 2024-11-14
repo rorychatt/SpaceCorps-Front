@@ -11,5 +11,7 @@ import { MainMenuComponent } from '../components/main-menu/main-menu.component';
   styleUrl: './lobby.component.scss'
 })
 export class LobbyComponent {
-
+  openGame(): void {
+    window.open('/game', '_blank');
+  }
 }
