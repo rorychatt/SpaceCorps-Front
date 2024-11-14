@@ -1,0 +1,59 @@
+<ul class="menu lg:menu-horizontal bg-base-200 rounded-box" (mouseleave)="closeAllItems()">
+  <li>
+    <details
+      [open]="openItem === 'pilot'"
+      (click)="toggleItem('pilot')"
+      (mouseenter)="openItemOnHover('pilot')"
+    >
+      <summary>Pilot</summary>
+      <ul>
+        <li><a routerLink="/pilot-info">Pilot Info</a></li>
+        <li><a>Pilot Skill Tree</a></li>
+        <li><a>Pilot Inventory</a></li>
+      </ul>
+    </details>
+  </li>
+  <li>
+    <details
+      [open]="openItem === 'shop'"
+      (click)="toggleItem('shop')"
+      (mouseenter)="openItemOnHover('shop')"
+    >
+      <summary>Shop</summary>
+      <ul>
+        <li><a>Ship Yard</a></li>
+        <li><a>Black Market</a></li>
+        <li><a>Auction</a></li>
+        <li><a>Trade</a></li>
+      </ul>
+    </details>
+  </li>
+  <li>
+    <details
+      [open]="openItem === 'company'"
+      (click)="toggleItem('company')"
+      (mouseenter)="openItemOnHover('company')"
+    >
+      <summary>Company</summary>
+      <ul>
+        <li><a>Spy system</a></li>
+        <li><a>Most Wanted</a></li>
+        <li><a>Star System</a></li>
+      </ul>
+    </details>
+  </li>
+  <li>
+    <details
+      [open]="openItem === 'wiki'"
+      (click)="toggleItem('wiki')"
+      (mouseenter)="openItemOnHover('wiki')"
+    >
+      <summary>Wiki</summary>
+      <ul>
+        <li><a>How to Play</a></li>
+        <li><a>Lore</a></li>
+        <li><a>FAQ</a></li>
+      </ul>
+    </details>
+  </li>
+</ul>

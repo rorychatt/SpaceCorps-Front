@@ -53,9 +53,13 @@ export class LoginComponent {
     result.subscribe({
       next: (response) => {
         this.clearLoginError();
-        console.log({ ...response, isLoggedIn: true });
-        this.authService.patchState({ ...response, isLoggedIn: true });
-        void this.router.navigate(['lobby']);
+        try {
+          this.authService.fetchUserAfterSuccessfulLogin(response)
+          void this.router.navigate(['lobby']);
+        } catch (err) {
+          this.error = err as HttpErrorResponse;
+          console.log(err);
+        }
       },
       error: (err: HttpErrorResponse) => {
         this.error = err;
