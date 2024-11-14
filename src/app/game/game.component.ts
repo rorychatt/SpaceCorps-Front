@@ -44,7 +44,7 @@ export class GameComponent {
 
   private initializeSignalR(): void {
     this.hubConnection = new SignalR.HubConnectionBuilder()
-      .withUrl('/gameHub')
+      .withUrl('http://localhost:5274/gameHub')
       .build();
 
     this.hubConnection.start()
