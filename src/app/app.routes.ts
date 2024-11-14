@@ -21,5 +21,12 @@ export const routes: Routes = [{
       const module = await import('./lobby/lobby.component');
       return module.LobbyComponent;
     }
+  },
+  {
+    path: 'pilot-info',
+    loadComponent: async () => {
+      const module = await import('./pilot-info/pilot-info.component');
+      return module.PilotInfoComponent;
+    }
   }
 ];
