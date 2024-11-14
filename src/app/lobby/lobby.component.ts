@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { MainMenuComponent } from '../components/main-menu/main-menu.component';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
-  imports: [],
+  imports: [
+    MainMenuComponent
+  ],
   templateUrl: './lobby.component.html',
   styleUrl: './lobby.component.scss'
 })

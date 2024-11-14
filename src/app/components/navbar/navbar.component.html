@@ -1,6 +1,9 @@
 <header class="navbar bg-base-300 h-16">
   <nav class="flex justify-between w-full">
     <a routerLink="/">SpaceCorps Open Beta 2025</a>
+    @if ((authState$ | async)?.isLoggedIn) {
+      <app-main-menu></app-main-menu>
+    }
     <ul class="flex space-x-4">
       @if ((authState$ | async)?.isLoggedIn) {
         <a class="btn btn-neutral" routerLink="/profile">
