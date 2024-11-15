@@ -50,4 +50,8 @@ export class AuthService extends ComponentStore<AuthState> {
       }
     });
   }
+
+  getPlayerData(){
+    return this.state().playerData;
+  }
 }

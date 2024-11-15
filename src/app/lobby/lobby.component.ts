@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MainMenuComponent } from '../components/main-menu/main-menu.component';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-lobby',
@@ -11,7 +13,20 @@ import { MainMenuComponent } from '../components/main-menu/main-menu.component';
   styleUrl: './lobby.component.scss'
 })
 export class LobbyComponent {
-  openGame(): void {
-    window.open('/game', '_blank');
+
+  authService = inject(AuthService);
+
+  constructor (private router: Router) {
+  }
+
+  openGame (): void {
+    const playerData = this.authService.getPlayerData();
+    if (!playerData) {
+      console.error('No username found');
+    } else {
+      const userName = playerData!.userName;
+      const url = `/game?userName=${userName}`;
+      void window.open(url, '_blank');
+    }
   }
 }
