@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
-import * as SignalR from '@microsoft/signalr';
+import { HubService } from '../services/hub.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -9,16 +10,21 @@ import * as SignalR from '@microsoft/signalr';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
 
-  hubConnection?: SignalR.HubConnection;
-
-  ngOnInit(): void {
-    this.initializeSignalR();
-    this.initializeThreeJs();
+  constructor (private hubService: HubService, private route: ActivatedRoute) {
   }
 
-  private initializeThreeJs(): void {
+  ngOnInit (): void {
+    this.route.queryParams.subscribe(params => {
+      const username = params['username'];
+      this.hubService.initializeSignalR(username);
+      this.setupSignalREvents();
+      this.initializeThreeJs();
+    })
+  }
+
+  private initializeThreeJs (): void {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -42,14 +48,9 @@ export class GameComponent {
     animate();
   }
 
-  private initializeSignalR(): void {
-    this.hubConnection = new SignalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5274/gameHub')
-      .build();
-
-    this.hubConnection.start()
-      .then(() => console.log('SignalR Connected'))
-      .catch(err => console.error('Error while starting SignalR connection: ' + err));
+  private setupSignalREvents (): void {
+    this.hubService.on('server-side-log', (data) => {
+      console.log('Received data:', data);
+    });
   }
-
 }

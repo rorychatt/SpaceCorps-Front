@@ -56,4 +56,18 @@
       </ul>
     </details>
   </li>
+  <li>
+    <details
+      [open]="openItem === 'admin'"
+      (click)="toggleItem('admin')"
+      (mouseenter)="openItemOnHover('admin')"
+    >
+      <summary>Admin</summary>
+      <ul>
+        <li><a>Users</a></li>
+        <li><a routerLink="/spacemap-editor">SpaceMapEditor</a></li>
+        <li><a>Logs</a></li>
+      </ul>
+    </details>
+  </li>
 </ul>
