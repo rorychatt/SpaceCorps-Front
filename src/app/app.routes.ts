@@ -35,5 +35,12 @@ export const routes: Routes = [{
       const module = await import('./game/game.component');
       return module.GameComponent;
     }
+  },
+  {
+    path: 'spacemap-editor',
+    loadComponent: async () => {
+      const module = await import('./spacemap-editor/spacemap-editor.component');
+      return module.SpacemapEditorComponent;
+    }
   }
 ];
