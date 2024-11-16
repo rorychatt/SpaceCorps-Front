@@ -1,1 +1,38 @@
-<p>spacemap-editor works!</p>
+<section class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
+  <section class="drawer-content flex flex-col items-center justify-center">
+    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+      Open All SpaceMaps
+    </label>
+    <section *ngIf="selectedSpaceMapDataEntryName">
+      <h2>{{ selectedSpaceMapDataEntryName }}</h2>
+
+    </section>
+  </section>
+  <aside class="drawer-side">
+    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+      <p>Existing SpaceMaps</p>
+      <li *ngFor="let map of spaceMapDataEntryNames">
+        <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
+      </li>
+      <hr>
+      <li>
+        <span>
+        <input
+          class="input input-bordered"
+          [(ngModel)]="newSpaceMapName"
+          placeholder="New SpaceMap Name"/>
+        <button
+          class="btn"
+          (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
+          [ngClass]="{
+          'btn-disabled': !newSpaceMapName
+          }"
+          [disabled]="!newSpaceMapName"
+        >New</button>
+        </span>
+      </li>
+    </ul>
+  </aside>
+</section>
