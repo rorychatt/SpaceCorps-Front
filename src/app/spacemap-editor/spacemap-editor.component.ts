@@ -3,6 +3,7 @@ import { ApiService } from '../services/api.service';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
+import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
 
 @Component({
   selector: 'app-spacemap-editor',
@@ -40,6 +41,7 @@ export class SpacemapEditorComponent {
     this.selectedSpaceMapDataEntryName = name;
     this.apiService.getSpaceMapDataEntry(name).subscribe((data: SpaceMapDataEntry) => {
       this.selectedSpaceMapDataEntry = data;
+      console.log("Fetched SpaceMapDataEntry: ", data);
     });
   }
 
@@ -48,6 +50,20 @@ export class SpacemapEditorComponent {
       this.fetchSpaceMapDataEntryNames();
     });
     this.newSpaceMapName = null;
+  }
+
+  updateSpaceMapDataEntry () {
+    if (this.selectedSpaceMapDataEntry && this.selectedSpaceMapDataEntryName) {
+      const updateRequest: UpdateSpaceMapDataEntryRequest = {
+        size: this.selectedSpaceMapDataEntry.size,
+        preferredColor: this.selectedSpaceMapDataEntry.preferredColor,
+      };
+
+      this.apiService.updateSpaceMapDataEntry(this.selectedSpaceMapDataEntryName, updateRequest)
+        .subscribe(() => {
+          console.log('SpaceMapDataEntry updated successfully');
+        });
+    }
   }
 
 }

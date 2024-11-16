@@ -4,9 +4,28 @@
     <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
       Open All SpaceMaps
     </label>
-    <section *ngIf="selectedSpaceMapDataEntryName">
-      <h2>{{ selectedSpaceMapDataEntryName }}</h2>
-
+    <section *ngIf="selectedSpaceMapDataEntry">
+      <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
+      <div>
+        <label>Name:</label>
+        <input [(ngModel)]="selectedSpaceMapDataEntry.name" class="input input-bordered"/>
+      </div>
+      <div>
+        <label>Preferred Color:</label>
+        <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
+      </div>
+      <div>
+        <label>Size:</label>
+        <div>
+          <label>Width:</label>
+          <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+        </div>
+        <div>
+          <label>Height:</label>
+          <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
+        </div>
+      </div>
+      <button (click)="updateSpaceMapDataEntry()" class="btn btn-primary">Save</button>
     </section>
   </section>
   <aside class="drawer-side">
@@ -16,13 +35,12 @@
       <li *ngFor="let map of spaceMapDataEntryNames">
         <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
       </li>
-      <hr>
       <li>
         <span>
         <input
           class="input input-bordered"
           [(ngModel)]="newSpaceMapName"
-          placeholder="New SpaceMap Name"/>
+          placeholder="Enter new"/>
         <button
           class="btn"
           (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
@@ -30,7 +48,7 @@
           'btn-disabled': !newSpaceMapName
           }"
           [disabled]="!newSpaceMapName"
-        >New</button>
+        >Add</button>
         </span>
       </li>
     </ul>

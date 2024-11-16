@@ -42,7 +42,7 @@ export class ApiService {
   }
 
   updateSpaceMapDataEntry(mapName: string, request: UpdateSpaceMapDataEntryRequest){
-    return this.http.put(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
+    return this.http.patch(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
   }
 
 
