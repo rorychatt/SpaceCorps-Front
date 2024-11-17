@@ -46,4 +46,7 @@ export class ApiService {
   }
 
 
+  deleteSpaceMapDataEntry (mapName: string) {
+    return this.http.delete(`${this.url}/SpaceMapDataEntries/delete/${mapName}`);
+  }
 }

@@ -36,23 +36,30 @@
     <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
       <p>Existing SpaceMaps</p>
       <li *ngFor="let map of spaceMapDataEntryNames">
-        <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
+    <span class="flex flex-row justify-between">
+      <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
+      <button
+        class="btn btn-error btn-xs max-w-4"
+        (dblclick)="deleteSpaceMap(map)"
+        title="Double-click to delete"
+      >X</button>
+    </span>
       </li>
       <li>
-        <span>
-        <input
-          class="input input-bordered"
-          [(ngModel)]="newSpaceMapName"
-          placeholder="Enter new"/>
-        <button
-          class="btn"
-          (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
-          [ngClass]="{
-          'btn-disabled': !newSpaceMapName
-          }"
-          [disabled]="!newSpaceMapName"
-        >Add</button>
-        </span>
+    <span>
+      <input
+        class="input input-bordered"
+        [(ngModel)]="newSpaceMapName"
+        placeholder="Enter new"/>
+      <button
+        class="btn"
+        (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
+        [ngClass]="{
+        'btn-disabled': !newSpaceMapName
+        }"
+        [disabled]="!newSpaceMapName"
+      >Add</button>
+    </span>
       </li>
       <li>
         <button

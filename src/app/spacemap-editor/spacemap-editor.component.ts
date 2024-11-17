@@ -121,6 +121,22 @@ export class SpacemapEditorComponent {
     this.fetchSpaceMapDataEntryNames();
   }
 
+  deleteSpaceMap(name: string) {
+    this.apiService.deleteSpaceMapDataEntry(name).subscribe({
+      next: () => {
+        this.fetchSpaceMapDataEntryNames();
+        if (this.selectedSpaceMapDataEntryName === name) {
+          this.selectedSpaceMapDataEntry = null;
+          this.selectedSpaceMapDataEntryName = null;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error = err;
+        console.log(err);
+      }
+    });
+  }
+
   private createAndUpdateSpaceMapDataEntry (map: SpaceMapDataEntry) {
     this.apiService.postSpaceMapDataEntry(map.name).subscribe(() => {
       this.apiService.updateSpaceMapDataEntry(map.name, map).subscribe(() => {
