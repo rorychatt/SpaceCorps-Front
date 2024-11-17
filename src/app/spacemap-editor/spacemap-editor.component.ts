@@ -6,12 +6,15 @@ import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
 import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 
 @Component({
   selector: 'app-spacemap-editor',
   standalone: true,
   imports: [
     FormsModule,
+    FontAwesomeModule,
     NgForOf,
     NgIf,
     NgClass,
@@ -144,4 +147,6 @@ export class SpacemapEditorComponent {
       });
     });
   }
+
+  protected readonly faArrowsRotate = faArrowsRotate;
 }
