@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
 import { PlayerData } from '../models/player/PlayerData';
+import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
+import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +28,22 @@ export class ApiService {
   getPlayerInfo (request: GetPlayerInfoRequest){
     return this.http.get<PlayerData>(`${this.url}/Players/get/${request.username}`);
   }
+
+  getSpaceMapDataEntryNames(){
+    return this.http.get<string[]>(`${this.url}/SpaceMapDataEntries/getAllNames`);
+  }
+
+  getSpaceMapDataEntry(name: string){
+    return this.http.get<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/get/${name}`);
+  }
+
+  postSpaceMapDataEntry(mapName: string){
+    return this.http.post(`${this.url}/SpaceMapDataEntries/add`, {name: mapName});
+  }
+
+  updateSpaceMapDataEntry(mapName: string, request: UpdateSpaceMapDataEntryRequest){
+    return this.http.patch(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
+  }
+
+
 }

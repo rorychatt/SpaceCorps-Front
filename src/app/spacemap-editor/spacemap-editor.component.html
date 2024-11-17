@@ -1,1 +1,56 @@
-<p>spacemap-editor works!</p>
+<section class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
+  <section class="drawer-content flex flex-col items-center justify-center">
+    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+      Open All SpaceMaps
+    </label>
+    <section *ngIf="selectedSpaceMapDataEntry">
+      <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
+      <div>
+        <label>Name:</label>
+        <input [(ngModel)]="selectedSpaceMapDataEntry.name" class="input input-bordered"/>
+      </div>
+      <div>
+        <label>Preferred Color:</label>
+        <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
+      </div>
+      <div>
+        <label>Size:</label>
+        <div>
+          <label>Width:</label>
+          <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+        </div>
+        <div>
+          <label>Height:</label>
+          <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
+        </div>
+      </div>
+      <button (click)="updateSpaceMapDataEntry()" class="btn btn-primary">Save</button>
+    </section>
+  </section>
+  <aside class="drawer-side">
+    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+      <p>Existing SpaceMaps</p>
+      <li *ngFor="let map of spaceMapDataEntryNames">
+        <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
+      </li>
+      <li>
+        <span>
+        <input
+          class="input input-bordered"
+          [(ngModel)]="newSpaceMapName"
+          placeholder="Enter new"/>
+        <button
+          class="btn"
+          (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
+          [ngClass]="{
+          'btn-disabled': !newSpaceMapName
+          }"
+          [disabled]="!newSpaceMapName"
+        >Add</button>
+        </span>
+      </li>
+    </ul>
+  </aside>
+</section>
