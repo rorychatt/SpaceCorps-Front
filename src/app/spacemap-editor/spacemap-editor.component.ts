@@ -43,17 +43,28 @@ export class SpacemapEditorComponent {
 
   selectSpaceMapDataEntry (name: string) {
     this.selectedSpaceMapDataEntryName = name;
-    this.apiService.getSpaceMapDataEntry(name).subscribe((data: SpaceMapDataEntry) => {
-      this.selectedSpaceMapDataEntry = data;
-      console.log("Fetched SpaceMapDataEntry: ", data);
+    this.apiService.getSpaceMapDataEntry(name).subscribe({
+      next: (data: SpaceMapDataEntry) => {
+        this.selectedSpaceMapDataEntry = data;
+        console.log("Fetched SpaceMapDataEntry: ", data);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error = err;
+        console.log(err);
+      }
     });
   }
 
   postSpaceMapDataEntryByName (newName: string) {
-    this.apiService.postSpaceMapDataEntry(newName).subscribe(() => {
-      this.fetchSpaceMapDataEntryNames();
+    this.apiService.postSpaceMapDataEntry(newName).subscribe({
+      next: () => {
+        this.fetchSpaceMapDataEntryNames();
+        this.newSpaceMapName = null;
+      }, error: (err: HttpErrorResponse) => {
+        this.error = err;
+        console.log(err);
+      }
     });
-    this.newSpaceMapName = null;
   }
 
   updateSpaceMapDataEntry () {
@@ -64,10 +75,17 @@ export class SpacemapEditorComponent {
       };
 
       this.apiService.updateSpaceMapDataEntry(this.selectedSpaceMapDataEntryName, updateRequest)
-        .subscribe(() => {
-          console.log('SpaceMapDataEntry updated successfully');
+        .subscribe({
+          error: (err: HttpErrorResponse) => {
+            this.error = err;
+            console.log(err);
+          }
         });
     }
+  }
+
+  clearLoginError () {
+    this.error = null;
   }
 
   createDefaultStarMap () {
@@ -103,7 +121,7 @@ export class SpacemapEditorComponent {
     this.fetchSpaceMapDataEntryNames();
   }
 
-  private createAndUpdateSpaceMapDataEntry(map: SpaceMapDataEntry) {
+  private createAndUpdateSpaceMapDataEntry (map: SpaceMapDataEntry) {
     this.apiService.postSpaceMapDataEntry(map.name).subscribe(() => {
       this.apiService.updateSpaceMapDataEntry(map.name, map).subscribe(() => {
         console.log(`${map.name} SpaceMapDataEntry created and updated successfully`);
