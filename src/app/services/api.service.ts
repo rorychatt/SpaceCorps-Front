@@ -38,12 +38,15 @@ export class ApiService {
   }
 
   postSpaceMapDataEntry(mapName: string){
-    return this.http.post(`${this.url}/SpaceMapDataEntries/add`, {name: mapName});
+    return this.http.post<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/add`, {name: mapName});
   }
 
   updateSpaceMapDataEntry(mapName: string, request: UpdateSpaceMapDataEntryRequest){
-    return this.http.patch(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
+    return this.http.patch<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
   }
 
 
+  deleteSpaceMapDataEntry (mapName: string) {
+    return this.http.delete(`${this.url}/SpaceMapDataEntries/delete/${mapName}`);
+  }
 }
