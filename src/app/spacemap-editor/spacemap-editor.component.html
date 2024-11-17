@@ -33,39 +33,42 @@
   </section>
   <aside class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 gap-4 overflow-y-auto">
       <p>Existing SpaceMaps</p>
-      <li *ngFor="let map of spaceMapDataEntryNames">
-    <span class="flex flex-row justify-between">
-      <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
-      <button
-        class="btn btn-error btn-xs max-w-4"
-        (dblclick)="deleteSpaceMap(map)"
-        title="Double-click to delete"
-      >X</button>
-    </span>
+      <li
+        class="flex flex-row justify-between"
+        *ngFor="let map of spaceMapDataEntryNames">
+        <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
+        <button
+          class="btn btn-error btn-xs max-w-4"
+          (dblclick)="deleteSpaceMap(map)"
+          title="Double-click to delete"
+        >X
+        </button>
       </li>
-      <li>
-    <span>
-      <input
-        class="input input-bordered"
-        [(ngModel)]="newSpaceMapName"
-        placeholder="Enter new"/>
-      <button
-        class="btn"
-        (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
-        [ngClass]="{
-        'btn-disabled': !newSpaceMapName
-        }"
-        [disabled]="!newSpaceMapName"
-      >Add</button>
-    </span>
+      <li
+        class="flex flex-row justify-between"
+      >
+        <input
+          class="input input-bordered"
+          [(ngModel)]="newSpaceMapName"
+          placeholder="Enter new"/>
+        <button
+          class="btn"
+          (click)="postSpaceMapDataEntryByName(newSpaceMapName!)"
+          [ngClass]="{
+            'btn-disabled': !newSpaceMapName
+            }"
+          [disabled]="!newSpaceMapName"
+        >Add
+        </button>
       </li>
       <li>
         <button
           class="btn bg-base-300"
           (click)="createDefaultStarMap()"
-        >Create Default Star Map</button>
+        >Create Default Star Map
+        </button>
       </li>
     </ul>
   </aside>
