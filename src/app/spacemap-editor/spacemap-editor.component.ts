@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
 import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
+import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-spacemap-editor',
@@ -13,6 +15,7 @@ import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpac
     NgForOf,
     NgIf,
     NgClass,
+    ErrorModalComponent,
   ],
   templateUrl: './spacemap-editor.component.html',
   styleUrl: './spacemap-editor.component.scss'
@@ -23,6 +26,7 @@ export class SpacemapEditorComponent {
   selectedSpaceMapDataEntry: SpaceMapDataEntry | null = null;
   selectedSpaceMapDataEntryName: string | null = null;
   newSpaceMapName: string | null = null;
+  error: HttpErrorResponse | null = null;
 
   constructor (private apiService: ApiService) {
   }
@@ -66,4 +70,44 @@ export class SpacemapEditorComponent {
     }
   }
 
+  createDefaultStarMap () {
+
+    const m1Map: SpaceMapDataEntry = {
+      name: 'M-1',
+      size: { width: 320, height: 180 },
+      preferredColor: 'red',
+      spawnableAliens: [],
+      staticEntities: []
+    }
+
+    const t1Map: SpaceMapDataEntry = {
+      name: 'T-1',
+      size: { width: 320, height: 180 },
+      preferredColor: 'blue',
+      spawnableAliens: [],
+      staticEntities: []
+    }
+
+    const v1Map: SpaceMapDataEntry = {
+      name: 'V-1',
+      size: { width: 320, height: 180 },
+      preferredColor: 'green',
+      spawnableAliens: [],
+      staticEntities: []
+    }
+
+    this.createAndUpdateSpaceMapDataEntry(m1Map);
+    this.createAndUpdateSpaceMapDataEntry(t1Map);
+    this.createAndUpdateSpaceMapDataEntry(v1Map);
+
+    this.fetchSpaceMapDataEntryNames();
+  }
+
+  private createAndUpdateSpaceMapDataEntry(map: SpaceMapDataEntry) {
+    this.apiService.postSpaceMapDataEntry(map.name).subscribe(() => {
+      this.apiService.updateSpaceMapDataEntry(map.name, map).subscribe(() => {
+        console.log(`${map.name} SpaceMapDataEntry created and updated successfully`);
+      });
+    });
+  }
 }

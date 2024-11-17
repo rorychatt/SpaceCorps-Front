@@ -1,3 +1,6 @@
+@if (error) {
+  <app-error-modal [error]="error"></app-error-modal>
+}
 <section class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
   <section class="drawer-content flex flex-col items-center justify-center">
@@ -50,6 +53,12 @@
           [disabled]="!newSpaceMapName"
         >Add</button>
         </span>
+      </li>
+      <li>
+        <button
+          class="btn bg-base-300"
+          (click)="createDefaultStarMap()"
+        >Create Default Star Map</button>
       </li>
     </ul>
   </aside>
