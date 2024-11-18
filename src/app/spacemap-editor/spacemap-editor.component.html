@@ -8,9 +8,10 @@
   </label>
   <section class="drawer-content">
 
+    <!--Map General Info-->
     <div
       *ngIf="selectedSpaceMapDataEntry"
-      class="card max-w-lg bg-neutral">
+      class="card max-w-96 bg-neutral">
       <div class="card-body flex flex-col justify-center">
         <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
         <div class="flex flex-row justify-between items-center">
@@ -39,7 +40,8 @@
         <button
           (click)="updateSpaceMapDataEntry()"
           class="btn bg-base-300 max-w-32 mx-auto mt-4"
-        >Save</button>
+        >Save
+        </button>
       </div>
     </div>
 
