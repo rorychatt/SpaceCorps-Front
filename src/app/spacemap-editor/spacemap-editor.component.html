@@ -3,39 +3,52 @@
 }
 <section class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
-  <section class="drawer-content flex flex-col items-center justify-center">
-    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
-      Open All SpaceMaps
-    </label>
-    <section *ngIf="selectedSpaceMapDataEntry">
-      <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
-      <div>
-        <label>Name:</label>
-        <input [(ngModel)]="selectedSpaceMapDataEntry.name" class="input input-bordered"/>
-      </div>
-      <div>
-        <label>Preferred Color:</label>
-        <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
-      </div>
-      <div>
-        <label>Size:</label>
-        <div>
-          <label>Width:</label>
-          <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+  <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+    Open All SpaceMaps
+  </label>
+  <section class="drawer-content">
+
+    <div
+      *ngIf="selectedSpaceMapDataEntry"
+      class="card max-w-lg bg-neutral">
+      <div class="card-body flex flex-col justify-center">
+        <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
+        <div class="flex flex-row justify-between items-center">
+          <label>Name:</label>
+          <input
+            [(ngModel)]="selectedSpaceMapDataEntry.name"
+            class="input input-bordered read-only:cursor-not-allowed"
+            readonly
+          />
         </div>
-        <div>
-          <label>Height:</label>
-          <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
+        <div class="flex flex-row justify-between items-center">
+          <label>Preferred Color:</label>
+          <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
         </div>
+        <div class="flex flex-col gap-2">
+          <label>Size:</label>
+          <div class="flex flex-row justify-between items-center">
+            <label>Width:</label>
+            <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+          </div>
+          <div class="flex flex-row justify-between items-center">
+            <label>Height:</label>
+            <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
+          </div>
+        </div>
+        <button
+          (click)="updateSpaceMapDataEntry()"
+          class="btn bg-base-300 max-w-32 mx-auto mt-4"
+        >Save</button>
       </div>
-      <button (click)="updateSpaceMapDataEntry()" class="btn btn-primary">Save</button>
-    </section>
+    </div>
+
   </section>
   <aside class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 gap-4 overflow-y-auto">
       <li
-        class="flex flex-row justify-between"
+        class="flex flex-row justify-between items-center"
       >
         <p>Existing SpaceMaps</p>
         <button
@@ -46,7 +59,7 @@
         </button>
       </li>
       <li
-        class="flex flex-row justify-between"
+        class="flex flex-row justify-betwee items-center"
         *ngFor="let map of spaceMapDataEntryNames">
         <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
         <button
