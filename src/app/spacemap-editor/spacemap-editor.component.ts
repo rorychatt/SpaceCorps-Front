@@ -8,6 +8,7 @@ import { ErrorModalComponent } from '../components/error-modal/error-modal.compo
 import { HttpErrorResponse } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
+import { StaticEntity } from '../models/entity/StaticEntity';
 
 @Component({
   selector: 'app-spacemap-editor',
@@ -148,5 +149,13 @@ export class SpacemapEditorComponent {
     });
   }
 
+  protected deleteStaticEntity (staticEntity: StaticEntity) {
+    console.warn("Not implemented");
+  }
+
+  protected saveStaticEntities () {
+    console.warn("Not implemented");
+  }
   protected readonly faArrowsRotate = faArrowsRotate;
+
 }

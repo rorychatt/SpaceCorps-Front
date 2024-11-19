@@ -45,6 +45,48 @@
       </div>
     </div>
 
+    <!--Static Entities View-->
+    <div
+      *ngIf="selectedSpaceMapDataEntry"
+      class="card bg-neutral max-w-96">
+      <ul class="card-body flex flex-col justify-center">
+        <li *ngFor="let staticEntity of selectedSpaceMapDataEntry!.staticEntities">
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row justify-between items-center">
+              <label>Name:</label>
+              <input [(ngModel)]="staticEntity.name" class="input input-bordered"/>
+              <button class="btn btn-error btn-xs btn-square" (click)="deleteStaticEntity(staticEntity)">X</button>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <label>Position:</label>
+              <span>
+            X: <input [(ngModel)]="staticEntity.position.x" type="number" class="input input-bordered w-20"/>
+            Y: <input [(ngModel)]="staticEntity.position.y" type="number" class="input input-bordered w-20"/>
+            Z: <input [(ngModel)]="staticEntity.position.z" type="number" class="input input-bordered w-20"/>
+          </span>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <label>ID:</label>
+              <input [(ngModel)]="staticEntity.id" type="number" class="input input-bordered"/>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <label>Location Name:</label>
+              <input [(ngModel)]="staticEntity.locationName" class="input input-bordered"/>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <label>Safe Zone Radii:</label>
+              <input [(ngModel)]="staticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <label>Destination:</label>
+              <input [(ngModel)]="staticEntity.destination" class="input input-bordered"/>
+            </div>
+          </div>
+        </li>
+        <button (click)="saveStaticEntities()" class="btn bg-base-300 max-w-32 mx-auto mt-4">Save</button>
+      </ul>
+    </div>
+
   </section>
   <aside class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>

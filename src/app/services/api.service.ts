@@ -45,7 +45,6 @@ export class ApiService {
     return this.http.patch<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
   }
 
-
   deleteSpaceMapDataEntry (mapName: string) {
     return this.http.delete(`${this.url}/SpaceMapDataEntries/delete/${mapName}`);
   }
