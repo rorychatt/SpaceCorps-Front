@@ -7,7 +7,7 @@ import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpac
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import { StaticEntity } from '../models/entity/StaticEntity';
 
 @Component({
@@ -125,7 +125,7 @@ export class SpacemapEditorComponent {
     this.fetchSpaceMapDataEntryNames();
   }
 
-  deleteSpaceMap(name: string) {
+  deleteSpaceMap (name: string) {
     this.apiService.deleteSpaceMapDataEntry(name).subscribe({
       next: () => {
         this.fetchSpaceMapDataEntryNames();
@@ -156,6 +156,20 @@ export class SpacemapEditorComponent {
   protected saveStaticEntities () {
     console.warn("Not implemented");
   }
+
+  protected addStaticEntityToMap () {
+    console.warn("Not implemented");
+  }
+
   protected readonly faArrowsRotate = faArrowsRotate;
+
+  protected newStaticEntity: StaticEntity = {
+    name: '',
+    position: { x: 0, y: 0, z: 0 },
+    id: 0,
+    locationName: '',
+    safeZoneRadii: 0,
+    destination: ''
+  }
 
 }
