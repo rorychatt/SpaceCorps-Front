@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import { StaticEntity } from '../models/entity/StaticEntity';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-spacemap-editor',
@@ -32,7 +33,11 @@ export class SpacemapEditorComponent {
   newSpaceMapName: string | null = null;
   error: HttpErrorResponse | null = null;
 
-  constructor (private apiService: ApiService) {
+  constructor (
+    private apiService: ApiService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit () {
@@ -50,6 +55,7 @@ export class SpacemapEditorComponent {
     this.apiService.getSpaceMapDataEntry(name).subscribe({
       next: (data: SpaceMapDataEntry) => {
         this.selectedSpaceMapDataEntry = data;
+        this.updateUrlWithMapName(name);
         console.log("Fetched SpaceMapDataEntry: ", data);
       },
       error: (err: HttpErrorResponse) => {
@@ -130,9 +136,14 @@ export class SpacemapEditorComponent {
       next: () => {
         this.fetchSpaceMapDataEntryNames();
         if (this.selectedSpaceMapDataEntryName === name) {
-          this.selectedSpaceMapDataEntry = null;
           this.selectedSpaceMapDataEntryName = null;
+          void this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { map: null },
+            queryParamsHandling: 'merge'
+          });
         }
+        this.selectedSpaceMapDataEntry = null;
       },
       error: (err: HttpErrorResponse) => {
         this.error = err;
@@ -146,6 +157,14 @@ export class SpacemapEditorComponent {
       this.apiService.updateSpaceMapDataEntry(map.name, map).subscribe(() => {
         console.log(`${map.name} SpaceMapDataEntry created and updated successfully`);
       });
+    });
+  }
+
+  private async updateUrlWithMapName (name: string) {
+    await this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { map: name },
+      queryParamsHandling: 'merge'
     });
   }
 
