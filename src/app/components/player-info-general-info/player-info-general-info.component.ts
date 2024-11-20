@@ -18,15 +18,15 @@ export class PlayerInfoGeneralInfoComponent {
 
   authState$ = this.authService.authState$;
 
-  ngOnInit() {
-    this.authState$.subscribe((state)=> {
+  ngOnInit () {
+    this.authState$.subscribe((state) => {
       this.templateValues.username = state.username ?? this.templateValues.username;
     })
   }
 
   templateValues = {
-    "username" : "undefined",
-    "dateOfReg" : "undefined",
-    "hoursPlayed" : 9999,
+    "username": "undefined",
+    "dateOfReg": "undefined",
+    "hoursPlayed": 9999,
   }
 }
