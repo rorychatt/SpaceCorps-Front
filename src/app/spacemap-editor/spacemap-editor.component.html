@@ -3,39 +3,120 @@
 }
 <section class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
-  <section class="drawer-content flex flex-col items-center justify-center">
-    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
-      Open All SpaceMaps
-    </label>
-    <section *ngIf="selectedSpaceMapDataEntry">
-      <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
-      <div>
-        <label>Name:</label>
-        <input [(ngModel)]="selectedSpaceMapDataEntry.name" class="input input-bordered"/>
-      </div>
-      <div>
-        <label>Preferred Color:</label>
-        <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
-      </div>
-      <div>
-        <label>Size:</label>
-        <div>
-          <label>Width:</label>
-          <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+  <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+    Open All SpaceMaps
+  </label>
+  <section class="drawer-content flex flex-col gap-4">
+
+    <!-- Map General Info -->
+
+    <div
+      *ngIf="selectedSpaceMapDataEntry"
+      class="card bg-neutral">
+      <div class="card card-body">
+        <h2>Map General Info</h2>
+        <div class="flex flex-wrap gap-4">
+          <div class="card bg-base-200 max-w-96">
+            <div class="card-body flex flex-col gap-2 justify-center">
+              <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
+              <label>Name:</label>
+              <input
+                [(ngModel)]="selectedSpaceMapDataEntry.name"
+                class="input input-bordered read-only:cursor-not-allowed"
+                readonly
+              />
+              <label>Preferred Color:</label>
+              <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
+              <label>Size:</label>
+              <label>Width:</label>
+              <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+              <label>Height:</label>
+              <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number"
+                     class="input input-bordered"/>
+              <button
+                (click)="updateSpaceMapDataEntry()"
+                class="btn bg-base-300 max-w-32 mx-auto mt-4"
+              >Save
+              </button>
+            </div>
+          </div>
+
+          <!-- Element to create a new static entity -->
+
+          <div class="card bg-base-200 p-4 max-w-96">
+            <h3>Create New Static Entity</h3>
+            <div class="flex flex-col gap-2">
+              <label>Name:</label>
+              <input [(ngModel)]="newStaticEntity.name" class="input input-bordered"/>
+              <label>Position:</label>
+              <span>
+            X: <input [(ngModel)]="newStaticEntity.position.x" type="number" class="input input-bordered w-20"/>
+            Y: <input [(ngModel)]="newStaticEntity.position.y" type="number" class="input input-bordered w-20"/>
+            Z: <input [(ngModel)]="newStaticEntity.position.z" type="number" class="input input-bordered w-20"/>
+          </span>
+              <label>Location Name:</label>
+              <input [(ngModel)]="newStaticEntity.locationName" class="input input-bordered"/>
+              <label>Safe Zone Radii:</label>
+              <input [(ngModel)]="newStaticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
+              <label>Destination:</label>
+              <input [(ngModel)]="newStaticEntity.destination" class="input input-bordered"/>
+              <button (click)="addStaticEntityToMap()" class="btn bg-base-300 mt-4 max-w-32 mx-auto">Add</button>
+            </div>
+          </div>
+
         </div>
-        <div>
-          <label>Height:</label>
-          <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
-        </div>
       </div>
-      <button (click)="updateSpaceMapDataEntry()" class="btn btn-primary">Save</button>
-    </section>
+    </div>
+
+    <!--Static Entities View-->
+
+    <div *ngIf="selectedSpaceMapDataEntry" class="card bg-neutral">
+      <div class="card-body">
+        <h2>Static Entities on Map</h2>
+        <div class="flex flex-wrap gap-4">
+
+          <!-- Existing static entities -->
+
+          <div
+            *ngFor="let staticEntity of selectedSpaceMapDataEntry!.staticEntities"
+            class="card bg-base-200 p-4 max-w-96">
+            <div class="flex flex-col gap-2">
+              <label>Name:</label>
+              <span class="flex flex-row justify-between items-center">
+                <input [(ngModel)]="staticEntity.name" class="input input-bordered"/>
+                <button class="btn btn-error btn-xs btn-square" (click)="deleteStaticEntity(staticEntity)">X</button>
+              </span>
+              <label>Position:</label>
+              <span>
+              X: <input [(ngModel)]="staticEntity.position.x" type="number" class="input input-bordered w-20"/>
+              Y: <input [(ngModel)]="staticEntity.position.y" type="number" class="input input-bordered w-20"/>
+              Z: <input [(ngModel)]="staticEntity.position.z" type="number" class="input input-bordered w-20"/>
+            </span>
+              <label>ID:</label>
+              <input [(ngModel)]="staticEntity.id" type="number"
+                     class="input input-bordered read-only:cursor-not-allowed" readonly/>
+              <label>Location Name:</label>
+              <input [(ngModel)]="staticEntity.locationName" class="input input-bordered"/>
+              <label>Safe Zone Radii:</label>
+              <input [(ngModel)]="staticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
+              <label>Destination:</label>
+              <input [(ngModel)]="staticEntity.destination" class="input input-bordered"/>
+            </div>
+          </div>
+        </div>
+        <button (click)="saveStaticEntities()" class="btn bg-base-300 max-w-32 mx-auto mt-4">Save</button>
+      </div>
+    </div>
+
   </section>
+
+  <!-- Sidebar -->
+
   <aside class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 gap-4 overflow-y-auto">
       <li
-        class="flex flex-row justify-between"
+        class="flex flex-row justify-between items-center"
       >
         <p>Existing SpaceMaps</p>
         <button
@@ -46,7 +127,7 @@
         </button>
       </li>
       <li
-        class="flex flex-row justify-between"
+        class="flex flex-row justify-between items-center"
         *ngFor="let map of spaceMapDataEntryNames">
         <a (click)="selectSpaceMapDataEntry(map)">{{ map }}</a>
         <button
