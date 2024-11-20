@@ -10,6 +10,9 @@
     <div
       *ngIf="selectedSpaceMapDataEntry"
       class="card bg-neutral p-4">
+
+      <!-- Map General Info -->
+
       <h2>Map General Info</h2>
       <div class="flex flex-wrap gap-4">
         <div class="card bg-base-200 max-w-96">
@@ -47,6 +50,7 @@
         </div>
 
         <!-- Element to create a new static entity -->
+
         <div class="card bg-base-200 p-4 max-w-96">
           <h3>Create New Static Entity</h3>
           <div class="flex flex-col gap-2">
@@ -72,11 +76,14 @@
     </div>
 
     <!--Static Entities View-->
+
     <div *ngIf="selectedSpaceMapDataEntry" class="card bg-neutral">
       <div class="card-body">
         <h2>Static Entities on Map</h2>
         <div class="flex flex-wrap gap-4">
+
           <!-- Existing static entities -->
+
           <div
             *ngFor="let staticEntity of selectedSpaceMapDataEntry!.staticEntities"
             class="card bg-base-200 p-4 max-w-96">
