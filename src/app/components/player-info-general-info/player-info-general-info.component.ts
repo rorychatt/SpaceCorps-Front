@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-player-info-general-info',
@@ -15,11 +14,19 @@ import { firstValueFrom } from 'rxjs';
 })
 export class PlayerInfoGeneralInfoComponent {
 
-  authService = inject(AuthService)
+  authService = inject(AuthService);
 
-  data = {
-    "username" : "Dumacuk",
-    "dateOfReg" : "21.11.2025",
-    "hoursPlayed" : 216,
+  authState$ = this.authService.authState$;
+
+  ngOnInit() {
+    this.authState$.subscribe((state)=> {
+      this.templateValues.username = state.username ?? this.templateValues.username;
+    })
+  }
+
+  templateValues = {
+    "username" : "undefined",
+    "dateOfReg" : "undefined",
+    "hoursPlayed" : 9999,
   }
 }
