@@ -1,12 +1,16 @@
 <div class="card card-side bg-base-100 shadow-xl">
   <div class="card-body">
-      <div class="avatar justify-center">
-        <div class="w-24 rounded-full">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-          />
-        </div>
+    <div class="avatar justify-center"
+         [ngClass]="{
+            'online': (authService.authState$ | async)?.isLoggedIn
+          }"
+    >
+      <div class="w-24 rounded-full">
+        <img
+          src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          alt="Player Profile Picture"/>
       </div>
+    </div>
     <p>Player Username</p>
     <p>Date of Registration</p>
     <p>Total Hours played</p>
