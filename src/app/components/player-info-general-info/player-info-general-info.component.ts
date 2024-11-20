@@ -17,4 +17,9 @@ export class PlayerInfoGeneralInfoComponent {
 
   authService = inject(AuthService)
 
+  data = {
+    "username" : "Dumacuk",
+    "dateOfReg" : "21.11.2025",
+    "hoursPlayed" : 216,
+  }
 }

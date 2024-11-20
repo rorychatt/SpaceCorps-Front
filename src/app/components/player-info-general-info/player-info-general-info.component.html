@@ -11,9 +11,11 @@
           alt="Player Profile Picture"/>
       </div>
     </div>
-    <p>Player Username</p>
-    <p>Date of Registration</p>
-    <p>Total Hours played</p>
-    <p>Quest completion bar</p>
+    <br>
+    <p> <strong>Nickname:</strong> {{data.username}}</p>
+    <p> <strong>First login:</strong> {{data.dateOfReg}}</p>
+    <p> <strong>Hours:</strong> {{data.hoursPlayed}}</p>
+    <p class="self-center"> <strong>Quest progress</strong></p>
+    <progress class="progress w-56" value="35" max="100"></progress>
   </div>
 </div>
