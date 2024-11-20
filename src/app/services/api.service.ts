@@ -6,6 +6,7 @@ import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
 import { PlayerData } from '../models/player/PlayerData';
 import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
 import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
+import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,9 @@ export class ApiService {
 
   deleteSpaceMapDataEntry (mapName: string) {
     return this.http.delete(`${this.url}/SpaceMapDataEntries/delete/${mapName}`);
+  }
+
+  addStaticEntityToMap (selectedSpaceMapDataEntryName: string, newStaticEntity: CreateStaticEntityRequest) {
+    return this.http.post(`${this.url}/SpaceMapDataEntries/addStaticEntityToSpaceMap/${selectedSpaceMapDataEntryName}`, newStaticEntity);
   }
 }

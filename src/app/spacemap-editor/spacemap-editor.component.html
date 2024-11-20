@@ -50,6 +50,7 @@
       <div class="card-body">
         <h2>Static Entities on Map</h2>
         <div class="flex flex-wrap gap-4">
+
           <!-- Element to create a new static entity -->
           <div class="card bg-base-200 p-4 max-w-96">
             <h3>Create New Static Entity</h3>
@@ -62,8 +63,6 @@
             Y: <input [(ngModel)]="newStaticEntity.position.y" type="number" class="input input-bordered w-20"/>
             Z: <input [(ngModel)]="newStaticEntity.position.z" type="number" class="input input-bordered w-20"/>
           </span>
-              <label>ID:</label>
-              <input [(ngModel)]="newStaticEntity.id" type="number" class="input input-bordered"/>
               <label>Location Name:</label>
               <input [(ngModel)]="newStaticEntity.locationName" class="input input-bordered"/>
               <label>Safe Zone Radii:</label>

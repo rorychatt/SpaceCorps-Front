@@ -10,6 +10,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import { StaticEntity } from '../models/entity/StaticEntity';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-spacemap-editor',
@@ -177,15 +179,27 @@ export class SpacemapEditorComponent {
   }
 
   protected addStaticEntityToMap () {
-    console.warn("Not implemented");
+    if (!this.selectedSpaceMapDataEntryName) {
+      console.error("No map selected");
+      return;
+    }
+    const mapName = this.selectedSpaceMapDataEntryName;
+    this.apiService.addStaticEntityToMap(mapName, this.newStaticEntity).subscribe({
+      next: () => {
+        this.selectSpaceMapDataEntry(mapName);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error = err;
+        console.log(err);
+      }
+    });
   }
 
   protected readonly faArrowsRotate = faArrowsRotate;
 
-  protected newStaticEntity: StaticEntity = {
+  protected newStaticEntity: CreateStaticEntityRequest = {
     name: '',
     position: { x: 0, y: 0, z: 0 },
-    id: 0,
     locationName: '',
     safeZoneRadii: 0,
     destination: ''
