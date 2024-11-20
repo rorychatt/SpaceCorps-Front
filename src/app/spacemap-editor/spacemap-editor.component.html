@@ -7,41 +7,67 @@
     Open All SpaceMaps
   </label>
   <section class="drawer-content">
-
-    <!--Map General Info-->
     <div
       *ngIf="selectedSpaceMapDataEntry"
-      class="card max-w-96 bg-neutral">
-      <div class="card-body flex flex-col justify-center">
-        <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
-        <div class="flex flex-row justify-between items-center">
-          <label>Name:</label>
-          <input
-            [(ngModel)]="selectedSpaceMapDataEntry.name"
-            class="input input-bordered read-only:cursor-not-allowed"
-            readonly
-          />
-        </div>
-        <div class="flex flex-row justify-between items-center">
-          <label>Preferred Color:</label>
-          <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
-        </div>
-        <div class="flex flex-col gap-2">
-          <label>Size:</label>
-          <div class="flex flex-row justify-between items-center">
-            <label>Width:</label>
-            <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+      class="card bg-neutral p-4">
+      <h2>Map General Info</h2>
+      <div class="flex flex-wrap gap-4">
+        <div class="card bg-base-200 max-w-96">
+          <div class="card-body flex flex-col gap-2 justify-center">
+            <h2>You selected: {{ selectedSpaceMapDataEntry.name }}</h2>
+            <div class="flex flex-row justify-between items-center">
+              <label>Name:</label>
+              <input
+                [(ngModel)]="selectedSpaceMapDataEntry.name"
+                class="input input-bordered read-only:cursor-not-allowed"
+                readonly
+              />
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <label>Preferred Color:</label>
+              <input [(ngModel)]="selectedSpaceMapDataEntry.preferredColor" class="input input-bordered"/>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label>Size:</label>
+              <div class="flex flex-row justify-between items-center">
+                <label>Width:</label>
+                <input [(ngModel)]="selectedSpaceMapDataEntry.size.width" type="number" class="input input-bordered"/>
+              </div>
+              <div class="flex flex-row justify-between items-center">
+                <label>Height:</label>
+                <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
+              </div>
+            </div>
+            <button
+              (click)="updateSpaceMapDataEntry()"
+              class="btn bg-base-300 max-w-32 mx-auto mt-4"
+            >Save
+            </button>
           </div>
-          <div class="flex flex-row justify-between items-center">
-            <label>Height:</label>
-            <input [(ngModel)]="selectedSpaceMapDataEntry.size.height" type="number" class="input input-bordered"/>
+        </div>
+
+        <!-- Element to create a new static entity -->
+        <div class="card bg-base-200 p-4 max-w-96">
+          <h3>Create New Static Entity</h3>
+          <div class="flex flex-col gap-2">
+            <label>Name:</label>
+            <input [(ngModel)]="newStaticEntity.name" class="input input-bordered"/>
+            <label>Position:</label>
+            <span>
+            X: <input [(ngModel)]="newStaticEntity.position.x" type="number" class="input input-bordered w-20"/>
+            Y: <input [(ngModel)]="newStaticEntity.position.y" type="number" class="input input-bordered w-20"/>
+            Z: <input [(ngModel)]="newStaticEntity.position.z" type="number" class="input input-bordered w-20"/>
+          </span>
+            <label>Location Name:</label>
+            <input [(ngModel)]="newStaticEntity.locationName" class="input input-bordered"/>
+            <label>Safe Zone Radii:</label>
+            <input [(ngModel)]="newStaticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
+            <label>Destination:</label>
+            <input [(ngModel)]="newStaticEntity.destination" class="input input-bordered"/>
+            <button (click)="addStaticEntityToMap()" class="btn bg-base-300 mt-4">Add</button>
           </div>
         </div>
-        <button
-          (click)="updateSpaceMapDataEntry()"
-          class="btn bg-base-300 max-w-32 mx-auto mt-4"
-        >Save
-        </button>
+
       </div>
     </div>
 
@@ -50,29 +76,6 @@
       <div class="card-body">
         <h2>Static Entities on Map</h2>
         <div class="flex flex-wrap gap-4">
-
-          <!-- Element to create a new static entity -->
-          <div class="card bg-base-200 p-4 max-w-96">
-            <h3>Create New Static Entity</h3>
-            <div class="flex flex-col gap-2">
-              <label>Name:</label>
-              <input [(ngModel)]="newStaticEntity.name" class="input input-bordered"/>
-              <label>Position:</label>
-              <span>
-            X: <input [(ngModel)]="newStaticEntity.position.x" type="number" class="input input-bordered w-20"/>
-            Y: <input [(ngModel)]="newStaticEntity.position.y" type="number" class="input input-bordered w-20"/>
-            Z: <input [(ngModel)]="newStaticEntity.position.z" type="number" class="input input-bordered w-20"/>
-          </span>
-              <label>Location Name:</label>
-              <input [(ngModel)]="newStaticEntity.locationName" class="input input-bordered"/>
-              <label>Safe Zone Radii:</label>
-              <input [(ngModel)]="newStaticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
-              <label>Destination:</label>
-              <input [(ngModel)]="newStaticEntity.destination" class="input input-bordered"/>
-              <button (click)="addStaticEntityToMap()" class="btn bg-base-300 mt-4">Add</button>
-            </div>
-          </div>
-
           <!-- Existing static entities -->
           <div
             *ngFor="let staticEntity of selectedSpaceMapDataEntry!.staticEntities"
