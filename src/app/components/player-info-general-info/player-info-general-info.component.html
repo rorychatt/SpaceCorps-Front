@@ -1,0 +1,21 @@
+<div class="card card-side bg-base-100 shadow-xl">
+  <div class="card-body">
+    <div class="avatar justify-center"
+         [ngClass]="{
+            'online': (authService.authState$ | async)?.isLoggedIn
+          }"
+    >
+      <div class="w-24 rounded-full">
+        <img
+          src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          alt="Player Profile Picture"/>
+      </div>
+    </div>
+    <br>
+    <p><strong>Nickname:</strong> {{ templateValues.username }}</p>
+    <p><strong>First login:</strong> {{ templateValues.dateOfReg }}</p>
+    <p><strong>Hours:</strong> {{ templateValues.hoursPlayed }}</p>
+    <p class="self-center"><strong>Quest progress</strong></p>
+    <progress class="progress w-56" value="35" max="100"></progress>
+  </div>
+</div>
