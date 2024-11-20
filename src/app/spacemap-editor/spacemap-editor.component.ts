@@ -171,7 +171,20 @@ export class SpacemapEditorComponent {
   }
 
   protected deleteStaticEntity (staticEntity: StaticEntity) {
-    console.warn("Not implemented");
+    if (!this.selectedSpaceMapDataEntryName) {
+      console.error("No map selected");
+      return;
+    }
+    const mapName = this.selectedSpaceMapDataEntryName;
+    this.apiService.deleteStaticEntityFromMap(mapName, staticEntity).subscribe({
+      next: () => {
+        this.selectSpaceMapDataEntry(mapName);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error = err;
+        console.log(err);
+      }
+    });
   }
 
   protected saveStaticEntities () {
