@@ -78,35 +78,26 @@
             *ngFor="let staticEntity of selectedSpaceMapDataEntry!.staticEntities"
             class="card bg-base-200 p-4 max-w-96">
             <div class="flex flex-col gap-2">
-              <div class="flex flex-row justify-between items-center">
-                <label>Name:</label>
+              <label>Name:</label>
+              <span class="flex flex-row justify-between items-center">
                 <input [(ngModel)]="staticEntity.name" class="input input-bordered"/>
                 <button class="btn btn-error btn-xs btn-square" (click)="deleteStaticEntity(staticEntity)">X</button>
-              </div>
-              <div class="flex flex-row justify-between items-center">
-                <label>Position:</label>
-                <span>
+              </span>
+              <label>Position:</label>
+              <span>
               X: <input [(ngModel)]="staticEntity.position.x" type="number" class="input input-bordered w-20"/>
               Y: <input [(ngModel)]="staticEntity.position.y" type="number" class="input input-bordered w-20"/>
               Z: <input [(ngModel)]="staticEntity.position.z" type="number" class="input input-bordered w-20"/>
             </span>
-              </div>
-              <div class="flex flex-row justify-between items-center">
-                <label>ID:</label>
-                <input [(ngModel)]="staticEntity.id" type="number" class="input input-bordered"/>
-              </div>
-              <div class="flex flex-row justify-between items-center">
-                <label>Location Name:</label>
-                <input [(ngModel)]="staticEntity.locationName" class="input input-bordered"/>
-              </div>
-              <div class="flex flex-row justify-between items-center">
-                <label>Safe Zone Radii:</label>
-                <input [(ngModel)]="staticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
-              </div>
-              <div class="flex flex-row justify-between items-center">
-                <label>Destination:</label>
-                <input [(ngModel)]="staticEntity.destination" class="input input-bordered"/>
-              </div>
+              <label>ID:</label>
+              <input [(ngModel)]="staticEntity.id" type="number"
+                     class="input input-bordered read-only:cursor-not-allowed" readonly/>
+              <label>Location Name:</label>
+              <input [(ngModel)]="staticEntity.locationName" class="input input-bordered"/>
+              <label>Safe Zone Radii:</label>
+              <input [(ngModel)]="staticEntity.safeZoneRadii" type="number" class="input input-bordered"/>
+              <label>Destination:</label>
+              <input [(ngModel)]="staticEntity.destination" class="input input-bordered"/>
             </div>
           </div>
         </div>
