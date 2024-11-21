@@ -1,0 +1,14 @@
+<script src="item-editor.component.ts"></script>
+<aside>
+  <ul class="menu bg-base-200 rounded-box w-48 items-center">
+    <li class="menu-title">Item Category</li>
+    <li *ngFor="let item of itemCategories" class="menu-item">
+      <a
+        (click)="selectCategory(item)"
+        [class]="item === selectedCategory ? 'active' : ''"
+        class="menu-link"
+      >
+        {{ item }}
+      </a>
+  </ul>
+</aside>
