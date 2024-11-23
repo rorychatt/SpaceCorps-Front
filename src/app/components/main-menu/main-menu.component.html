@@ -1,4 +1,4 @@
-<ul class="menu lg:menu-horizontal bg-base-200 rounded-box" (mouseleave)="closeAllItems()">
+<ul class="menu menu-horizontal bg-base-200 rounded-box" (mouseleave)="closeAllItems()">
   <li>
     <details
       [open]="openItem === 'pilot'"
@@ -65,6 +65,7 @@
       <summary>Admin</summary>
       <ul>
         <li><a>√Users</a></li>
+        <li><a routerLink="/item-editor">√ItemEditor</a></li>
         <li><a routerLink="/spacemap-editor">√SpaceMapEditor</a></li>
         <li><a>√Logs</a></li>
       </ul>
