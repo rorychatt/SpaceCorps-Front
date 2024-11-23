@@ -1,32 +1,47 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-player-info-general-info',
   standalone: true,
-  imports: [
-    NgClass,
-    AsyncPipe
-  ],
+  imports: [NgClass, AsyncPipe],
   templateUrl: './player-info-general-info.component.html',
-  styleUrl: './player-info-general-info.component.scss'
+  styleUrl: './player-info-general-info.component.scss',
 })
 export class PlayerInfoGeneralInfoComponent {
-
   authService = inject(AuthService);
+  apiService = inject(ApiService);
 
   authState$ = this.authService.authState$;
 
-  ngOnInit () {
-    this.authState$.subscribe((state) => {
-      this.templateValues.username = state.username ?? this.templateValues.username;
+  ngOnInit() {
+    const authPlayerData = this.authService.getPlayerData();
+    if (!authPlayerData) console.error('Error: Missing PlayerData');
+    const userName = authPlayerData!.userName;
+
+    this.getPlayerInfo(userName).subscribe({
+      next: (response) => {
+        this.templateValues.username = response.userName;
+        this.templateValues.hoursPlayed = response.totalPlayTime;
+        this.templateValues.dateOfReg = response.dateOfRegistration;
+      },
+      error: (err) => {
+        throw err;
+      }
     })
   }
 
-  templateValues = {
-    "username": "undefined",
-    "dateOfReg": "undefined",
-    "hoursPlayed": 9999,
+  getPlayerInfo(username: string) {
+    return this.apiService.getPlayerInfo({
+      username: username,
+    });
   }
+
+  templateValues = {
+    username: 'undefined',
+    dateOfReg: 'undefined',
+    hoursPlayed: 9999,
+  };
 }
