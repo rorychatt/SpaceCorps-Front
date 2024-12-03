@@ -27,7 +27,7 @@ export class ItemEditorComponent {
   ]
 
   protected ItemEntries: IItemEntry[] = [];
-  protected newItem: IItemEntry | null = null;
+  protected newItem: { [key: string]: any } | null = {};
   protected selectedCategory: string | null = null;
 
   constructor (private apiService: ApiService) {
@@ -41,7 +41,7 @@ export class ItemEditorComponent {
       return;
     } else {
       this.selectedCategory = category;
-      this.newItem = null;
+      this.newItem = this.createNewItemForCategory(category);
     }
   }
 
@@ -116,5 +116,18 @@ export class ItemEditorComponent {
     return fieldsMap[category] || [
       { label: 'Name', key: 'name' },
     ];
+  }
+
+  protected createNewItemForCategory(category: string): { [key: string]: any } {
+    const fields = this.getFieldsForCategory(category);
+    const newItem: { [key: string]: any } = {};
+    fields.forEach(field => {
+      newItem[field.key] = '';
+    });
+    return newItem;
+  }
+
+  trackByKey(index: number, item: any): any {
+    return item.key;
   }
 }

@@ -20,10 +20,12 @@
         <div class="card bg-base-200 max-w-96">
           <div class="card-body flex flex-col gap-2 justify-center">
             <h2 class="card-title">Create New Item</h2>
-            @for (field of getFieldsForCategory(selectedCategory); track field.key) {
-              <label>{{ field.label }}</label>
-              <input [(ngModel)]="newItem!" [name]="field.key" class="input input-bordered"/>
-            }
+            <div *ngFor="let field of getFieldsForCategory(selectedCategory); trackBy: trackByKey">
+              <div class="flex flex-col gap-2">
+                <label>{{ field.label }}</label>
+                <input [(ngModel)]="newItem![field.key]" [name]="field.key" class="input input-bordered"/>
+              </div>
+            </div>
             <button type="submit" class="btn bg-base-300 mt-4">Add</button>
           </div>
         </div>
@@ -32,7 +34,6 @@
   </div>
 
   <div *ngIf="selectedCategory">
-
     <section>
       <h2>{{ selectedCategory }} Items</h2>
       <div class="card bg-neutral">
@@ -49,4 +50,3 @@
     </section>
   </div>
 </div>
-
