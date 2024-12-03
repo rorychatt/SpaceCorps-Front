@@ -1,36 +1,52 @@
-<aside>
-  <ul class="menu bg-base-200 rounded-box w-48 items-center">
-    <li class="menu-title">Item Category</li>
-    <li *ngFor="let item of itemCategories" class="menu-item">
-      <a
-        (click)="selectCategory(item)"
-        [class]="item === selectedCategory ? 'active' : ''"
-        class="menu-link"
-      >
-        {{ item }}
-      </a>
-    </li>
-  </ul>
-</aside>
-
-<main *ngIf="selectedCategory">
-  <section>
-    <h2>Create New Item</h2>
-    <form (ngSubmit)="createNewItem()">
-      <div *ngFor="let field of getFieldsForCategory(selectedCategory)">
-        <label>{{ field.label }}</label>
-        <input [(ngModel)]="newItem ? newItem : [field.key]" [name]="field.key" class="input input-bordered"/>
-      </div>
-      <button type="submit" class="btn bg-base-300 mt-4">Add</button>
-    </form>
-  </section>
-
-  <section>
-    <h2>{{ selectedCategory }} Items</h2>
-    <ul>
-      <li *ngFor="let item of ItemEntries">
-        {{ item | json }}
+<div class="flex flex-wrap p-4 gap-4">
+  <div>
+    <ul class="menu bg-base-200 rounded-box w-48 items-center">
+      <li class="menu-title">Item Category</li>
+      <li *ngFor="let item of itemCategories" class="menu-item">
+        <a
+          (click)="selectCategory(item)"
+          [class]="item === selectedCategory ? 'active' : ''"
+          class="menu-link"
+        >
+          {{ item }}
+        </a>
       </li>
     </ul>
-  </section>
-</main>
+  </div>
+
+  <div *ngIf="selectedCategory">
+    <section>
+      <form (ngSubmit)="createNewItem()">
+        <div class="card bg-base-200 max-w-96">
+          <div class="card-body flex flex-col gap-2 justify-center">
+            <h2 class="card-title">Create New Item</h2>
+            @for (field of getFieldsForCategory(selectedCategory); track field.key) {
+              <label>{{ field.label }}</label>
+              <input [(ngModel)]="newItem!" [name]="field.key" class="input input-bordered"/>
+            }
+            <button type="submit" class="btn bg-base-300 mt-4">Add</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div *ngIf="selectedCategory">
+
+    <section>
+      <h2>{{ selectedCategory }} Items</h2>
+      <div class="card bg-neutral">
+        <div class="card-body">
+          <ul class="flex flex-wrap gap-4">
+            <li *ngFor="let item of ItemEntries" class="card bg-base-200 p-4 max-w-96">
+              <div class="flex flex-col gap-2">
+                {{ item | json }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+

@@ -37,8 +37,12 @@ export class ItemEditorComponent {
   }
 
   protected selectCategory (category: string) {
-    this.selectedCategory = category;
-    this.fetchItems(category);
+    if (this.selectedCategory === category) {
+      return;
+    } else {
+      this.selectedCategory = category;
+      this.newItem = null;
+    }
   }
 
   protected fetchItems (category: string) {
@@ -50,6 +54,7 @@ export class ItemEditorComponent {
   protected createNewItem () {
     if (this.selectedCategory) {
       const oldCategory = this.selectedCategory;
+      this.newItem = null;
       // this.apiService.createNewItemEntry(this.selectedCategory).subscribe((data: IItemEntry) => {
       //   this.fetchItems(oldCategory);
       // });
@@ -61,13 +66,11 @@ export class ItemEditorComponent {
       'LaserAmmoEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Base Damage Multiplier', key: 'baseDamageMultiplier' }
       ],
       'LaserAmpEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Add Base Damage', key: 'addBaseDamage' },
         { label: 'Add Laser Damage Multiplier', key: 'addLaserDamageMultiplier' },
         { label: 'Add Critical Chance', key: 'addCriticalChance' }
@@ -75,7 +78,6 @@ export class ItemEditorComponent {
       'LaserEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Base Damage', key: 'baseDamage' },
         { label: 'Critical Chance', key: 'criticalChance' },
         { label: 'Laser Amp Slots', key: 'laserAmpSlots' }
@@ -83,7 +85,6 @@ export class ItemEditorComponent {
       'ShieldEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Capacity', key: 'capacity' },
         { label: 'Recharge Rate', key: 'rechargeRate' },
         { label: 'Passive Recharge Rate', key: 'passiveRechargeRate' },
@@ -93,7 +94,6 @@ export class ItemEditorComponent {
       'ShieldCellEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Add Capacity', key: 'addCapacity' },
         { label: 'Add Recharge Rate', key: 'addRechargeRate' },
         { label: 'Add Passive Recharge Rate', key: 'addPassiveRechargeRate' },
@@ -102,7 +102,6 @@ export class ItemEditorComponent {
       'ShipEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Base Health', key: 'baseHealth' },
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Engine Slots', key: 'engineSlots' },
@@ -111,14 +110,12 @@ export class ItemEditorComponent {
       'EngineEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Thruster Slots', key: 'thrusterSlots' }
       ],
       'ThrusterEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Item Type', key: 'itemType' },
-        { label: 'ID', key: 'id' },
         { label: 'Add Base Speed', key: 'addBaseSpeed' },
         { label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier' }
       ]
@@ -127,7 +124,6 @@ export class ItemEditorComponent {
     return fieldsMap[category] || [
       { label: 'Name', key: 'name' },
       { label: 'Item Type', key: 'itemType' },
-      { label: 'ID', key: 'id' }
     ];
   }
 }
