@@ -8,6 +8,7 @@ import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
 import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
 import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
 import { DeleteStaticEntityRequest } from '../models/entity/DeleteStaticEntityRequest';
+import { IItemEntry } from '../models/dataEntries/itemEntries/IItemEntry';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,9 @@ export class ApiService {
 
   deleteStaticEntityFromMap (mapName: string, staticEntity: DeleteStaticEntityRequest) {
     return this.http.delete(`${this.url}/SpaceMapDataEntries/deleteStaticEntityFromSpaceMap/${mapName}`, { body: staticEntity });
+  }
+
+  getItemEntriesByCategory (category: string) {
+    return this.http.get<IItemEntry[]>(`${this.url}/ItemEntries/${category}`);
   }
 }

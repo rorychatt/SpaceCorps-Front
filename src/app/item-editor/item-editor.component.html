@@ -1,4 +1,3 @@
-<script src="item-editor.component.ts"></script>
 <aside>
   <ul class="menu bg-base-200 rounded-box w-48 items-center">
     <li class="menu-title">Item Category</li>
@@ -10,5 +9,28 @@
       >
         {{ item }}
       </a>
+    </li>
   </ul>
 </aside>
+
+<main *ngIf="selectedCategory">
+  <section>
+    <h2>Create New Item</h2>
+    <form (ngSubmit)="createNewItem()">
+      <div *ngFor="let field of getFieldsForCategory(selectedCategory)">
+        <label>{{ field.label }}</label>
+        <input [(ngModel)]="newItem ? newItem : [field.key]" [name]="field.key" class="input input-bordered"/>
+      </div>
+      <button type="submit" class="btn bg-base-300 mt-4">Add</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>{{ selectedCategory }} Items</h2>
+    <ul>
+      <li *ngFor="let item of ItemEntries">
+        {{ item | json }}
+      </li>
+    </ul>
+  </section>
+</main>
