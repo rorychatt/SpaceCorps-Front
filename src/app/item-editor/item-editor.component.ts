@@ -65,26 +65,22 @@ export class ItemEditorComponent {
     const fieldsMap: { [key: string]: { label: string, key: string }[] } = {
       'LaserAmmoEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Base Damage Multiplier', key: 'baseDamageMultiplier' }
       ],
       'LaserAmpEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Add Base Damage', key: 'addBaseDamage' },
         { label: 'Add Laser Damage Multiplier', key: 'addLaserDamageMultiplier' },
         { label: 'Add Critical Chance', key: 'addCriticalChance' }
       ],
       'LaserEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Base Damage', key: 'baseDamage' },
         { label: 'Critical Chance', key: 'criticalChance' },
         { label: 'Laser Amp Slots', key: 'laserAmpSlots' }
       ],
       'ShieldEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Capacity', key: 'capacity' },
         { label: 'Recharge Rate', key: 'rechargeRate' },
         { label: 'Passive Recharge Rate', key: 'passiveRechargeRate' },
@@ -93,7 +89,6 @@ export class ItemEditorComponent {
       ],
       'ShieldCellEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Add Capacity', key: 'addCapacity' },
         { label: 'Add Recharge Rate', key: 'addRechargeRate' },
         { label: 'Add Passive Recharge Rate', key: 'addPassiveRechargeRate' },
@@ -101,7 +96,6 @@ export class ItemEditorComponent {
       ],
       'ShipEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Base Health', key: 'baseHealth' },
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Engine Slots', key: 'engineSlots' },
@@ -109,13 +103,11 @@ export class ItemEditorComponent {
       ],
       'EngineEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Thruster Slots', key: 'thrusterSlots' }
       ],
       'ThrusterEntries': [
         { label: 'Name', key: 'name' },
-        { label: 'Item Type', key: 'itemType' },
         { label: 'Add Base Speed', key: 'addBaseSpeed' },
         { label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier' }
       ]
@@ -123,7 +115,6 @@ export class ItemEditorComponent {
 
     return fieldsMap[category] || [
       { label: 'Name', key: 'name' },
-      { label: 'Item Type', key: 'itemType' },
     ];
   }
 }
