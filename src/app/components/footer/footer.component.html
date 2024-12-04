@@ -1,5 +1,10 @@
 <footer class="footer bg-base-300 flex flex-row justify-center">
-  <div class="footer-title">
-    Version: {{ version }}
-  </div>
+    <div class="footer-title">
+        Version: {{ clientVersion }}
+    </div>
+    @if (serverVersion) {
+        <div class="footer-title">
+            Server Version: {{ serverVersion }}
+        </div>
+    }
 </footer>
