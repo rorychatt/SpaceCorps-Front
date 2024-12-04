@@ -61,6 +61,14 @@ export class ApiService {
   }
 
   getItemEntriesByCategory (category: string) {
-    return this.http.get<IItemEntry[]>(`${this.url}/ItemEntries/${category}`);
+    return this.http.get(`${this.url}/ItemEntries/${category}`);
+  }
+
+  createNewItemEntry (category: string, newItem: IItemEntry) {
+    return this.http.post<IItemEntry>(`${this.url}/ItemEntries/${category}/Add`, newItem);
+  }
+
+  deleteItemEntry (selectedCategory: string, item: IItemEntry) {
+    return this.http.delete(`${this.url}/ItemEntries/${selectedCategory}/Delete`, { body: { id: item.id } });
   }
 }
