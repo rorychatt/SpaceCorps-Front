@@ -1,13 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { version } from '../../../../package.json';
+import { AsyncPipe, NgIf } from "@angular/common";
+import { AuthService } from "../../services/auth.service";
+import { ApiService } from "../../services/api.service";
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'app-footer',
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        NgIf
+    ],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  version: string = version;
+
+    clientVersion: string = version;
+    serverVersion: string | null = null;
+
+    apiService = inject(ApiService)
+
+    ngOnInit () {
+        this.apiService.getBackendVersion().subscribe({
+            next: (serverInfo) => {
+                this.serverVersion = serverInfo.version
+            },
+            error: (error) => {
+                console.error(error)
+            }
+        });
+    }
 }
