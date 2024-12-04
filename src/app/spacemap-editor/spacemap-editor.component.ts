@@ -11,7 +11,6 @@ import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate
 import { StaticEntity } from '../models/entity/StaticEntity';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-spacemap-editor',
