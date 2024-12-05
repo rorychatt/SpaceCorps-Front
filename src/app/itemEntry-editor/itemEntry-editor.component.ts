@@ -8,7 +8,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 
 @Component({
-  selector: 'app-item-editor',
+  selector: 'app-itemEntry-editor',
   standalone: true,
   imports: [
     NgForOf,
@@ -17,10 +17,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     JsonPipe,
     FaIconComponent
   ],
-  templateUrl: './item-editor.component.html',
-  styleUrl: './item-editor.component.scss'
+  templateUrl: './itemEntry-editor.component.html',
+  styleUrl: './itemEntry-editor.component.scss'
 })
-export class ItemEditorComponent {
+export class ItemEntryEditorComponent {
 
   protected itemCategories = [
     'ShipEntries',

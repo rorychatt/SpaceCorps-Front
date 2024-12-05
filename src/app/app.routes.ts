@@ -44,10 +44,10 @@ export const routes: Routes = [{
     }
   },
   {
-    path: 'item-editor',
+    path: 'itemEntry-editor',
     loadComponent: async () => {
-      const module = await import('./item-editor/item-editor.component');
-      return module.ItemEditorComponent;
+      const module = await import('./itemEntry-editor/itemEntry-editor.component');
+      return module.ItemEntryEditorComponent;
     }
   }
 ];

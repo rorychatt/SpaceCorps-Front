@@ -1,10 +1,10 @@
 <div class="flex flex-wrap p-4 gap-4">
 
-  <!--  Display Item Categories-->
+  <!--  Display Item Entry Categories-->
 
   <div>
     <ul class="menu bg-base-200 rounded-box w-48 items-center">
-      <li class="menu-title">Item Category</li>
+      <li class="menu-title">Item Entry Category</li>
       <li *ngFor="let item of itemCategories" class="menu-item">
         <a
           (click)="selectCategory(item)"
@@ -17,7 +17,7 @@
     </ul>
   </div>
 
-  <!--  Create new Item in selected category-->
+  <!--  Create new Item Entry in selected category-->
 
   <div *ngIf="selectedCategory">
     <section>
@@ -46,7 +46,7 @@
     </section>
   </div>
 
-  <!--  Display Items in selected category-->
+  <!--  Display Item Entries in selected category-->
 
   <div *ngIf="selectedCategory">
     <section>
