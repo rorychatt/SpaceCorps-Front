@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { version } from '../../../../package.json';
 import { AsyncPipe, NgIf } from "@angular/common";
-import { AuthService } from "../../services/auth.service";
 import { ApiService } from "../../services/api.service";
 
 @Component({

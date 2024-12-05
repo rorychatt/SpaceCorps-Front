@@ -1,4 +1,7 @@
 <div class="flex flex-wrap p-4 gap-4">
+
+  <!--  Display Item Categories-->
+
   <div>
     <ul class="menu bg-base-200 rounded-box w-48 items-center">
       <li class="menu-title">Item Category</li>
@@ -14,20 +17,22 @@
     </ul>
   </div>
 
+  <!--  Create new Item in selected category-->
+
   <div *ngIf="selectedCategory">
     <section>
-      <form (ngSubmit)="createNewItem()">
-        <div class="card bg-base-200 max-w-96">
-          <div class="card-body flex flex-col gap-2 justify-center">
-            <div class="flex flex-row justify-between items-center">
-              <h2 class="card-title">Create New Item</h2>
-              <button
-                class="btn bg-base-300 btn-xs btn-square mt-4"
-                (click)="fetchItems(selectedCategory)"
-                title="Refresh">
-                <fa-icon [icon]="faArrowsRotate"></fa-icon>
-              </button>
-            </div>
+      <div class="card bg-base-200 max-w-96">
+        <div class="card-body flex flex-col gap-2 justify-center">
+          <div class="flex flex-row justify-between items-center">
+            <h2 class="card-title">Create New Item</h2>
+            <button
+              class="btn bg-base-300 btn-xs btn-square mt-4"
+              (click)="fetchItems(selectedCategory);"
+              title="Refresh">
+              <fa-icon [icon]="faArrowsRotate"></fa-icon>
+            </button>
+          </div>
+          <form (ngSubmit)="createNewItem()">
             <div *ngFor="let field of getFieldsForCategory(selectedCategory); trackBy: trackByKey">
               <div *ngIf="field.key !== 'id'" class="flex flex-col gap-2">
                 <label>{{ field.label }}</label>
@@ -35,11 +40,13 @@
               </div>
             </div>
             <button type="submit" class="btn bg-base-300 mt-4">Add</button>
-          </div>
+          </form>
         </div>
-      </form>
+      </div>
     </section>
   </div>
+
+  <!--  Display Items in selected category-->
 
   <div *ngIf="selectedCategory">
     <section>
@@ -50,7 +57,7 @@
             <li *ngFor="let item of ItemEntries" class="card bg-base-200 p-4 max-w-96">
               <div class="flex flex-col gap-2">
                 <div *ngFor="let field of getFieldsForCategory(selectedCategory); trackBy: trackByKey">
-                  <div class="flex flex-col gap-2">
+                  <div class="flex flex-col gap-2 min-w-60">
                     <label>{{ field.label }}</label>
                     <span
                       class="input input-bordered read-only:cursor-not-allowed text-center flex items-center justify-center">
