@@ -49,5 +49,12 @@ export const routes: Routes = [{
       const module = await import('./itemEntry-editor/itemEntry-editor.component');
       return module.ItemEntryEditorComponent;
     }
+  },
+  {
+    path: 'ship-yard',
+    loadComponent: async () => {
+      const module = await import('./ship-yard/ship-yard.component');
+      return module.ShipYardComponent;
+    }
   }
 ];
