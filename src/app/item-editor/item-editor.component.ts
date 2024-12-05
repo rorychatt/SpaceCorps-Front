@@ -124,6 +124,7 @@ export class ItemEditorComponent {
         { label: 'Base Health', key: 'baseHealth' },
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Engine Slots', key: 'engineSlots' },
+        { label: 'Generator Slots', key: 'generatorSlots' },
         { label: 'Laser Slots', key: 'laserSlots' }
       ],
       'EngineEntries': [
