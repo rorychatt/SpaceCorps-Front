@@ -85,21 +85,27 @@ export class ItemEntryEditorComponent {
       'LaserAmmoEntries': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
-        { label: 'Base Damage Multiplier', key: 'baseDamageMultiplier' }
+        { label: 'Base Damage Multiplier', key: 'baseDamageMultiplier' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'LaserAmpEntries': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Add Base Damage', key: 'addBaseDamage' },
         { label: 'Add Laser Damage Multiplier', key: 'addLaserDamageMultiplier' },
-        { label: 'Add Critical Chance', key: 'addCriticalChance' }
+        { label: 'Add Critical Chance', key: 'addCriticalChance' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'LaserEntries': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Damage', key: 'baseDamage' },
         { label: 'Critical Chance', key: 'criticalChance' },
-        { label: 'Laser Amp Slots', key: 'laserAmpSlots' }
+        { label: 'Laser Amp Slots', key: 'laserAmpSlots' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'ShieldEntries': [
         { label: 'Name', key: 'name' },
@@ -108,7 +114,9 @@ export class ItemEntryEditorComponent {
         { label: 'Recharge Rate', key: 'rechargeRate' },
         { label: 'Passive Recharge Rate', key: 'passiveRechargeRate' },
         { label: 'Absorbance', key: 'absorbance' },
-        { label: 'Shield Cell Slots', key: 'shieldCellSlots' }
+        { label: 'Shield Cell Slots', key: 'shieldCellSlots' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'ShieldCellEntries': [
         { label: 'Name', key: 'name' },
@@ -116,7 +124,9 @@ export class ItemEntryEditorComponent {
         { label: 'Add Capacity', key: 'addCapacity' },
         { label: 'Add Recharge Rate', key: 'addRechargeRate' },
         { label: 'Add Passive Recharge Rate', key: 'addPassiveRechargeRate' },
-        { label: 'Add Absorbance', key: 'addAbsorbance' }
+        { label: 'Add Absorbance', key: 'addAbsorbance' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'ShipEntries': [
         { label: 'Name', key: 'name' },
@@ -125,18 +135,24 @@ export class ItemEntryEditorComponent {
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Engine Slots', key: 'engineSlots' },
         { label: 'Shield Slots', key: 'shieldSlots' },
-        { label: 'Laser Slots', key: 'laserSlots' }
+        { label: 'Laser Slots', key: 'laserSlots' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'EngineEntries': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Speed', key: 'baseSpeed' },
-        { label: 'Thruster Slots', key: 'thrusterSlots' }
+        { label: 'Thruster Slots', key: 'thrusterSlots' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ],
       'ThrusterEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Add Base Speed', key: 'addBaseSpeed' },
-        { label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier' }
+        { label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier' },
+        { label: 'Price in Cats', key: 'priceCats'},
+        { label: 'Price in Thulium', key: 'priceThulium'}
       ]
     };
 
