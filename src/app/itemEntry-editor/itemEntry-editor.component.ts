@@ -190,4 +190,8 @@ export class ItemEntryEditorComponent {
   }
 
   protected readonly faArrowsRotate = faArrowsRotate;
+
+  generateDefaultItemsForCategory (selectedCategory: string) {
+
+  }
 }
