@@ -1,10 +1,10 @@
 <div class="flex flex-wrap p-4 gap-4">
 
-  <!--  Display Item Categories-->
+  <!--  Display Item Entry Categories-->
 
   <div>
     <ul class="menu bg-base-200 rounded-box w-48 items-center">
-      <li class="menu-title">Item Category</li>
+      <li class="menu-title">Item Entry Category</li>
       <li *ngFor="let item of itemCategories" class="menu-item">
         <a
           (click)="selectCategory(item)"
@@ -14,10 +14,17 @@
           {{ item }}
         </a>
       </li>
+      <li>
+        <button
+          class="btn bg-base-300"
+          (click)="createAllDefaultItems()"
+        >Create All Default Items
+        </button>
+      </li>
     </ul>
   </div>
 
-  <!--  Create new Item in selected category-->
+  <!--  Create new Item Entry in selected category-->
 
   <div *ngIf="selectedCategory">
     <section>
@@ -46,11 +53,17 @@
     </section>
   </div>
 
-  <!--  Display Items in selected category-->
+  <!--  Display Item Entries in selected category-->
 
   <div *ngIf="selectedCategory">
     <section>
-      <h2>{{ selectedCategory }} Items</h2>
+      <div class="flex flex-row items-center p-4 gap-4">
+        <h2>{{ selectedCategory }} Items</h2>
+        <button
+          class="btn bg-base-300 my-auto"
+          (click)="generateDefaultItemsForCategory(selectedCategory)">Generate Default {{selectedCategory}}
+        </button>
+      </div>
       <div class="card bg-neutral">
         <div class="card-body">
           <ul class="flex flex-wrap gap-4">
