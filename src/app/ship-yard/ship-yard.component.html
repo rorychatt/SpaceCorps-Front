@@ -4,23 +4,46 @@
     Open All Shop Categories
   </label>
 
-  <section class="drawer-content flex flex-col gap-4">
+  <section class="drawer-content flex flex-col gap-4 p-4">
+    <!-- Player Balance -->
+    <div class="flex justify-between p-4 bg-base-200 rounded-box">
+      <div>
+        <p>Balance in Cats: {{ playerBalance.cats }}</p>
+        <p>Balance in Thulium: {{ playerBalance.thulium }}</p>
+      </div>
+    </div>
 
+    <!-- Render Components based on selected category -->
+    <div *ngIf="selectedCategory">
+      <h2>{{ selectedCategory }} Items</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div *ngFor="let item of items" class="card bg-base-200 p-4">
+          <div class="flex flex-col items-center">
+<!--            <img [src]="item.icon" alt="{{ item.name }} icon" class="w-16 h-16"/>-->
+            <h3 class="card-title">{{ item.name }}</h3>
+            <p>Category: {{ item.category }}</p>
+            <p>Price in Cats: {{ item.priceCats }}</p>
+            <p>Price in Thulium: {{ item.priceThulium }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- Side menu with categories -->
   <aside class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 gap-4 overflow-y-auto">
       <li class="menu-title"><p>Shop Categories</p></li>
-      <li><a>Ships</a></li>
-      <li><a>Lasers</a></li>
-      <li><a>Laser Amps</a></li>
-      <li><a>Shields</a></li>
-      <li><a>Shield Cells</a></li>
-      <li><a>Engines</a></li>
-      <li><a>Engine Thrusters</a></li>
-      <li><a>Laser Ammo</a></li>
+      <li *ngFor="let category of categories">
+        <a
+          (click)="selectCategory(category)"
+          [class]="category === selectedCategory ? 'active' : ''"
+          class="menu-link"
+        >
+          {{ category }}
+        </a>
+      </li>
     </ul>
   </aside>
-
 </section>
