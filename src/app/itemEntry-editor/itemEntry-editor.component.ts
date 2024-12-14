@@ -5,6 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { IItemEntry } from '../models/dataEntries/itemEntries/IItemEntry';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  defaultEngines, defaultLaserAmmos,
+  defaultLaserAmps,
+  defaultLasers, defaultShieldCells, defaultShields, defaultShips,
+  defaultThrusters
+} from '../models/dataEntries/itemEntries/itemEntryGenScripts';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -86,8 +93,8 @@ export class ItemEntryEditorComponent {
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Damage Multiplier', key: 'baseDamageMultiplier' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'LaserAmpEntries': [
         { label: 'Name', key: 'name' },
@@ -95,8 +102,8 @@ export class ItemEntryEditorComponent {
         { label: 'Add Base Damage', key: 'addBaseDamage' },
         { label: 'Add Laser Damage Multiplier', key: 'addLaserDamageMultiplier' },
         { label: 'Add Critical Chance', key: 'addCriticalChance' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'LaserEntries': [
         { label: 'Name', key: 'name' },
@@ -104,8 +111,8 @@ export class ItemEntryEditorComponent {
         { label: 'Base Damage', key: 'baseDamage' },
         { label: 'Critical Chance', key: 'criticalChance' },
         { label: 'Laser Amp Slots', key: 'laserAmpSlots' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'ShieldEntries': [
         { label: 'Name', key: 'name' },
@@ -115,8 +122,8 @@ export class ItemEntryEditorComponent {
         { label: 'Passive Recharge Rate', key: 'passiveRechargeRate' },
         { label: 'Absorbance', key: 'absorbance' },
         { label: 'Shield Cell Slots', key: 'shieldCellSlots' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'ShieldCellEntries': [
         { label: 'Name', key: 'name' },
@@ -125,8 +132,8 @@ export class ItemEntryEditorComponent {
         { label: 'Add Recharge Rate', key: 'addRechargeRate' },
         { label: 'Add Passive Recharge Rate', key: 'addPassiveRechargeRate' },
         { label: 'Add Absorbance', key: 'addAbsorbance' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'ShipEntries': [
         { label: 'Name', key: 'name' },
@@ -136,23 +143,23 @@ export class ItemEntryEditorComponent {
         { label: 'Engine Slots', key: 'engineSlots' },
         { label: 'Shield Slots', key: 'shieldSlots' },
         { label: 'Laser Slots', key: 'laserSlots' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'EngineEntries': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Speed', key: 'baseSpeed' },
         { label: 'Thruster Slots', key: 'thrusterSlots' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ],
       'ThrusterEntries': [
         { label: 'Name', key: 'name' },
         { label: 'Add Base Speed', key: 'addBaseSpeed' },
         { label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier' },
-        { label: 'Price in Cats', key: 'priceCats'},
-        { label: 'Price in Thulium', key: 'priceThulium'}
+        { label: 'Price in Cats', key: 'priceCats' },
+        { label: 'Price in Thulium', key: 'priceThulium' }
       ]
     };
 
@@ -192,6 +199,82 @@ export class ItemEntryEditorComponent {
   protected readonly faArrowsRotate = faArrowsRotate;
 
   generateDefaultItemsForCategory (selectedCategory: string) {
-
+    switch (selectedCategory) {
+      case 'EngineEntries':
+        this.generateDefaultEngineItem();
+        break;
+      case 'ThrusterEntries':
+        this.generateDefaultThrusterItem();
+        break;
+      case 'LaserEntries':
+        this.generateDefaultLaserItem();
+        break;
+      case 'LaserAmpEntries':
+        this.generateDefaultLaserAmpItem();
+        break;
+      case 'ShieldEntries':
+        this.generateDefaultShieldItem();
+        break;
+      case 'ShieldCellEntries':
+        this.generateDefaultShieldCellItem();
+        break;
+      case 'ShipEntries':
+        this.generateDefaultShipItem();
+        break;
+      case 'LaserAmmoEntries':
+        this.generateDefaultLaserAmmoItem();
+        break;
+      default:
+        console.error('No default items for category', selectedCategory);
+    }
   }
+
+  private generateDefaultEngineItem () {
+    defaultEngines.map(async (engine) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('EngineEntries', engine))
+    });
+  }
+
+  private generateDefaultThrusterItem () {
+    defaultThrusters.map(async (thruster) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('ThrusterEntries', thruster))
+    });
+  }
+
+  private generateDefaultLaserItem () {
+    defaultLasers.map(async (laser) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('LaserEntries', laser))
+    });
+  }
+
+  private generateDefaultLaserAmpItem () {
+    defaultLaserAmps.map(async (laserAmp) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('LaserAmpEntries', laserAmp))
+    });
+  }
+
+  private generateDefaultShieldItem () {
+    defaultShields.map(async (shield) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('ShieldEntries', shield))
+    });
+  }
+
+  private generateDefaultShieldCellItem () {
+    defaultShieldCells.map(async (shieldCell) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('ShieldCellEntries', shieldCell))
+    });
+  }
+
+  private generateDefaultShipItem () {
+    defaultShips.map(async (ship) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('ShipEntries', ship))
+    });
+  }
+
+  private generateDefaultLaserAmmoItem () {
+    defaultLaserAmmos.map(async (laserAmmo) => {
+      await firstValueFrom(this.apiService.createNewItemEntry('LaserAmmoEntries', laserAmmo))
+    });
+  }
+
 }
