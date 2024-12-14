@@ -201,80 +201,91 @@ export class ItemEntryEditorComponent {
   generateDefaultItemsForCategory (selectedCategory: string) {
     switch (selectedCategory) {
       case 'EngineEntries':
-        this.generateDefaultEngineItem();
+        this.generateDefaultEngineItems();
         break;
       case 'ThrusterEntries':
-        this.generateDefaultThrusterItem();
+        this.generateDefaultThrusterItems();
         break;
       case 'LaserEntries':
-        this.generateDefaultLaserItem();
+        this.generateDefaultLaserItems();
         break;
       case 'LaserAmpEntries':
-        this.generateDefaultLaserAmpItem();
+        this.generateDefaultLaserAmpItems();
         break;
       case 'ShieldEntries':
-        this.generateDefaultShieldItem();
+        this.generateDefaultShieldItems();
         break;
       case 'ShieldCellEntries':
-        this.generateDefaultShieldCellItem();
+        this.generateDefaultShieldCellItems();
         break;
       case 'ShipEntries':
-        this.generateDefaultShipItem();
+        this.generateDefaultShipItems();
         break;
       case 'LaserAmmoEntries':
-        this.generateDefaultLaserAmmoItem();
+        this.generateDefaultLaserAmmoItems();
         break;
       default:
         console.error('No default items for category', selectedCategory);
     }
+    this.fetchItems(selectedCategory);
   }
 
-  private generateDefaultEngineItem () {
+  private generateDefaultEngineItems () {
     defaultEngines.map(async (engine) => {
       await firstValueFrom(this.apiService.createNewItemEntry('EngineEntries', engine))
     });
   }
 
-  private generateDefaultThrusterItem () {
+  private generateDefaultThrusterItems () {
     defaultThrusters.map(async (thruster) => {
       await firstValueFrom(this.apiService.createNewItemEntry('ThrusterEntries', thruster))
     });
   }
 
-  private generateDefaultLaserItem () {
+  private generateDefaultLaserItems () {
     defaultLasers.map(async (laser) => {
       await firstValueFrom(this.apiService.createNewItemEntry('LaserEntries', laser))
     });
   }
 
-  private generateDefaultLaserAmpItem () {
+  private generateDefaultLaserAmpItems () {
     defaultLaserAmps.map(async (laserAmp) => {
       await firstValueFrom(this.apiService.createNewItemEntry('LaserAmpEntries', laserAmp))
     });
   }
 
-  private generateDefaultShieldItem () {
+  private generateDefaultShieldItems () {
     defaultShields.map(async (shield) => {
       await firstValueFrom(this.apiService.createNewItemEntry('ShieldEntries', shield))
     });
   }
 
-  private generateDefaultShieldCellItem () {
+  private generateDefaultShieldCellItems () {
     defaultShieldCells.map(async (shieldCell) => {
       await firstValueFrom(this.apiService.createNewItemEntry('ShieldCellEntries', shieldCell))
     });
   }
 
-  private generateDefaultShipItem () {
+  private generateDefaultShipItems () {
     defaultShips.map(async (ship) => {
       await firstValueFrom(this.apiService.createNewItemEntry('ShipEntries', ship))
     });
   }
 
-  private generateDefaultLaserAmmoItem () {
+  private generateDefaultLaserAmmoItems () {
     defaultLaserAmmos.map(async (laserAmmo) => {
       await firstValueFrom(this.apiService.createNewItemEntry('LaserAmmoEntries', laserAmmo))
     });
   }
 
+  protected createAllDefaultItems () {
+    this.generateDefaultEngineItems();
+    this.generateDefaultThrusterItems();
+    this.generateDefaultLaserItems();
+    this.generateDefaultLaserAmpItems();
+    this.generateDefaultShieldItems();
+    this.generateDefaultShieldCellItems();
+    this.generateDefaultShipItems();
+    this.generateDefaultLaserAmmoItems();
+  }
 }
