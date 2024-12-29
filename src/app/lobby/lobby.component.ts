@@ -24,7 +24,7 @@ export class LobbyComponent {
     if (!playerData) {
       console.error('No username found');
     } else {
-      const userName = playerData!.userName;
+      const userName = playerData!.username;
       const url = `/game?userName=${userName}`;
       void window.open(url, '_blank');
     }

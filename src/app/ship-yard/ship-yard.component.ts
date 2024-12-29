@@ -60,7 +60,7 @@ export class ShipYardComponent implements OnInit {
         return;
       }
 
-      this.username = playerData.userName;
+      this.username = playerData.username;
     } else {
       this.apiService.getPlayerInfo({ username: this.username }).subscribe(data => {
         this.playerBalance.cats = data.cats;

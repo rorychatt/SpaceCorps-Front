@@ -41,7 +41,7 @@ export class AuthService extends ComponentStore<AuthState> {
       next: (response) => {
         this.patchState({
           isLoggedIn: true,
-          username: response.userName,
+          username: response.username,
           playerData: response
         });
         console.log(this.state());
