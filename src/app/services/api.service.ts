@@ -87,7 +87,7 @@ export class ApiService {
   }
 
   handleUserEditorCommand(command: string) {
-    return this.http.post(`${this.url}/Users/Command`, { command });
+    return this.http.post(`${this.url}/Players/UserEditorCommand`, { command });
   }
 
 }
