@@ -10,6 +10,7 @@ import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRe
 import { DeleteStaticEntityRequest } from '../models/entity/DeleteStaticEntityRequest';
 import { IItemEntry } from '../models/dataEntries/itemEntries/IItemEntry';
 import { ServerInfo } from '../models/servers/ServerInfo';
+import { BuyItemRequest } from '../models/player/BuyItemRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,10 @@ export class ApiService {
 
   getBackendVersion() {
     return this.http.get<ServerInfo>(`${this.url}/Servers/Info`);
+  }
+
+  buyItem(buyItemRequest: BuyItemRequest) {
+    return this.http.post(`${this.url}/ShipYard/Buy`, buyItemRequest);
   }
 
 }

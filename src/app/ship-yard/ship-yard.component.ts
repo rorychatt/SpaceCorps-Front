@@ -16,44 +16,50 @@ interface Item {
   selector: 'app-ship-yard',
   templateUrl: './ship-yard.component.html',
   standalone: true,
-  imports: [
-    NgForOf,
-    NgIf
-  ],
-  styleUrls: ['./ship-yard.component.scss']
+  imports: [NgForOf, NgIf],
+  styleUrls: ['./ship-yard.component.scss'],
 })
-
 export class ShipYardComponent implements OnInit {
-  categories: string[] = ['Ships', 'Lasers', 'Laser Amps', 'Shields', 'Shield Cells', 'Engines', 'Engine Thrusters', 'Laser Ammo'];
+  categories: string[] = [
+    'Ships',
+    'Lasers',
+    'Laser Amps',
+    'Shields',
+    'Shield Cells',
+    'Engines',
+    'Engine Thrusters',
+    'Laser Ammo',
+  ];
   selectedCategory: string | null = null;
   items: SellableItem[] = [];
   playerBalance = { cats: 0, thulium: 0 };
   username: string | null = null;
 
-  constructor (private apiService: ApiService, private authService: AuthService) {
-  }
+  constructor(
+    private apiService: ApiService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit () {
+  ngOnInit() {
     this.fetchPlayerData();
   }
 
-  selectCategory (category: string) {
+  selectCategory(category: string) {
     this.selectedCategory = category;
     this.fetchItems(category);
   }
 
-  fetchItems (category: string) {
-    const categoryKey = ItemTypeDictionary[category as keyof typeof ItemTypeDictionary];
-    this.apiService.getItemEntriesByCategory(categoryKey).subscribe(data => {
+  fetchItems(category: string) {
+    const categoryKey =
+      ItemTypeDictionary[category as keyof typeof ItemTypeDictionary];
+    this.apiService.getItemEntriesByCategory(categoryKey).subscribe((data) => {
       this.items = data as SellableItem[];
     });
   }
 
-  fetchPlayerData () {
-
+  fetchPlayerData() {
     if (!this.username) {
-
-      const playerData = this.authService.getPlayerData()
+      const playerData = this.authService.getPlayerData();
 
       if (!playerData) {
         console.error('Player data not found');
@@ -62,28 +68,60 @@ export class ShipYardComponent implements OnInit {
 
       this.username = playerData.username;
     } else {
-      this.apiService.getPlayerInfo({ username: this.username }).subscribe(data => {
-        this.playerBalance.cats = data.cats;
-        this.playerBalance.thulium = data.thulium;
-      });
+      this.apiService
+        .getPlayerInfo({ username: this.username })
+        .subscribe((data) => {
+          this.playerBalance.cats = data.cats;
+          this.playerBalance.thulium = data.thulium;
+        });
     }
+  }
+
+  buyItem(item: SellableItem) {
+
+    if(this.username === null) {
+      alert('No username found');
+      return;
+    }
+
+    if (item.priceCats > this.playerBalance.cats) {
+      alert('Not enough cats');
+      return;
+    }
+
+    if (item.priceThulium > this.playerBalance.thulium) {
+      alert('Not enough thulium');
+      return;
+    }
+
+    this.apiService
+      .buyItem({ username: this.username, itemId: item.id, itemType: item.category })
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          console.error('Error buying item', error);
+        }
+      );
   }
 }
 
 type SellableItem = {
-  name: string,
-  priceCats: number,
-  priceThulium: number,
-  category: string,
-}
+  id: number;
+  name: string;
+  priceCats: number;
+  priceThulium: number;
+  category: string;
+};
 
 const ItemTypeDictionary = {
-  "Ships": "ShipEntries",
-  "Lasers": "LaserEntries",
-  "Laser Amps": "LaserAmpEntries",
-  "Shields": "ShieldEntries",
-  "Shield Cells": "ShieldCellEntries",
-  "Engines": "EngineEntries",
-  "Engine Thrusters": "ThrusterEntries",
-  "Laser Ammo": "LaserAmmoEntries"
-}
+  Ships: 'ShipEntries',
+  Lasers: 'LaserEntries',
+  'Laser Amps': 'LaserAmpEntries',
+  Shields: 'ShieldEntries',
+  'Shield Cells': 'ShieldCellEntries',
+  Engines: 'EngineEntries',
+  'Engine Thrusters': 'ThrusterEntries',
+  'Laser Ammo': 'LaserAmmoEntries',
+};
