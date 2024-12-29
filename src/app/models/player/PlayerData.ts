@@ -6,4 +6,6 @@ export type PlayerData = {
   userId: string;
   dateOfRegistration: string;
   totalPlayTime: number;
+  cats: number;
+  thulium: number;
 }

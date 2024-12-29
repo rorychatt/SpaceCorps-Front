@@ -5,6 +5,7 @@ import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCrea
 import { ApiService } from './api.service';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

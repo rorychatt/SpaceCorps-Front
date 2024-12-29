@@ -76,4 +76,5 @@ export class ApiService {
   getBackendVersion() {
     return this.http.get<ServerInfo>(`${this.url}/Servers/Info`);
   }
+
 }
