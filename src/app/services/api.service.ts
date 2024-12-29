@@ -33,6 +33,10 @@ export class ApiService {
   getPlayerInfo (request: GetPlayerInfoRequest) {
     return this.http.get<PlayerData>(`${this.url}/Players/${request.username}`);
   }
+  
+  getAllPlayers() {
+    return this.http.get<PlayerData[]>(`${this.url}/Players/All`);
+  }
 
   getSpaceMapDataEntryNames () {
     return this.http.get<string[]>(`${this.url}/SpaceMapDataEntries/GetAllNames`);
