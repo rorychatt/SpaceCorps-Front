@@ -61,23 +61,18 @@ export class UsersEditorComponent implements OnInit {
       const amount = parseInt(commandParts[4], 10);
 
       if (!isNaN(amount)) {
-        // this.http
-        //   .post('/api/command', { username, resource, amount })
-        //   .pipe(
-        //     catchError((error) => {
-        //       this.commandHistory.unshift(
-        //         `${timestamp} Error: ${error.message}`
-        //       );
-        //       return of(null);
-        //     })
-        //   )
-        //   .subscribe((response) => {
-        //     if (response) {
-        //       this.commandHistory.unshift(
-        //         `${timestamp} Success: ${JSON.stringify(response)}`
-        //       );
-        //     }
-        //   });
+        this.apiService.handleUserEditorCommand(this.command).subscribe({
+          next: () => {
+            this.commandHistory.unshift(
+              `${timestamp} Successfully set ${resource} for ${username} to ${amount}`
+            );
+          },
+          error: (error: HttpErrorResponse) => {
+            this.commandHistory.unshift(
+              `${timestamp} Error setting ${resource} for ${username}: ${error.message}`
+            );
+          },
+        })
       } else {
         this.commandHistory.unshift(
           `${timestamp} Invalid amount: ${commandParts[4]}`
