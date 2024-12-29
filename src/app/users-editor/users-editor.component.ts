@@ -62,14 +62,14 @@ export class UsersEditorComponent implements OnInit {
 
       if (!isNaN(amount)) {
         this.apiService.handleUserEditorCommand(this.command).subscribe({
-          next: () => {
+          next: (response: any) => {
             this.commandHistory.unshift(
               `${timestamp} Successfully set ${resource} for ${username} to ${amount}`
             );
           },
           error: (error: HttpErrorResponse) => {
             this.commandHistory.unshift(
-              `${timestamp} Error setting ${resource} for ${username}: ${error.message}`
+              `${timestamp} Error setting ${resource} for ${username}: ${JSON.stringify(error)}`
             );
           },
         })
