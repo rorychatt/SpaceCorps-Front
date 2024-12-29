@@ -22,35 +22,35 @@ export class ApiService {
   }
 
   createNewUser (request: UserCredentialsCreateRequest) {
-    return this.http.post(`${this.url}/UserCredentials/create`, request);
+    return this.http.post(`${this.url}/UserCredentials/Create`, request);
   }
 
   logIn (request: UserCredentialsLoginRequest) {
-    return this.http.post(`${this.url}/UserCredentials/verify`, request);
+    return this.http.post(`${this.url}/UserCredentials/Verify`, request);
   }
 
   getPlayerInfo (request: GetPlayerInfoRequest) {
-    return this.http.get<PlayerData>(`${this.url}/Players/get/${request.username}`);
+    return this.http.get<PlayerData>(`${this.url}/Players/Get/${request.username}`);
   }
 
   getSpaceMapDataEntryNames () {
-    return this.http.get<string[]>(`${this.url}/SpaceMapDataEntries/getAllNames`);
+    return this.http.get<string[]>(`${this.url}/SpaceMapDataEntries/GetAllNames`);
   }
 
   getSpaceMapDataEntry (name: string) {
-    return this.http.get<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/get/${name}`);
+    return this.http.get<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/Get/${name}`);
   }
 
   postSpaceMapDataEntry (mapName: string) {
-    return this.http.post<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/add`, { name: mapName });
+    return this.http.post<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/Add`, { name: mapName });
   }
 
   updateSpaceMapDataEntry (mapName: string, request: UpdateSpaceMapDataEntryRequest) {
-    return this.http.patch<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/update/${mapName}`, request);
+    return this.http.patch<SpaceMapDataEntry>(`${this.url}/SpaceMapDataEntries/Update/${mapName}`, request);
   }
 
   deleteSpaceMapDataEntry (mapName: string) {
-    return this.http.delete(`${this.url}/SpaceMapDataEntries/delete/${mapName}`);
+    return this.http.delete(`${this.url}/SpaceMapDataEntries/Delete/${mapName}`);
   }
 
   addStaticEntityToMap (selectedSpaceMapDataEntryName: string, newStaticEntity: CreateStaticEntityRequest) {
