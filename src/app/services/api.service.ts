@@ -82,4 +82,8 @@ export class ApiService {
     return this.http.post(`${this.url}/ShipYard/Buy`, buyItemRequest);
   }
 
+  handleUserEditorCommand(command: string) {
+    return this.http.post(`${this.url}/Users/Command`, { command });
+  }
+
 }
