@@ -30,7 +30,7 @@ export class ApiService {
   }
 
   getPlayerInfo (request: GetPlayerInfoRequest) {
-    return this.http.get<PlayerData>(`${this.url}/Players/Get/${request.username}`);
+    return this.http.get<PlayerData>(`${this.url}/Players/${request.username}`);
   }
 
   getSpaceMapDataEntryNames () {
