@@ -119,7 +119,7 @@ export class ApiService {
 
   handleUserEditorCommand(command: string) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(
+    return this.http.post<void>(
       `${this.url}/Players/UserEditorCommand`,
       JSON.stringify(command),
       { headers }

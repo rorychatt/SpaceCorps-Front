@@ -18,9 +18,14 @@ export class UsersEditorComponent implements OnInit {
   command: string = '';
   commandHistory: string[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor (private apiService: ApiService) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
+    this.fetchUsers();
+  }
+
+  private fetchUsers () {
     this.apiService.getAllPlayers().subscribe({
       next: (data: PlayerData[]) => {
         this.users = data;
@@ -32,7 +37,7 @@ export class UsersEditorComponent implements OnInit {
     });
   }
 
-  private getCurrentTime(): string {
+  private getCurrentTime (): string {
     const now = new Date();
     return `[${now.getHours().toString().padStart(2, '0')}:${now
       .getMinutes()
@@ -40,7 +45,7 @@ export class UsersEditorComponent implements OnInit {
       .padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
   }
 
-  executeCommand() {
+  executeCommand () {
     const timestamp = this.getCurrentTime();
 
     this.commandHistory.unshift(`${timestamp} ${this.command}`);
@@ -85,5 +90,9 @@ export class UsersEditorComponent implements OnInit {
     }
 
     this.command = '';
+
+    setTimeout(() => {
+      this.fetchUsers();
+    }, 300);
   }
 }
