@@ -11,6 +11,7 @@ import { DeleteStaticEntityRequest } from '../models/entity/DeleteStaticEntityRe
 import { IItemEntry } from '../models/dataEntries/itemEntries/IItemEntry';
 import { ServerInfo } from '../models/servers/ServerInfo';
 import { BuyItemRequest } from '../models/player/BuyItemRequest';
+import { Inventory } from '../models/player/Inventory';
 
 @Injectable({
   providedIn: 'root',
@@ -127,5 +128,9 @@ export class ApiService {
       JSON.stringify(command),
       { headers, responseType: "text" as "json" }
     );
+  }
+
+  getUserInventory (username: string) {
+    return this.http.get<Inventory>(`${this.url}/Players/Inventory/${username}`);
   }
 }

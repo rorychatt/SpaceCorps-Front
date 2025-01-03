@@ -3,32 +3,30 @@
 
   <table class="table w-full">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Cats</th>
-        <th>Thulium</th>
-      </tr>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Cats</th>
+      <th>Thulium</th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.userId }}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.cats }}</td>
-        <td>{{ user.thulium }}</td>
-      </tr>
+    <tr *ngFor="let user of users" (click)="onUserClick(user.username)" class="hover:cursor-pointer">
+      <td>{{ user.userId }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.cats }}</td>
+      <td>{{ user.thulium }}</td>
+    </tr>
     </tbody>
   </table>
 
   <div class="mockup-code p-4">
     <div class="command-history">
-      <pre
-        class="max-h-[600px] flex overflow-y-auto flex-col-reverse whitespace-pre-wrap"
-      >
-            <code *ngFor="let log of commandHistory">
-                {{ log }}
-            </code>
-        </pre>
+      <pre class="max-h-[600px] flex overflow-y-auto flex-col-reverse whitespace-pre-wrap">
+        <code *ngFor="let log of commandHistory">
+          {{ log }}
+        </code>
+      </pre>
     </div>
     <input
       type="text"
@@ -37,5 +35,25 @@
       (keyup.enter)="executeCommand()"
       class="input input-bordered w-full"
     />
+  </div>
+
+  <div *ngIf="selectedUserInventory" class="mt-4">
+    <h2 class="text-xl font-bold mb-2">User Items</h2>
+    <table class="table w-full">
+      <thead>
+      <tr>
+        <th>Item ID</th>
+        <th>Item Name</th>
+        <th>Item Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of selectedUserInventory?.items">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.itemType }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

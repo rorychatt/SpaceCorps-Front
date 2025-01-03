@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { PlayerData } from '../models/player/PlayerData';
 import { ApiService } from '../services/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Inventory } from '../models/player/Inventory';
 
 @Component({
   selector: 'app-users-editor',
   templateUrl: './users-editor.component.html',
   styleUrls: ['./users-editor.component.scss'],
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, NgFor, NgIf],
   standalone: true,
 })
 export class UsersEditorComponent implements OnInit {
   users: PlayerData[] | null = null;
+  selectedUserInventory: Inventory | null = null;
 
   command: string = '';
   commandHistory: string[] = [];
@@ -67,7 +69,7 @@ export class UsersEditorComponent implements OnInit {
 
       if (!isNaN(amount)) {
         this.apiService.handleUserEditorCommand(this.command).subscribe({
-          next: (response: any) => {
+          next: (response) => {
             this.commandHistory.unshift(
               `${timestamp} Successfully set ${resource} for ${username} to ${amount}`
             );
@@ -94,5 +96,17 @@ export class UsersEditorComponent implements OnInit {
     setTimeout(() => {
       this.fetchUsers();
     }, 300);
+  }
+
+  onUserClick (username: string) {
+    this.apiService.getUserInventory(username).subscribe({
+      next: (response) => {
+        this.selectedUserInventory = response;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.commandHistory.unshift(
+          `${this.getCurrentTime()} Error fetching inventory for ${username}: ${error.message}`);
+      }
+    })
   }
 }
