@@ -35,21 +35,22 @@ export class ShipYardComponent implements OnInit {
   playerBalance = { cats: 0, thulium: 0 };
   username: string | null = null;
 
-  constructor(
+  constructor (
     private apiService: ApiService,
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
-  ngOnInit() {
+  ngOnInit () {
     this.fetchPlayerData();
   }
 
-  selectCategory(category: string) {
+  selectCategory (category: string) {
     this.selectedCategory = category;
     this.fetchItems(category);
   }
 
-  fetchItems(category: string) {
+  fetchItems (category: string) {
     const categoryKey =
       ItemTypeDictionary[category as keyof typeof ItemTypeDictionary];
     this.apiService.getItemEntriesByCategory(categoryKey).subscribe((data) => {
@@ -57,7 +58,8 @@ export class ShipYardComponent implements OnInit {
     });
   }
 
-  fetchPlayerData() {
+  fetchPlayerData () {
+
     if (!this.username) {
       const playerData = this.authService.getPlayerData();
 
@@ -67,19 +69,20 @@ export class ShipYardComponent implements OnInit {
       }
 
       this.username = playerData.username;
-    } else {
-      this.apiService
-        .getPlayerInfo({ username: this.username })
-        .subscribe((data) => {
-          this.playerBalance.cats = data.cats;
-          this.playerBalance.thulium = data.thulium;
-        });
     }
+
+    this.apiService
+      .getPlayerInfo({ username: this.username })
+      .subscribe((data) => {
+        this.playerBalance.cats = data.cats;
+        this.playerBalance.thulium = data.thulium;
+      });
+
   }
 
-  buyItem(item: SellableItem) {
+  buyItem (item: SellableItem) {
 
-    if(this.username === null) {
+    if (this.username === null) {
       alert('No username found');
       return;
     }
