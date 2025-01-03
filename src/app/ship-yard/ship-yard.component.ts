@@ -98,7 +98,11 @@ export class ShipYardComponent implements OnInit {
     }
 
     this.apiService
-      .buyItem({ username: this.username, itemId: item.id, itemType: item.category })
+      .buyItem({
+        username: this.username,
+        itemId: item.id,
+        itemType: item.itemType
+      })
       .subscribe(
         (data) => {
           console.log(data);
@@ -111,6 +115,7 @@ export class ShipYardComponent implements OnInit {
 }
 
 type SellableItem = {
+  itemType: string;
   id: number;
   name: string;
   priceCats: number;
@@ -119,12 +124,12 @@ type SellableItem = {
 };
 
 const ItemTypeDictionary = {
-  Ships: 'ShipEntries',
-  Lasers: 'LaserEntries',
+  'Ships': 'ShipEntries',
+  'Lasers': 'LaserEntries',
   'Laser Amps': 'LaserAmpEntries',
-  Shields: 'ShieldEntries',
+  'Shields': 'ShieldEntries',
   'Shield Cells': 'ShieldCellEntries',
-  Engines: 'EngineEntries',
+  'Engines': 'EngineEntries',
   'Engine Thrusters': 'ThrusterEntries',
   'Laser Ammo': 'LaserAmmoEntries',
 };
