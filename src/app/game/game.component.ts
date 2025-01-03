@@ -97,6 +97,15 @@ export class GameComponent implements OnInit {
   }
 
   private async createLighting () {
+    if(!this.scene){
+      console.error('Scene not initialized, cannot create lighting');
+      return;
+    }
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1);
+    this.scene.add(directionalLight);
+    this.scene.add(ambientLight);
   }
 
   private async createSkybox (mapname?: string) {
