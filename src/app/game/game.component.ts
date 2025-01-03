@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { HubService } from '../services/hub.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './game.component.scss'
 })
 export class GameComponent implements OnInit {
+
+  private camera?: THREE.PerspectiveCamera;
+  private renderer?: THREE.WebGLRenderer;
 
   constructor (private hubService: HubService, private route: ActivatedRoute) {
   }
@@ -26,26 +29,37 @@ export class GameComponent implements OnInit {
 
   private initializeThreeJs (): void {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    this.renderer.domElement.style.position = 'absolute';
+    this.renderer.domElement.style.top = '0';
+
+    document.body.appendChild(this.renderer.domElement);
 
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
-    camera.position.z = 5;
+    this.camera.position.z = 5;
 
     const animate = () => {
       requestAnimationFrame(animate);
       cube.rotation.x += 0.01;
       cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
+      this.renderer!.render(scene, this.camera!);
     };
 
     animate();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize (event: Event): void {
+    this.renderer!.setSize(window.innerWidth, window.innerHeight);
+    this.camera!.aspect = window.innerWidth / window.innerHeight;
+    this.camera!.updateProjectionMatrix();
   }
 
   private setupSignalREvents (): void {
