@@ -69,7 +69,7 @@ export class UsersEditorComponent implements OnInit {
 
       if (!isNaN(amount)) {
         this.apiService.handleUserEditorCommand(this.command).subscribe({
-          next: (response) => {
+          next: () => {
             this.commandHistory.unshift(
               `${timestamp} Successfully set ${resource} for ${username} to ${amount}`
             );

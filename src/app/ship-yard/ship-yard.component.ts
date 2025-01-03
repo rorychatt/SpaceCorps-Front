@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { NgForOf, NgIf } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
