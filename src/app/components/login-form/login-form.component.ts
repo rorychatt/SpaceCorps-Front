@@ -31,12 +31,4 @@ export class LoginFormComponent {
     this.toggleLoginEvent.emit(userCredentialsLoginRequest);
   }
 
-  loginAsPredefinedAccount() {
-    const userCredentialsLoginRequest: UserCredentialsLoginRequest = {
-      email: 'tester@tester.com',
-      password: 'MegaGoodPassword123!',
-    };
-
-    this.toggleLoginEvent.emit(userCredentialsLoginRequest);
-  }
 }
