@@ -287,5 +287,10 @@ export class ItemEntryEditorComponent {
     this.generateDefaultShieldCellItems();
     this.generateDefaultShipItems();
     this.generateDefaultLaserAmmoItems();
+
+    setTimeout(()=>{
+      if(!this.selectedCategory) return;
+      this.fetchItems(this.selectedCategory!);
+    }, 300)
   }
 }
