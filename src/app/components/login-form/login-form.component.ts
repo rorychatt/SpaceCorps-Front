@@ -6,32 +6,28 @@ import { UserCredentialsLoginRequest } from '../../models/auth/UserCredentialsLo
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NgClass
-  ],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.scss'
+  styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
-
   loginForm = new FormGroup({
     email: new FormControl(''),
-    password: new FormControl('')
-  })
+    password: new FormControl(''),
+  });
 
   toggleViewEvent = output<void>();
   toggleLoginEvent = output<UserCredentialsLoginRequest>();
 
-  toggleView () {
+  toggleView() {
     this.toggleViewEvent.emit();
   }
 
   handleLogin() {
     const userCredentialsLoginRequest: UserCredentialsLoginRequest = {
       email: this.loginForm.get('email')!.value!,
-      password: this.loginForm.get('password')!.value!
-    }
+      password: this.loginForm.get('password')!.value!,
+    };
     this.toggleLoginEvent.emit(userCredentialsLoginRequest);
   }
 

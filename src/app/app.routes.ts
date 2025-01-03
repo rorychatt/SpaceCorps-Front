@@ -56,5 +56,12 @@ export const routes: Routes = [{
       const module = await import('./ship-yard/ship-yard.component');
       return module.ShipYardComponent;
     }
+  },
+  {
+    path: 'users-editor',
+    loadComponent: async () => {
+      const module = await import('./users-editor/users-editor.component');
+      return module.UsersEditorComponent;
+    }
   }
 ];

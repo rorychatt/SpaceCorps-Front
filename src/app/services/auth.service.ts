@@ -5,6 +5,7 @@ import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCrea
 import { ApiService } from './api.service';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,7 @@ export class AuthService extends ComponentStore<AuthState> {
       next: (response) => {
         this.patchState({
           isLoggedIn: true,
-          username: response.userName,
+          username: response.username,
           playerData: response
         });
         console.log(this.state());

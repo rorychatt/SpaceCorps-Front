@@ -13,6 +13,9 @@
           Log Out
         </a>
       } @else {
+        <app-login-as-admin-btn
+          (toggleLoginEvent)="toggleLogin($event)"
+        ></app-login-as-admin-btn>
         <a class="btn btn-neutral bg-base-200" routerLink="/login">
           Log In / Sign Up
         </a>
