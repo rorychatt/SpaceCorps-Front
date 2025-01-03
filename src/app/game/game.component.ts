@@ -18,6 +18,7 @@ export class GameComponent implements OnInit {
   private renderer?: THREE.WebGLRenderer;
   private scene?: THREE.Scene;
   private controls?: OrbitControls
+  private entities: Map<string, THREE.Mesh> = new Map();
 
   constructor (private hubService: HubService, private route: ActivatedRoute) {
   }
@@ -72,9 +73,15 @@ export class GameComponent implements OnInit {
   }
 
   private setupSignalREvents (): void {
+
     this.hubService.on('server-side-log', (data) => {
       console.log('Received data:', data);
     });
+
+    this.hubService.on('update-entities', (entities) => {
+      this.updateEntities(entities);
+    });
+
   }
 
   private async loadNewSpaceMap (spaceMapData: SpaceMapData) {
@@ -83,6 +90,10 @@ export class GameComponent implements OnInit {
   }
 
   private async clearScene () {
+    this.entities.forEach(entity => {
+      this.scene!.remove(entity);
+    });
+    this.entities.clear();
   }
 
   private async loadMapEnvironment (spaceMapData: SpaceMapData) {
@@ -97,7 +108,7 @@ export class GameComponent implements OnInit {
   }
 
   private async createLighting () {
-    if(!this.scene){
+    if (!this.scene) {
       console.error('Scene not initialized, cannot create lighting');
       return;
     }
@@ -143,5 +154,26 @@ export class GameComponent implements OnInit {
 
   private async createStaticEntities () {
 
+  }
+
+  private createEntity (id: string, position: THREE.Vector3): THREE.Mesh {
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const entity = new THREE.Mesh(geometry, material);
+    entity.position.copy(position);
+    this.scene!.add(entity);
+    this.entities.set(id, entity);
+    return entity;
+  }
+
+  private updateEntities (entities: { id: string, position: THREE.Vector3 }[]): void {
+    entities.forEach(entityData => {
+      const entity = this.entities.get(entityData.id);
+      if (entity) {
+        entity.position.copy(entityData.position);
+      } else {
+        this.createEntity(entityData.id, entityData.position);
+      }
+    });
   }
 }
