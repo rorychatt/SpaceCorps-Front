@@ -114,7 +114,7 @@ export class ApiService {
   }
 
   buyItem(buyItemRequest: BuyItemRequest) {
-    return this.http.post(`${this.url}/ShipYard/Buy`, buyItemRequest);
+    return this.http.post(`${this.url}/Shops/ShipYard/Buy`, buyItemRequest);
   }
 
   handleUserEditorCommand(command: string) {
