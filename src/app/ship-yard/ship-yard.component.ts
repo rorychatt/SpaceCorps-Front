@@ -12,11 +12,10 @@ interface Item {
 }
 
 @Component({
-  selector: 'app-ship-yard',
-  templateUrl: './ship-yard.component.html',
-  standalone: true,
-  imports: [NgForOf, NgIf],
-  styleUrls: ['./ship-yard.component.scss'],
+    selector: 'app-ship-yard',
+    templateUrl: './ship-yard.component.html',
+    imports: [NgForOf, NgIf],
+    styleUrls: ['./ship-yard.component.scss']
 })
 export class ShipYardComponent implements OnInit {
   categories: string[] = [

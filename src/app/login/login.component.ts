@@ -9,15 +9,14 @@ import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLogin
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    LoginFormComponent,
-    RegisterFormComponent,
-    ErrorModalComponent
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [
+        LoginFormComponent,
+        RegisterFormComponent,
+        ErrorModalComponent
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 

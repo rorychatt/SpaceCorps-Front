@@ -15,17 +15,16 @@ import { firstValueFrom } from 'rxjs';
 
 
 @Component({
-  selector: 'app-itemEntry-editor',
-  standalone: true,
-  imports: [
-    NgForOf,
-    NgIf,
-    FormsModule,
-    JsonPipe,
-    FaIconComponent
-  ],
-  templateUrl: './itemEntry-editor.component.html',
-  styleUrl: './itemEntry-editor.component.scss'
+    selector: 'app-itemEntry-editor',
+    imports: [
+        NgForOf,
+        NgIf,
+        FormsModule,
+        JsonPipe,
+        FaIconComponent
+    ],
+    templateUrl: './itemEntry-editor.component.html',
+    styleUrl: './itemEntry-editor.component.scss'
 })
 export class ItemEntryEditorComponent {
 

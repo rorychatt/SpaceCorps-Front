@@ -6,11 +6,10 @@ import { SpaceMapData } from './types/SpaceMapData';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 @Component({
-  selector: 'app-game',
-  standalone: true,
-  imports: [],
-  templateUrl: './game.component.html',
-  styleUrl: './game.component.scss'
+    selector: 'app-game',
+    imports: [],
+    templateUrl: './game.component.html',
+    styleUrl: './game.component.scss'
 })
 export class GameComponent implements OnInit {
 

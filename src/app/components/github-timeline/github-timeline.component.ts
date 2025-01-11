@@ -3,15 +3,14 @@ import { GitHubService } from '../../services/git-hub.service';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-github-timeline',
-  standalone: true,
-  imports: [
-    NgForOf,
-    DatePipe,
-    NgIf
-  ],
-  templateUrl: './github-timeline.component.html',
-  styleUrl: './github-timeline.component.scss'
+    selector: 'app-github-timeline',
+    imports: [
+        NgForOf,
+        DatePipe,
+        NgIf
+    ],
+    templateUrl: './github-timeline.component.html',
+    styleUrl: './github-timeline.component.scss'
 })
 export class GithubTimelineComponent {
 

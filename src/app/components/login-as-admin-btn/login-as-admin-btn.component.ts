@@ -2,11 +2,10 @@ import { Component, output } from '@angular/core';
 import { UserCredentialsLoginRequest } from '../../models/auth/UserCredentialsLoginRequest';
 
 @Component({
-  selector: 'app-login-as-admin-btn',
-  standalone: true,
-  imports: [],
-  templateUrl: './login-as-admin-btn.component.html',
-  styleUrl: './login-as-admin-btn.component.scss'
+    selector: 'app-login-as-admin-btn',
+    imports: [],
+    templateUrl: './login-as-admin-btn.component.html',
+    styleUrl: './login-as-admin-btn.component.scss'
 })
 export class LoginAsAdminBtnComponent {
 

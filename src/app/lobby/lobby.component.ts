@@ -4,13 +4,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-lobby',
-  standalone: true,
-  imports: [
-    MainMenuComponent
-  ],
-  templateUrl: './lobby.component.html',
-  styleUrl: './lobby.component.scss'
+    selector: 'app-lobby',
+    imports: [
+        MainMenuComponent
+    ],
+    templateUrl: './lobby.component.html',
+    styleUrl: './lobby.component.scss'
 })
 export class LobbyComponent {
 

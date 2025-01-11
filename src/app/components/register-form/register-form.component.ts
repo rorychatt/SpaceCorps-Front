@@ -4,15 +4,14 @@ import { NgClass } from '@angular/common';
 import { UserCredentialsCreateRequest } from '../../models/auth/UserCredentialsCreateRequest';
 
 @Component({
-  selector: 'app-register-form',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    NgClass
-  ],
-  templateUrl: './register-form.component.html',
-  styleUrl: './register-form.component.scss'
+    selector: 'app-register-form',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        NgClass
+    ],
+    templateUrl: './register-form.component.html',
+    styleUrl: './register-form.component.scss'
 })
 export class RegisterFormComponent {
   registerForm = new FormGroup({

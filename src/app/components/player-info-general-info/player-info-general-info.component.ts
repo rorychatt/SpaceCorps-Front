@@ -4,11 +4,10 @@ import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
 
 @Component({
-  selector: 'app-player-info-general-info',
-  standalone: true,
-  imports: [NgClass, AsyncPipe],
-  templateUrl: './player-info-general-info.component.html',
-  styleUrl: './player-info-general-info.component.scss',
+    selector: 'app-player-info-general-info',
+    imports: [NgClass, AsyncPipe],
+    templateUrl: './player-info-general-info.component.html',
+    styleUrl: './player-info-general-info.component.scss'
 })
 export class PlayerInfoGeneralInfoComponent {
   authService = inject(AuthService);

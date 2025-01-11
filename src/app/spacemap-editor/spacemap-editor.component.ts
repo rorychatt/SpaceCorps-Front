@@ -13,18 +13,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
 
 @Component({
-  selector: 'app-spacemap-editor',
-  standalone: true,
-  imports: [
-    FormsModule,
-    FontAwesomeModule,
-    NgForOf,
-    NgIf,
-    NgClass,
-    ErrorModalComponent,
-  ],
-  templateUrl: './spacemap-editor.component.html',
-  styleUrl: './spacemap-editor.component.scss'
+    selector: 'app-spacemap-editor',
+    imports: [
+        FormsModule,
+        FontAwesomeModule,
+        NgForOf,
+        NgIf,
+        NgClass,
+        ErrorModalComponent,
+    ],
+    templateUrl: './spacemap-editor.component.html',
+    styleUrl: './spacemap-editor.component.scss'
 })
 export class SpacemapEditorComponent {
 
