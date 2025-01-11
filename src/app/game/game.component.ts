@@ -5,11 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { SpaceMapData } from './types/SpaceMapData';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { initializeThreeJs, setupSignalREvents, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
+import { EntityDTO } from './types/Entity';
 
 @Component({
-    selector: 'app-game',
-    templateUrl: './game.component.html',
-    styleUrls: ['./game.component.scss']
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
 
@@ -19,12 +20,12 @@ export class GameComponent implements OnInit {
   public controls?: OrbitControls
   public entities: Map<string, THREE.Mesh> = new Map();
 
-  constructor (
+  constructor(
     private hubService: HubService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const username = params['username'];
       this.hubService.initializeSignalR(username);
@@ -36,18 +37,18 @@ export class GameComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onWindowResize (event: Event): void {
+  onWindowResize(event: Event): void {
     this.renderer!.setSize(window.innerWidth, window.innerHeight);
     this.camera!.aspect = window.innerWidth / window.innerHeight;
     this.camera!.updateProjectionMatrix();
   }
 
-  public async loadNewSpaceMap (spaceMapData: SpaceMapData) {
+  public async loadNewSpaceMap(spaceMapData: SpaceMapData) {
     await clearScene(this);
     await loadMapEnvironment(this, spaceMapData);
   }
 
-  public updateEntities (entities: { id: string, position: THREE.Vector3 }[]): void {
+  public updateEntities(entities: EntityDTO[]): void {
     updateEntities(this, entities);
   }
 }

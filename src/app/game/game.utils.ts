@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { SpaceMapData } from './types/SpaceMapData';
 import { HubService } from './services/hub.service';
 import { GameComponent } from './game.component';
+import { EntityDTO } from './types/Entity';
 
 export function initializeThreeJs(component: GameComponent): void {
   component.scene = new THREE.Scene();
@@ -129,13 +130,17 @@ export function createEntity(component: GameComponent, id: string, position: THR
   return entity;
 }
 
-export function updateEntities(component: GameComponent, entities: { id: string, position: THREE.Vector3 }[]): void {
+export function updateEntities(component: GameComponent, entities: EntityDTO[]): void {
   entities.forEach(entityData => {
     const entity = component.entities.get(entityData.id);
     if (entity) {
       entity.position.copy(entityData.position);
     } else {
-      createEntity(component, entityData.id, entityData.position);
+      createEntity(component, entityData.id, parsePositionDTOtoVector3(entityData.position));
     }
   });
+}
+
+function parsePositionDTOtoVector3(position: { x: number, y: number, z: number }): THREE.Vector3 {
+  return new THREE.Vector3(position.x, position.y, position.z);
 }
