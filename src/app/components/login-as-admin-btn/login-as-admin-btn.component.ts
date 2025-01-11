@@ -11,7 +11,7 @@ export class LoginAsAdminBtnComponent {
 
   toggleLoginEvent = output<UserCredentialsLoginRequest>();
 
-  loginAsPredefinedAccount () {
+  loginAsPredefinedAdmin () {
     const userCredentialsLoginRequest: UserCredentialsLoginRequest = {
       email: 'tester@tester.com',
       password: 'MegaGoodPassword123!',
