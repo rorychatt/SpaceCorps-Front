@@ -5,7 +5,6 @@ import { GithubTimelineComponent } from '../components/github-timeline/github-ti
 @Component({
     selector: 'app-home',
     imports: [
-        NavbarComponent,
         GithubTimelineComponent
     ],
     templateUrl: './home.component.html',

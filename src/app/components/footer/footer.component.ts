@@ -5,10 +5,6 @@ import { ApiService } from "../../services/api.service";
 
 @Component({
     selector: 'app-footer',
-    imports: [
-        AsyncPipe,
-        NgIf
-    ],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss'
 })

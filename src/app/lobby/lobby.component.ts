@@ -5,9 +5,6 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-lobby',
-    imports: [
-        MainMenuComponent
-    ],
     templateUrl: './lobby.component.html',
     styleUrl: './lobby.component.scss'
 })

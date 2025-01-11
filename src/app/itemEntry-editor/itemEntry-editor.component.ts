@@ -20,7 +20,6 @@ import { firstValueFrom } from 'rxjs';
         NgForOf,
         NgIf,
         FormsModule,
-        JsonPipe,
         FaIconComponent
     ],
     templateUrl: './itemEntry-editor.component.html',
