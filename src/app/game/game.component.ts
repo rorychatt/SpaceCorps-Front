@@ -1,67 +1,38 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import * as THREE from 'three';
-import { HubService } from '../services/hub.service';
+import { HubService } from './services/hub.service';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceMapData } from './types/SpaceMapData';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { initializeThreeJs, setupSignalREvents, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
 
 @Component({
     selector: 'app-game',
-    imports: [],
     templateUrl: './game.component.html',
-    styleUrl: './game.component.scss'
+    styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
 
-  private camera?: THREE.PerspectiveCamera;
-  private renderer?: THREE.WebGLRenderer;
-  private scene?: THREE.Scene;
-  private controls?: OrbitControls
-  private entities: Map<string, THREE.Mesh> = new Map();
+  public camera?: THREE.PerspectiveCamera;
+  public renderer?: THREE.WebGLRenderer;
+  public scene?: THREE.Scene;
+  public controls?: OrbitControls
+  public entities: Map<string, THREE.Mesh> = new Map();
 
-  constructor (private hubService: HubService, private route: ActivatedRoute) {
-  }
+  constructor (
+    private hubService: HubService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit (): void {
     this.route.queryParams.subscribe(params => {
       const username = params['username'];
       this.hubService.initializeSignalR(username);
-      this.setupSignalREvents();
-      this.initializeThreeJs();
-    })
-  }
+      setupSignalREvents(this.hubService, this.updateEntities.bind(this));
+      initializeThreeJs(this);
+    });
 
-  private initializeThreeJs (): void {
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-    this.renderer.domElement.style.position = 'absolute';
-    this.renderer.domElement.style.top = '0';
-
-    document.body.appendChild(this.renderer.domElement);
-
-    this.controls = new OrbitControls(
-      this.camera!,
-      this.renderer!.domElement
-    )
-
-    this.controls.enableDamping = true;
-
-    this.camera.position.z = 5;
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      this.renderer!.render(this.scene!, this.camera!);
-    };
-
-    animate();
-
-    void this.loadNewSpaceMap({
-      mapname: 'G-1',
-      id: "1"
-    })
+    document.body.style.overflow = 'hidden';
   }
 
   @HostListener('window:resize', ['$event'])
@@ -71,108 +42,12 @@ export class GameComponent implements OnInit {
     this.camera!.updateProjectionMatrix();
   }
 
-  private setupSignalREvents (): void {
-
-    this.hubService.on('server-side-log', (data) => {
-      console.log('Received data:', data);
-    });
-
-    this.hubService.on('update-entities', (entities) => {
-      this.updateEntities(entities);
-    });
-
+  public async loadNewSpaceMap (spaceMapData: SpaceMapData) {
+    await clearScene(this);
+    await loadMapEnvironment(this, spaceMapData);
   }
 
-  private async loadNewSpaceMap (spaceMapData: SpaceMapData) {
-    await this.clearScene();
-    await this.loadMapEnvironment(spaceMapData);
-  }
-
-  private async clearScene () {
-    this.entities.forEach(entity => {
-      this.scene!.remove(entity);
-    });
-    this.entities.clear();
-  }
-
-  private async loadMapEnvironment (spaceMapData: SpaceMapData) {
-    await this.createStars();
-    await this.createLighting();
-    await this.createSkybox(spaceMapData.mapname);
-    await this.createStaticEntities();
-  }
-
-  private async createStars () {
-
-  }
-
-  private async createLighting () {
-    if (!this.scene) {
-      console.error('Scene not initialized, cannot create lighting');
-      return;
-    }
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    directionalLight.position.set(1, 1, 1);
-    this.scene.add(directionalLight);
-    this.scene.add(ambientLight);
-  }
-
-  private async createSkybox (mapname?: string) {
-    if (!this.scene) {
-      console.error('Scene not initialized');
-      return;
-    }
-
-    const loader = new THREE.CubeTextureLoader();
-    const defaultMapname = 'G-1';
-
-    if (!mapname) {
-      mapname = defaultMapname;
-      console.log(`No mapname provided, loading default map ${defaultMapname}`);
-    }
-
-    const loadSkybox = (name: string) => {
-      return loader.load([
-        `./spacemaps/${name}/right.png`,
-        `./spacemaps/${name}/left.png`,
-        `./spacemaps/${name}/top.png`,
-        `./spacemaps/${name}/bottom.png`,
-        `./spacemaps/${name}/front.png`,
-        `./spacemaps/${name}/back.png`,
-      ]);
-    };
-
-    try {
-      this.scene.background = loadSkybox(mapname);
-    } catch (error) {
-      console.error(`Failed to load skybox for ${mapname}, loading default skybox`, error);
-      this.scene.background = loadSkybox(defaultMapname);
-    }
-  }
-
-  private async createStaticEntities () {
-
-  }
-
-  private createEntity (id: string, position: THREE.Vector3): THREE.Mesh {
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const entity = new THREE.Mesh(geometry, material);
-    entity.position.copy(position);
-    this.scene!.add(entity);
-    this.entities.set(id, entity);
-    return entity;
-  }
-
-  private updateEntities (entities: { id: string, position: THREE.Vector3 }[]): void {
-    entities.forEach(entityData => {
-      const entity = this.entities.get(entityData.id);
-      if (entity) {
-        entity.position.copy(entityData.position);
-      } else {
-        this.createEntity(entityData.id, entityData.position);
-      }
-    });
+  public updateEntities (entities: { id: string, position: THREE.Vector3 }[]): void {
+    updateEntities(this, entities);
   }
 }

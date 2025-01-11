@@ -28,6 +28,8 @@ export class HubService {
 
   public send (event: string, ...args: any[]): void {
     this.hubConnection?.invoke(event, ...args)
-      .catch(err => console.error('Error while sending SignalR message: ' + err));
+      .catch(err =>
+        console.error('Error while sending SignalR message: ' + err)
+      );
   }
 }
