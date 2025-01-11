@@ -6,6 +6,7 @@ import { SpaceMapData } from './types/SpaceMapData';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { initializeThreeJs, setupSignalREvents, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
 import { EntityDTO } from './types/Entity';
+import { KeyboardService } from './services/keyboard.service';
 
 @Component({
   selector: 'app-game',
@@ -22,7 +23,8 @@ export class GameComponent implements OnInit {
 
   constructor(
     private hubService: HubService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private keyboardService: KeyboardService // Inject KeyboardService
   ) { }
 
   ngOnInit(): void {
