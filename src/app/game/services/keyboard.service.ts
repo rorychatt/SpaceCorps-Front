@@ -25,6 +25,6 @@ export class KeyboardService {
   }
 
   private logEntities(): void {
-    this.hubService.send('logEntities');
+    this.hubService.send('logEntities', null);
   }
 }

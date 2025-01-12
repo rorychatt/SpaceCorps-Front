@@ -4,7 +4,7 @@ import { HubService } from './services/hub.service';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceMapData } from './types/SpaceMapData';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { initializeThreeJs, setupSignalREvents, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
+import { initializeThreeJs, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
 import { EntityDTO } from './types/Entity';
 import { KeyboardService } from './services/keyboard.service';
 
@@ -24,14 +24,14 @@ export class GameComponent implements OnInit {
   constructor(
     private hubService: HubService,
     private route: ActivatedRoute,
-    private keyboardService: KeyboardService // Inject KeyboardService
+    private keyboardService: KeyboardService
   ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const username = params['username'];
       this.hubService.initializeSignalR(username);
-      setupSignalREvents(this.hubService, this.updateEntities.bind(this));
+      this.setupSignalREvents(this.hubService, this.updateEntities.bind(this));
       initializeThreeJs(this);
     });
 
@@ -52,5 +52,15 @@ export class GameComponent implements OnInit {
 
   public updateEntities(entities: EntityDTO[]): void {
     updateEntities(this, entities);
+  }
+
+  public setupSignalREvents(hubService: HubService, updateEntities: (entities: { id: string, position: THREE.Vector3 }[]) => void): void {
+    hubService.on('server-side-log', (data) => {
+      console.log('Received data:', data);
+    });
+  
+    hubService.on('update-entities', (entities) => {
+      updateEntities(entities);
+    });
   }
 }

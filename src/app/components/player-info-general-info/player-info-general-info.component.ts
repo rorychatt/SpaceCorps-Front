@@ -18,9 +18,9 @@ export class PlayerInfoGeneralInfoComponent {
   ngOnInit() {
     const authPlayerData = this.authService.getPlayerData();
     if (!authPlayerData) console.error('Error: Missing PlayerData');
-    const userName = authPlayerData!.username;
+    const username = authPlayerData!.username;
 
-    this.getPlayerInfo(userName).subscribe({
+    this.getPlayerInfo(username).subscribe({
       next: (response) => {
         this.templateValues.username = response.username;
         this.templateValues.hoursPlayed = response.totalPlayTime;

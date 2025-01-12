@@ -38,16 +38,6 @@ export function initializeThreeJs(component: GameComponent): void {
   });
 }
 
-export function setupSignalREvents(hubService: HubService, updateEntities: (entities: { id: string, position: THREE.Vector3 }[]) => void): void {
-  hubService.on('server-side-log', (data) => {
-    console.log('Received data:', data);
-  });
-
-  hubService.on('update-entities', (entities) => {
-    updateEntities(entities);
-  });
-}
-
 export async function loadNewSpaceMap(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
   await clearScene(component);
   await loadMapEnvironment(component, spaceMapData);
