@@ -36,7 +36,7 @@ export class HubService {
   }
 
   public async send<T extends keyof ServerRequestTypes>
-    (event: T, args?: ServerRequestTypes[T]): Promise<void> {
+    (event: T, args: ServerRequestTypes[T]): Promise<void> {
     console.log('Sending SignalR message: ' + event, args ? args : '');
 
     if (!this.hubConnection) {
@@ -45,7 +45,11 @@ export class HubService {
     }
 
     try {
-      return await this.hubConnection.invoke(event, args);
+      if(args === null) {
+        return await this.hubConnection.invoke(event);
+      } else {
+        return await this.hubConnection.invoke(event, args);
+      }
     } catch (err) {
       console.error('Error while sending SignalR message: ' + err);
       throw err;

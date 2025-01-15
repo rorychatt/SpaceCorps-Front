@@ -58,6 +58,10 @@ export class GameComponent implements OnInit {
     hubService.on('server-side-log', (data) => {
       console.log('Received data:', data);
     });
+
+    hubService.on('server-side-error', (error) => {
+      console.warn('Received error:', error);
+    });
   
     hubService.on('update-entities', (entities) => {
       updateEntities(entities);
@@ -70,5 +74,9 @@ export class GameComponent implements OnInit {
     hubService.on('loginFailed', (response: string) => {
       console.error('Login failed:', response);
     });
+
+    hubService.on('logEntities', (entities) => {
+      console.log('Entities:', entities);
+    })
   }
 }
