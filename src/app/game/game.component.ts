@@ -62,5 +62,9 @@ export class GameComponent implements OnInit {
     hubService.on('update-entities', (entities) => {
       updateEntities(entities);
     });
+
+    hubService.on('loginSuccessful', (response) => {
+      console.log('Login successful:', response);
+    })
   }
 }

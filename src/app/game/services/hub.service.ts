@@ -35,8 +35,9 @@ export class HubService {
     this.hubConnection?.off(event, callback);
   }
 
-  public async send<T extends keyof ServerRequestTypes>(event: T, args: ServerRequestTypes[T]): Promise<void> {
-    console.log('Sending SignalR message: ' + event, args);
+  public async send<T extends keyof ServerRequestTypes>
+    (event: T, args?: ServerRequestTypes[T]): Promise<void> {
+    console.log('Sending SignalR message: ' + event, args ? args : '');
 
     if (!this.hubConnection) {
       console.error('SignalR connection is not initialized');
