@@ -66,5 +66,9 @@ export class GameComponent implements OnInit {
     hubService.on('loginSuccessful', (response) => {
       console.log('Login successful:', response);
     })
+
+    hubService.on('loginFailed', (response: string) => {
+      console.error('Login failed:', response);
+    });
   }
 }
