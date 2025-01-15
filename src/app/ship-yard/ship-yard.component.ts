@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
+import { SellableItems } from '../models/player/Items';
 
 interface Item {
   name: string;
@@ -29,7 +30,7 @@ export class ShipYardComponent implements OnInit {
     'Laser Ammo',
   ];
   selectedCategory: string | null = null;
-  items: SellableItem[] = [];
+  items: SellableItems[] = [];
   playerBalance = { cats: 0, thulium: 0 };
   username: string | null = null;
 
@@ -52,7 +53,8 @@ export class ShipYardComponent implements OnInit {
     const categoryKey =
       ItemTypeDictionary[category as keyof typeof ItemTypeDictionary];
     this.apiService.getItemEntriesByCategory(categoryKey).subscribe((data) => {
-      this.items = data as SellableItem[];
+      console.log(data)
+      this.items = data as SellableItems[];
     });
   }
 
@@ -78,7 +80,7 @@ export class ShipYardComponent implements OnInit {
 
   }
 
-  buyItem (item: SellableItem) {
+  buyItem (item: SellableItems) {
 
     if (this.username === null) {
       alert('No username found');
@@ -111,15 +113,6 @@ export class ShipYardComponent implements OnInit {
       );
   }
 }
-
-type SellableItem = {
-  itemType: string;
-  id: number;
-  name: string;
-  priceCats: number;
-  priceThulium: number;
-  category: string;
-};
 
 const ItemTypeDictionary = {
   'Ships': 'ShipEntries',

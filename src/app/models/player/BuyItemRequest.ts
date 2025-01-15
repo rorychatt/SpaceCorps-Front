@@ -1,5 +1,5 @@
 export type BuyItemRequest = {
     username: string;
-    itemId: number;
+    itemId: string;
     itemType: string;
 }
