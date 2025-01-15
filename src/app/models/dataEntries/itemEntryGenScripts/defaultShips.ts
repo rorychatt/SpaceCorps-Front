@@ -1,6 +1,6 @@
-import { ShipEntry } from '../ShipEntry';
+import { ShipItem } from "../../player/Items";
 
-export const defaultShips: ShipEntry[] = [
+export const defaultShips: ShipItem[] = [
   {
     name: "Protos",
     itemType: "ShipItem",

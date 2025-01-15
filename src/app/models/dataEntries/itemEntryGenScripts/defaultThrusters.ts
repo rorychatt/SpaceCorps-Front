@@ -1,6 +1,7 @@
-import { ThrusterEntity } from '../ThrusterEntity';
+import { ThrusterItem } from "../../player/Items";
 
-export const defaultThrusters: ThrusterEntity[] = [
+
+export const defaultThrusters: ThrusterItem[] = [
   {
     name: "Thruster 1",
     itemType: "ThrusterItem",

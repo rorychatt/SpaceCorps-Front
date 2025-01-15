@@ -1,6 +1,6 @@
-import { LaserAmpEntry } from '../LaserAmpEntry';
+import { LaserAmpItem } from "../../player/Items";
 
-export const defaultLaserAmps: LaserAmpEntry[] = [
+export const defaultLaserAmps: LaserAmpItem[] = [
   {
     name: "Laser Amp 1",
     itemType: "LaserAmpItem",

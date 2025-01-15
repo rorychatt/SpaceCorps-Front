@@ -67,7 +67,7 @@
       <div class="card bg-neutral">
         <div class="card-body">
           <ul class="flex flex-wrap gap-4">
-            <li *ngFor="let item of ItemEntries" class="card bg-base-200 p-4 max-w-96">
+            <li *ngFor="let item of items" class="card bg-base-200 p-4 max-w-96">
               <div class="flex flex-col gap-2">
                 <div *ngFor="let field of getFieldsForCategory(selectedCategory); trackBy: trackByKey">
                   <div class="flex flex-col gap-2 min-w-60">

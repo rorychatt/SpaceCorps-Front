@@ -1,6 +1,6 @@
-import { LaserEntry } from '../LaserEntry';
+import { LaserItem } from '../../player/Items';
 
-export const defaultLasers: LaserEntry[] = [
+export const defaultLasers: LaserItem[] = [
   {
     name: 'Quantum Laser 1',
     itemType: 'LaserItem',

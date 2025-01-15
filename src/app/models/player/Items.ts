@@ -1,64 +1,73 @@
 import { InventoryItem } from "./InventoryItem";
 
 export type SellableItems = 
-  ShipItem & SellableItem |
-  LaserItem & SellableItem |
-  LaserAmpItem & SellableItem |
-  ShieldItem & SellableItem |
-  ShieldCellItem & SellableItem |
-  EngineItem & SellableItem |
-  EngineThrusterItem & SellableItem |
-  LaserAmmoItem & SellableItem;
+  ShipItem |
+  LaserItem |
+  LaserAmpItem |
+  ShieldItem |
+  ShieldCellItem |
+  EngineItem |
+  ThrusterItem |
+  LaserAmmoItem;
 
-type SellableItem = InventoryItem & {
+export type SellableItem = InventoryItem & {
   priceCats: number;
   priceThulium: number;
 };
 
-type ShipItem = InventoryItem & {
+export type ShipItem = SellableItem & {
   baseHealth: number;
   baseSpeed: number;
   engineSlots: number;
   shieldSlots: number;
   laserSlots: number;
+  itemType: 'ShipItem';
 }
 
-type LaserItem = InventoryItem & {
+export type LaserItem = SellableItem & {
   baseDamage: number;
   criticalChance: number;
   laserAmpSlots: number;
+  itemType: 'LaserItem';
 }
 
-type LaserAmpItem = InventoryItem & {
+export type LaserAmpItem = SellableItem & {
   addBaseDamage: number;
   addCriticalChance: number;
   addLaserDamageMultiplier: number;
+  itemType: 'LaserAmpItem';
 }
 
-type ShieldItem = InventoryItem & {
+export type ShieldItem = SellableItem & {
   absorbance: number;
   capacity: number;
   passiveRechargeRate: number;
   rechargeRate: number;
   shieldCellSlots: number;
+  itemType: 'ShieldItem';
 }
 
-type ShieldCellItem = InventoryItem & {
+export type ShieldCellItem = SellableItem & {
   addAbsorbance: number;
   addCapacity: number;
   addPassiveRechargeRate: number;
   addRechargeRate: number;
+  itemType: 'ShieldCellItem';
 }
 
-type EngineItem = InventoryItem & {
+export type EngineItem = SellableItem & {
   baseSpeed: number;
+  thrusterSlots: number;
+  itemType: 'EngineItem';
 }
 
-type EngineThrusterItem = InventoryItem & {
+export type ThrusterItem = SellableItem & {
   addBaseSpeed: number;
-  addBaseSpeedMultiplier: number;
+  baseSpeedMultiplier: number;
+  itemType: 'ThrusterItem';
 }
 
-type LaserAmmoItem = InventoryItem & {
+export type LaserAmmoItem = SellableItem & {
   baseDamageMultiplier: number;
+  itemType: 'LaserAmmoItem';
 }

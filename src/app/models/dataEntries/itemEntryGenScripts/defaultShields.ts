@@ -1,6 +1,6 @@
-import { ShieldEntry } from '../ShieldEntry';
+import { ShieldItem } from '../../player/Items';
 
-export const defaultShields: ShieldEntry[] = [
+export const defaultShields: ShieldItem[] = [
   {
     name: "Default Shield",
     itemType: "ShieldItem",

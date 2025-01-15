@@ -1,51 +1,49 @@
 import { Component } from '@angular/core';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { FormsModule } from '@angular/forms';
-import { IItemEntry } from '../models/dataEntries/itemEntries/IItemEntry';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import {
-  defaultEngines, defaultLaserAmmos,
-  defaultLaserAmps,
-  defaultLasers, defaultShieldCells, defaultShields, defaultShips,
-  defaultThrusters
-} from '../models/dataEntries/itemEntries/itemEntryGenScripts';
 import { firstValueFrom } from 'rxjs';
+import { EngineItem, LaserAmmoItem, LaserAmpItem, LaserItem, SellableItems, ShieldCellItem, ShieldItem, ShipItem, ThrusterItem } from '../models/player/Items';
+import { defaultEngines, defaultThrusters, defaultLasers, defaultLaserAmps, defaultShields, defaultShieldCells, defaultShips, defaultLaserAmmos } from '../models/dataEntries/itemEntryGenScripts';
 
 
 @Component({
-    selector: 'app-itemEntry-editor',
-    imports: [
-        NgForOf,
-        NgIf,
-        FormsModule,
-        FaIconComponent
-    ],
-    templateUrl: './itemEntry-editor.component.html',
-    styleUrl: './itemEntry-editor.component.scss'
+  selector: 'app-itemEntry-editor',
+  imports: [
+    NgForOf,
+    NgIf,
+    FormsModule,
+    FaIconComponent
+  ],
+  templateUrl: './itemEntry-editor.component.html',
+  styleUrl: './itemEntry-editor.component.scss'
 })
 export class ItemEntryEditorComponent {
 
-  protected itemCategories = [
-    'ShipEntries',
-    'LaserEntries', 'LaserAmpEntries',
-    'ShieldEntries', 'ShieldCellEntries',
-    'EngineEntries', 'ThrusterEntries',
-    'LaserAmmoEntries'
+  protected selectedCategory: SellableItems['itemType'] | null = null;
+  protected itemCategories: SellableItems['itemType'][] = [
+    'EngineItem',
+    'ThrusterItem',
+    'LaserItem',
+    'LaserAmpItem',
+    'ShieldItem',
+    'ShieldCellItem',
+    'ShipItem',
+    'LaserAmmoItem'
   ]
 
-  protected ItemEntries: { [key: string]: any }[] = [];
-  protected newItem: { [key: string]: any } | null = {};
-  protected selectedCategory: string | null = null;
+  protected items: SellableItems[] = [];
+  protected newItem: SellableItems | null = null;
 
-  constructor (private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
   }
 
-  protected selectCategory (category: string) {
+  protected selectCategory(category: SellableItems['itemType']) {
     if (this.selectedCategory === category) {
       return;
     } else {
@@ -55,11 +53,11 @@ export class ItemEntryEditorComponent {
     }
   }
 
-  protected fetchItems (category: string) {
+  protected fetchItems(category: string) {
     this.apiService.getItemEntriesByCategory(category).subscribe(
       {
         next: (data: any) => {
-          this.ItemEntries = data;
+          this.items = data;
         },
         error: (err: any) => {
           console.error('Error fetching items', err);
@@ -68,33 +66,31 @@ export class ItemEntryEditorComponent {
     );
   }
 
-  protected createNewItem () {
-    if (this.selectedCategory && this.newItem) {
-      const oldCategory = this.selectedCategory;
-      this.apiService
-        .createNewItemEntry(this.selectedCategory, (this.newItem! as IItemEntry))
-        .subscribe({
-          next: () => {
-            this.fetchItems(oldCategory);
-          },
-          error: (err: any) => {
-            console.error('Error creating new item', err);
-          }
-        });
+  protected createNewItem() {
+    if (this.newItem) {
+      const oldCategory = this.newItem.itemType;
+      this.apiService.createNewItemEntry(this.newItem).subscribe({
+        next: () => {
+          this.fetchItems(oldCategory);
+        },
+        error: (err: any) => {
+          console.error('Error creating new item', err);
+        }
+      });
       this.newItem = null;
     }
   }
-
-  protected getFieldsForCategory (category: string): { label: string, key: string }[] {
-    const fieldsMap: { [key: string]: { label: string, key: string }[] } = {
-      'LaserAmmoEntries': [
+  
+  protected getFieldsForCategory(category: SellableItems['itemType']): { label: string, key: string }[] {
+    const fieldsMap: { [K in SellableItems['itemType']]: { label: string, key: string }[] } = {
+      'LaserAmmoItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Damage Multiplier', key: 'baseDamageMultiplier' },
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'LaserAmpEntries': [
+      'LaserAmpItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Add Base Damage', key: 'addBaseDamage' },
@@ -103,7 +99,7 @@ export class ItemEntryEditorComponent {
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'LaserEntries': [
+      'LaserItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Damage', key: 'baseDamage' },
@@ -112,7 +108,7 @@ export class ItemEntryEditorComponent {
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'ShieldEntries': [
+      'ShieldItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Capacity', key: 'capacity' },
@@ -123,7 +119,7 @@ export class ItemEntryEditorComponent {
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'ShieldCellEntries': [
+      'ShieldCellItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Add Capacity', key: 'addCapacity' },
@@ -133,7 +129,7 @@ export class ItemEntryEditorComponent {
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'ShipEntries': [
+      'ShipItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Health', key: 'baseHealth' },
@@ -144,7 +140,7 @@ export class ItemEntryEditorComponent {
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'EngineEntries': [
+      'EngineItem': [
         { label: 'Name', key: 'name' },
         { label: 'ID', key: 'id' },
         { label: 'Base Speed', key: 'baseSpeed' },
@@ -152,8 +148,9 @@ export class ItemEntryEditorComponent {
         { label: 'Price in Cats', key: 'priceCats' },
         { label: 'Price in Thulium', key: 'priceThulium' }
       ],
-      'ThrusterEntries': [
+      'ThrusterItem': [
         { label: 'Name', key: 'name' },
+        { label: 'ID', key: 'id' },
         { label: 'Add Base Speed', key: 'addBaseSpeed' },
         { label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier' },
         { label: 'Price in Cats', key: 'priceCats' },
@@ -167,23 +164,23 @@ export class ItemEntryEditorComponent {
     ];
   }
 
-  protected createNewItemForCategory (category: string): { [key: string]: any } {
+  protected createNewItemForCategory(category: SellableItems['itemType']): SellableItems {
     const fields = this.getFieldsForCategory(category);
-    const newItem: { [key: string]: any } = {};
+    const newItem: { [key: string]: any } = { itemType: category };
     fields.forEach(field => {
       newItem[field.key] = '';
     });
-    return newItem;
+    return newItem as SellableItems;
   }
 
-  trackByKey (index: number, item: any): any {
+  trackByKey(index: number, item: any): any {
     return item.key;
   }
 
-  protected deleteItem (item: { [key: string]: any }) {
+  protected deleteItem(item: SellableItems) {
     if (this.selectedCategory) {
       const oldCategory = this.selectedCategory;
-      this.apiService.deleteItemEntry(this.selectedCategory, (item as IItemEntry)).subscribe({
+      this.apiService.deleteItemEntry(item).subscribe({
         next: () => {
           this.fetchItems(oldCategory);
         },
@@ -196,7 +193,7 @@ export class ItemEntryEditorComponent {
 
   protected readonly faArrowsRotate = faArrowsRotate;
 
-  generateDefaultItemsForCategory (selectedCategory: string) {
+  generateDefaultItemsForCategory(selectedCategory: string) {
     switch (selectedCategory) {
       case 'EngineEntries':
         this.generateDefaultEngineItems();
@@ -228,55 +225,55 @@ export class ItemEntryEditorComponent {
     this.fetchItems(selectedCategory);
   }
 
-  private generateDefaultEngineItems () {
-    defaultEngines.map(async (engine) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('EngineEntries', engine))
+  private generateDefaultEngineItems() {
+    defaultEngines.map(async (engine: EngineItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(engine))
     });
   }
 
-  private generateDefaultThrusterItems () {
-    defaultThrusters.map(async (thruster) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('ThrusterEntries', thruster))
+  private generateDefaultThrusterItems() {
+    defaultThrusters.map(async (thruster: ThrusterItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(thruster))
     });
   }
 
-  private generateDefaultLaserItems () {
-    defaultLasers.map(async (laser) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('LaserEntries', laser))
+  private generateDefaultLaserItems() {
+    defaultLasers.map(async (laser: LaserItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(laser))
     });
   }
 
-  private generateDefaultLaserAmpItems () {
-    defaultLaserAmps.map(async (laserAmp) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('LaserAmpEntries', laserAmp))
+  private generateDefaultLaserAmpItems() {
+    defaultLaserAmps.map(async (laserAmp: LaserAmpItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(laserAmp))
     });
   }
 
-  private generateDefaultShieldItems () {
-    defaultShields.map(async (shield) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('ShieldEntries', shield))
+  private generateDefaultShieldItems() {
+    defaultShields.map(async (shield: ShieldItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(shield))
     });
   }
 
-  private generateDefaultShieldCellItems () {
-    defaultShieldCells.map(async (shieldCell) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('ShieldCellEntries', shieldCell))
+  private generateDefaultShieldCellItems() {
+    defaultShieldCells.map(async (shieldCell: ShieldCellItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(shieldCell))
     });
   }
 
-  private generateDefaultShipItems () {
-    defaultShips.map(async (ship) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('ShipEntries', ship))
+  private generateDefaultShipItems() {
+    defaultShips.map(async (ship: ShipItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(ship))
     });
   }
 
-  private generateDefaultLaserAmmoItems () {
-    defaultLaserAmmos.map(async (laserAmmo) => {
-      await firstValueFrom(this.apiService.createNewItemEntry('LaserAmmoEntries', laserAmmo))
+  private generateDefaultLaserAmmoItems() {
+    defaultLaserAmmos.map(async (laserAmmo: LaserAmmoItem) => {
+      await firstValueFrom(this.apiService.createNewItemEntry(laserAmmo))
     });
   }
 
-  protected createAllDefaultItems () {
+  protected createAllDefaultItems() {
     this.generateDefaultEngineItems();
     this.generateDefaultThrusterItems();
     this.generateDefaultLaserItems();
@@ -286,8 +283,8 @@ export class ItemEntryEditorComponent {
     this.generateDefaultShipItems();
     this.generateDefaultLaserAmmoItems();
 
-    setTimeout(()=>{
-      if(!this.selectedCategory) return;
+    setTimeout(() => {
+      if (!this.selectedCategory) return;
       this.fetchItems(this.selectedCategory!);
     }, 300)
   }
