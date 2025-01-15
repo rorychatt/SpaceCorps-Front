@@ -193,30 +193,30 @@ export class ItemEntryEditorComponent {
 
   protected readonly faArrowsRotate = faArrowsRotate;
 
-  generateDefaultItemsForCategory(selectedCategory: string) {
+  generateDefaultItemsForCategory(selectedCategory: SellableItems['itemType']) {
     switch (selectedCategory) {
-      case 'EngineEntries':
+      case 'EngineItem':
         this.generateDefaultEngineItems();
         break;
-      case 'ThrusterEntries':
+      case 'ThrusterItem':
         this.generateDefaultThrusterItems();
         break;
-      case 'LaserEntries':
+      case 'LaserItem':
         this.generateDefaultLaserItems();
         break;
-      case 'LaserAmpEntries':
+      case 'LaserAmpItem':
         this.generateDefaultLaserAmpItems();
         break;
-      case 'ShieldEntries':
+      case 'ShieldItem':
         this.generateDefaultShieldItems();
         break;
-      case 'ShieldCellEntries':
+      case 'ShieldCellItem':
         this.generateDefaultShieldCellItems();
         break;
-      case 'ShipEntries':
+      case 'ShipItem':
         this.generateDefaultShipItems();
         break;
-      case 'LaserAmmoEntries':
+      case 'LaserAmmoItem':
         this.generateDefaultLaserAmmoItems();
         break;
       default:
