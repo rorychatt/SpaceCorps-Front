@@ -1,7 +1,7 @@
 {
   "name": "space-corps-front",
   "version": "0.0.15-preview-1",
-  "backend-version": "0.0.12^",
+  "backend-version": "0.0.13^",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
