@@ -2,15 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
-import { SellableItems } from '../models/player/Items';
-
-interface Item {
-  name: string;
-  category: string;
-  priceCats: number;
-  priceThulium: number;
-  icon: string;
-}
+import {getFieldsForItemCategory as getAllFieldsForItemCategory, SellableItems} from '../models/player/Items';
 
 @Component({
     selector: 'app-ship-yard',
@@ -55,7 +47,6 @@ export class ShipYardComponent implements OnInit {
 
   fetchItems (category: SellableItems['itemType']) {
     this.apiService.getItemEntriesByCategory(category).subscribe((data) => {
-      console.log(data)
       this.items = data as SellableItems[];
     });
   }
@@ -113,5 +104,10 @@ export class ShipYardComponent implements OnInit {
           console.error('Error buying item', error);
         }
       );
+  }
+
+  protected getFieldsForItemCategory(category: SellableItems['itemType']){
+    const fields = getAllFieldsForItemCategory(category);
+    return fields.filter(field => !['name', 'id', 'priceCats', 'priceThulium'].includes(field.key));
   }
 }

@@ -21,6 +21,17 @@
           <div class="flex flex-col items-center">
             <!--            <img [src]="item.icon" alt="{{ item.name }} icon" class="w-16 h-16"/>-->
             <h3 class="card-title">{{ item.name }}</h3>
+
+            <table class="table">
+              <tr
+                class="hover:bg-base-100"
+                *ngFor="let field of getFieldsForItemCategory(selectedCategory)">
+                <td>{{ field.key }}</td>
+                <td>{{ item[field.key] }}</td>
+              </tr>
+            </table>
+
+
             <p>Price in Cats: {{ item.priceCats }}</p>
             <p>Price in Thulium: {{ item.priceThulium }}</p>
 
