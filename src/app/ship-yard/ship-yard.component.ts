@@ -110,4 +110,6 @@ export class ShipYardComponent implements OnInit {
     const fields = getAllFieldsForItemCategory(category);
     return fields.filter(field => !['name', 'id', 'priceCats', 'priceThulium'].includes(field.key));
   }
+
+  protected readonly JSON = JSON;
 }
