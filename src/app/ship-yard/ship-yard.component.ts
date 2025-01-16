@@ -19,6 +19,7 @@ interface Item {
     styleUrls: ['./ship-yard.component.scss']
 })
 export class ShipYardComponent implements OnInit {
+
   categories: SellableItems['itemType'][] = [
     'ShipItem',
     'LaserItem',
@@ -29,6 +30,7 @@ export class ShipYardComponent implements OnInit {
     'ThrusterItem',
     'LaserAmmoItem',
   ];
+
   selectedCategory: SellableItems['itemType'] | null = null;
   items: SellableItems[] = [];
 

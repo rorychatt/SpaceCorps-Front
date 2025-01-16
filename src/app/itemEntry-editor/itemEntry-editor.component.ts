@@ -6,7 +6,7 @@ import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {firstValueFrom} from 'rxjs';
 import {
-  EngineItem,
+  EngineItem, getFieldsForItemCategory,
   LaserAmmoItem,
   LaserAmpItem,
   LaserItem,
@@ -26,7 +26,6 @@ import {
   defaultShips,
   defaultLaserAmmos
 } from '../models/dataEntries/itemEntryGenScripts';
-
 
 @Component({
   selector: 'app-itemEntry-editor',
@@ -100,91 +99,8 @@ export class ItemEntryEditorComponent {
     }
   }
 
-  protected getFieldsForCategory(category: SellableItems['itemType']): { label: string, key: string }[] {
-    const fieldsMap: { [K in SellableItems['itemType']]: { label: string, key: string }[] } = {
-      'LaserAmmoItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Base Damage Multiplier', key: 'baseDamageMultiplier'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'LaserAmpItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Add Base Damage', key: 'addBaseDamage'},
-        {label: 'Add Laser Damage Multiplier', key: 'addLaserDamageMultiplier'},
-        {label: 'Add Critical Chance', key: 'addCriticalChance'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'LaserItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Base Damage', key: 'baseDamage'},
-        {label: 'Critical Chance', key: 'criticalChance'},
-        {label: 'Laser Amp Slots', key: 'laserAmpSlots'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'ShieldItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Capacity', key: 'capacity'},
-        {label: 'Recharge Rate', key: 'rechargeRate'},
-        {label: 'Passive Recharge Rate', key: 'passiveRechargeRate'},
-        {label: 'Absorbance', key: 'absorbance'},
-        {label: 'Shield Cell Slots', key: 'shieldCellSlots'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'ShieldCellItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Add Capacity', key: 'addCapacity'},
-        {label: 'Add Recharge Rate', key: 'addRechargeRate'},
-        {label: 'Add Passive Recharge Rate', key: 'addPassiveRechargeRate'},
-        {label: 'Add Absorbance', key: 'addAbsorbance'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'ShipItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Base Health', key: 'baseHealth'},
-        {label: 'Base Speed', key: 'baseSpeed'},
-        {label: 'Engine Slots', key: 'engineSlots'},
-        {label: 'Shield Slots', key: 'shieldSlots'},
-        {label: 'Laser Slots', key: 'laserSlots'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'EngineItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Base Speed', key: 'baseSpeed'},
-        {label: 'Thruster Slots', key: 'thrusterSlots'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ],
-      'ThrusterItem': [
-        {label: 'Name', key: 'name'},
-        {label: 'ID', key: 'id'},
-        {label: 'Add Base Speed', key: 'addBaseSpeed'},
-        {label: 'Base Speed Multiplier', key: 'baseSpeedMultiplier'},
-        {label: 'Price in Cats', key: 'priceCats'},
-        {label: 'Price in Thulium', key: 'priceThulium'}
-      ]
-    };
-
-    return fieldsMap[category] || [
-      {label: 'Name', key: 'name'},
-      {label: 'ID', key: 'id'},
-    ];
-  }
-
   protected createNewItemForCategory(category: SellableItems['itemType']): SellableItems {
-    const fields = this.getFieldsForCategory(category);
+    const fields = getFieldsForItemCategory(category);
     const newItem: { [key: string]: any } = {itemType: category};
     fields.forEach(field => {
       newItem[field.key] = '';
@@ -309,4 +225,6 @@ export class ItemEntryEditorComponent {
       this.fetchItems(this.selectedCategory!);
     }, 300)
   }
+
+  protected readonly getFieldsForItemCategory = getFieldsForItemCategory;
 }
