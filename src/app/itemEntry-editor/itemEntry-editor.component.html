@@ -40,7 +40,7 @@
             </button>
           </div>
           <form (ngSubmit)="createNewItem()">
-            <div *ngFor="let field of getFieldsForCategory(selectedCategory); trackBy: trackByKey">
+            <div *ngFor="let field of getFieldsForItemCategory(selectedCategory); trackBy: trackByKey">
               <div *ngIf="field.key !== 'id'" class="flex flex-col gap-2">
                 <label>{{ field.label }}</label>
                 <input [(ngModel)]="newItem![field.key]" [name]="field.key" class="input input-bordered"/>
@@ -61,15 +61,15 @@
         <h2>{{ selectedCategory }} Items</h2>
         <button
           class="btn bg-base-300 my-auto"
-          (click)="generateDefaultItemsForCategory(selectedCategory)">Generate Default {{selectedCategory}}
+          (click)="generateDefaultItemsForCategory(selectedCategory)">Generate Default {{ selectedCategory }}
         </button>
       </div>
       <div class="card bg-neutral">
         <div class="card-body">
           <ul class="flex flex-wrap gap-4">
-            <li *ngFor="let item of ItemEntries" class="card bg-base-200 p-4 max-w-96">
+            <li *ngFor="let item of items" class="card bg-base-200 p-4 max-w-96">
               <div class="flex flex-col gap-2">
-                <div *ngFor="let field of getFieldsForCategory(selectedCategory); trackBy: trackByKey">
+                <div *ngFor="let field of getFieldsForItemCategory(selectedCategory); trackBy: trackByKey">
                   <div class="flex flex-col gap-2 min-w-60">
                     <label>{{ field.label }}</label>
                     <span

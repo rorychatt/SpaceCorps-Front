@@ -3,11 +3,10 @@ import { NgForOf } from '@angular/common';
 import { PlayerStatistics } from '../../models/player/PlayerStatistics';
 
 @Component({
-  selector: 'app-player-info-statistics',
-  standalone: true,
-  imports: [NgForOf],
-  templateUrl: './player-info-statistics.component.html',
-  styleUrl: './player-info-statistics.component.scss',
+    selector: 'app-player-info-statistics',
+    imports: [NgForOf],
+    templateUrl: './player-info-statistics.component.html',
+    styleUrl: './player-info-statistics.component.scss'
 })
 export class PlayerInfoStatisticsComponent {
   categories = [

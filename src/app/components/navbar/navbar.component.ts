@@ -7,16 +7,15 @@ import { LoginAsAdminBtnComponent } from '../login-as-admin-btn/login-as-admin-b
 import { UserCredentialsLoginRequest } from '../../models/auth/UserCredentialsLoginRequest';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [
-    RouterLink,
-    AsyncPipe,
-    MainMenuComponent,
-    LoginAsAdminBtnComponent
-  ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+    selector: 'app-navbar',
+    imports: [
+        RouterLink,
+        AsyncPipe,
+        MainMenuComponent,
+        LoginAsAdminBtnComponent
+    ],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
 

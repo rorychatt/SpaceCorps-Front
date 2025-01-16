@@ -20,10 +20,31 @@
         <div *ngFor="let item of items" class="card bg-base-200 p-4 w-64 mx-auto">
           <div class="flex flex-col items-center">
             <!--            <img [src]="item.icon" alt="{{ item.name }} icon" class="w-16 h-16"/>-->
-            <h3 class="card-title">{{ item.name }}</h3>
+            <h3
+              title="{{ JSON.stringify(item) }}"
+              class="card-title">
+              {{ item.name }}
+            </h3>
+
+            <table class="table">
+              @for (field of getFieldsForItemCategory(selectedCategory); track field.key) {
+                <tr
+                  class="hover:bg-base-100">
+                  <td>{{ field.key }}</td>
+                  <td>{{ item[field.key] }}</td>
+                </tr>
+              }
+            </table>
+
+            @if(selectedCategory === 'ShipItem') {
+              <app-ship-model [shipModelName]="item.name"
+              ></app-ship-model>
+            }
+
             <p>Price in Cats: {{ item.priceCats }}</p>
             <p>Price in Thulium: {{ item.priceThulium }}</p>
-            <button class="btn btn-primary mt-2" (click)="buyItem(item)">Buy Item</button>
+
+            <button class="btn btn-neutral bg-base-200 mt-4" (click)="buyItem(item)">Buy Item</button>
           </div>
         </div>
       </div>

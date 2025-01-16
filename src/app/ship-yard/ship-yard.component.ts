@@ -2,36 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
-
-interface Item {
-  name: string;
-  category: string;
-  priceCats: number;
-  priceThulium: number;
-  icon: string;
-}
+import {getFieldsForItemCategory as getAllFieldsForItemCategory, SellableItems} from '../models/player/Items';
+import {ShipModelComponent} from '../components/ship-model/ship-model.component';
 
 @Component({
-  selector: 'app-ship-yard',
-  templateUrl: './ship-yard.component.html',
-  standalone: true,
-  imports: [NgForOf, NgIf],
-  styleUrls: ['./ship-yard.component.scss'],
+    selector: 'app-ship-yard',
+    templateUrl: './ship-yard.component.html',
+  imports: [NgForOf, NgIf, ShipModelComponent],
+    styleUrls: ['./ship-yard.component.scss']
 })
 export class ShipYardComponent implements OnInit {
-  categories: string[] = [
-    'Ships',
-    'Lasers',
-    'Laser Amps',
-    'Shields',
-    'Shield Cells',
-    'Engines',
-    'Engine Thrusters',
-    'Laser Ammo',
+
+  categories: SellableItems['itemType'][] = [
+    'ShipItem',
+    'LaserItem',
+    'LaserAmpItem',
+    'ShieldItem',
+    'ShieldCellItem',
+    'EngineItem',
+    'ThrusterItem',
+    'LaserAmmoItem',
   ];
-  selectedCategory: string | null = null;
-  items: SellableItem[] = [];
+
+  selectedCategory: SellableItems['itemType'] | null = null;
+  items: SellableItems[] = [];
+
   playerBalance = { cats: 0, thulium: 0 };
+
   username: string | null = null;
 
   constructor (
@@ -44,16 +41,14 @@ export class ShipYardComponent implements OnInit {
     this.fetchPlayerData();
   }
 
-  selectCategory (category: string) {
+  selectCategory (category: SellableItems['itemType']) {
     this.selectedCategory = category;
     this.fetchItems(category);
   }
 
-  fetchItems (category: string) {
-    const categoryKey =
-      ItemTypeDictionary[category as keyof typeof ItemTypeDictionary];
-    this.apiService.getItemEntriesByCategory(categoryKey).subscribe((data) => {
-      this.items = data as SellableItem[];
+  fetchItems (category: SellableItems['itemType']) {
+    this.apiService.getItemEntriesByCategory(category).subscribe((data) => {
+      this.items = data as SellableItems[];
     });
   }
 
@@ -79,7 +74,7 @@ export class ShipYardComponent implements OnInit {
 
   }
 
-  buyItem (item: SellableItem) {
+  buyItem (item: SellableItems) {
 
     if (this.username === null) {
       alert('No username found');
@@ -111,24 +106,11 @@ export class ShipYardComponent implements OnInit {
         }
       );
   }
+
+  protected getFieldsForItemCategory(category: SellableItems['itemType']){
+    const fields = getAllFieldsForItemCategory(category);
+    return fields.filter(field => !['name', 'id', 'priceCats', 'priceThulium'].includes(field.key));
+  }
+
+  protected readonly JSON = JSON;
 }
-
-type SellableItem = {
-  itemType: string;
-  id: number;
-  name: string;
-  priceCats: number;
-  priceThulium: number;
-  category: string;
-};
-
-const ItemTypeDictionary = {
-  'Ships': 'ShipEntries',
-  'Lasers': 'LaserEntries',
-  'Laser Amps': 'LaserAmpEntries',
-  'Shields': 'ShieldEntries',
-  'Shield Cells': 'ShieldCellEntries',
-  'Engines': 'EngineEntries',
-  'Engine Thrusters': 'ThrusterEntries',
-  'Laser Ammo': 'LaserAmmoEntries',
-};

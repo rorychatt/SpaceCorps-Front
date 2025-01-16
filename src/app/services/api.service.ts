@@ -8,10 +8,10 @@ import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
 import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
 import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
 import { DeleteStaticEntityRequest } from '../models/entity/DeleteStaticEntityRequest';
-import { IItemEntry } from '../models/dataEntries/itemEntries/IItemEntry';
 import { ServerInfo } from '../models/servers/ServerInfo';
 import { BuyItemRequest } from '../models/player/BuyItemRequest';
 import { Inventory } from '../models/player/Inventory';
+import { SellableItems } from '../models/player/Items';
 
 @Injectable({
   providedIn: 'root',
@@ -93,20 +93,20 @@ export class ApiService {
     );
   }
 
-  getItemEntriesByCategory (category: string) {
-    return this.http.get(`${this.url}/ItemEntries/${category}`);
+  getItemEntriesByCategory (category: SellableItems['itemType']) {
+    return this.http.get(`${this.url}/ItemEntries/${category}s`);
   }
 
-  createNewItemEntry (category: string, newItem: IItemEntry) {
-    return this.http.post<IItemEntry>(
-      `${this.url}/ItemEntries/${category}/Add`,
+  createNewItemEntry<T extends SellableItems>(newItem: T) {
+    return this.http.post<T>(
+      `${this.url}/ItemEntries/${newItem.itemType}s/Add`,
       newItem
     );
   }
 
-  deleteItemEntry (selectedCategory: string, item: IItemEntry) {
+  deleteItemEntry<T extends SellableItems>(item: T) {
     return this.http.delete(
-      `${this.url}/ItemEntries/${selectedCategory}/Delete`,
+      `${this.url}/ItemEntries/${item.itemType}s/Delete`,
       { body: { id: item.id } }
     );
   }

@@ -4,13 +4,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-lobby',
-  standalone: true,
-  imports: [
-    MainMenuComponent
-  ],
-  templateUrl: './lobby.component.html',
-  styleUrl: './lobby.component.scss'
+    selector: 'app-lobby',
+    templateUrl: './lobby.component.html',
+    styleUrl: './lobby.component.scss'
 })
 export class LobbyComponent {
 
@@ -24,8 +20,8 @@ export class LobbyComponent {
     if (!playerData) {
       console.error('No username found');
     } else {
-      const userName = playerData!.username;
-      const url = `/game?userName=${userName}`;
+      const username = playerData!.username;
+      const url = `/game?username=${username}`;
       void window.open(url, '_blank');
     }
   }

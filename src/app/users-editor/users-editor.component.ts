@@ -7,11 +7,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Inventory } from '../models/player/Inventory';
 
 @Component({
-  selector: 'app-users-editor',
-  templateUrl: './users-editor.component.html',
-  styleUrls: ['./users-editor.component.scss'],
-  imports: [FormsModule, NgFor, NgIf],
-  standalone: true,
+    selector: 'app-users-editor',
+    templateUrl: './users-editor.component.html',
+    styleUrls: ['./users-editor.component.scss'],
+    imports: [FormsModule, NgFor, NgIf]
 })
 export class UsersEditorComponent implements OnInit {
   users: PlayerData[] | null = null;

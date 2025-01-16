@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-main-menu',
-  standalone: true,
-  templateUrl: './main-menu.component.html',
-  imports: [
-    RouterLink
-  ],
-  styleUrl: './main-menu.component.scss'
+    selector: 'app-main-menu',
+    templateUrl: './main-menu.component.html',
+    imports: [
+        RouterLink
+    ],
+    styleUrl: './main-menu.component.scss'
 })
 export class MainMenuComponent {
   openItem: string | null = null;

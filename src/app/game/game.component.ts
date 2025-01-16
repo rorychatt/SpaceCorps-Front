@@ -1,56 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import * as THREE from 'three';
-import { HubService } from '../services/hub.service';
+import { HubService } from './services/hub.service';
 import { ActivatedRoute } from '@angular/router';
+import { SpaceMapData } from './types/SpaceMapData';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { initializeThreeJs, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
+import { EntityDTO } from './types/Entity';
+import { KeyboardService } from './services/keyboard.service';
 
 @Component({
   selector: 'app-game',
-  standalone: true,
-  imports: [],
   templateUrl: './game.component.html',
-  styleUrl: './game.component.scss'
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
 
-  constructor (private hubService: HubService, private route: ActivatedRoute) {
-  }
+  public camera?: THREE.PerspectiveCamera;
+  public renderer?: THREE.WebGLRenderer;
+  public scene?: THREE.Scene;
+  public controls?: OrbitControls
+  public entities: Map<string, THREE.Mesh> = new Map();
 
-  ngOnInit (): void {
+  constructor(
+    private hubService: HubService,
+    private route: ActivatedRoute,
+    private keyboardService: KeyboardService
+  ) { }
+
+  ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const username = params['username'];
       this.hubService.initializeSignalR(username);
-      this.setupSignalREvents();
-      this.initializeThreeJs();
-    })
+      this.setupSignalREvents(this.hubService, this.updateEntities.bind(this));
+      initializeThreeJs(this);
+    });
+
+    document.body.style.overflow = 'hidden';
   }
 
-  private initializeThreeJs (): void {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    camera.position.z = 5;
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    };
-
-    animate();
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: Event): void {
+    this.renderer!.setSize(window.innerWidth, window.innerHeight);
+    this.camera!.aspect = window.innerWidth / window.innerHeight;
+    this.camera!.updateProjectionMatrix();
   }
 
-  private setupSignalREvents (): void {
-    this.hubService.on('server-side-log', (data) => {
+  public async loadNewSpaceMap(spaceMapData: SpaceMapData) {
+    await clearScene(this);
+    await loadMapEnvironment(this, spaceMapData);
+  }
+
+  public updateEntities(entities: EntityDTO[]): void {
+    updateEntities(this, entities);
+  }
+
+  public setupSignalREvents(hubService: HubService, updateEntities: (entities: { id: string, position: THREE.Vector3 }[]) => void): void {
+    hubService.on('server-side-log', (data) => {
       console.log('Received data:', data);
     });
+
+    hubService.on('server-side-error', (error) => {
+      console.warn('Received error:', error);
+    });
+  
+    hubService.on('update-entities', (entities) => {
+      updateEntities(entities);
+    });
+
+    hubService.on('loginSuccessful', (response) => {
+      console.log('Login successful:', response);
+    })
+
+    hubService.on('loginFailed', (response: string) => {
+      console.error('Login failed:', response);
+    });
+
+    hubService.on('logEntities', (entities) => {
+      console.log('Entities:', entities);
+    })
   }
 }
