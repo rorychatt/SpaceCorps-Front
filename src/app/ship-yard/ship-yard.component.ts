@@ -3,11 +3,12 @@ import { NgForOf, NgIf } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import {getFieldsForItemCategory as getAllFieldsForItemCategory, SellableItems} from '../models/player/Items';
+import {ShipModelComponent} from '../components/ship-model/ship-model.component';
 
 @Component({
     selector: 'app-ship-yard',
     templateUrl: './ship-yard.component.html',
-    imports: [NgForOf, NgIf],
+  imports: [NgForOf, NgIf, ShipModelComponent],
     styleUrls: ['./ship-yard.component.scss']
 })
 export class ShipYardComponent implements OnInit {

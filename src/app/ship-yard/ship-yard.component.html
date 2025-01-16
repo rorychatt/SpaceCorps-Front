@@ -27,14 +27,16 @@
             </h3>
 
             <table class="table">
-              <tr
-                class="hover:bg-base-100"
-                *ngFor="let field of getFieldsForItemCategory(selectedCategory)">
-                <td>{{ field.key }}</td>
-                <td>{{ item[field.key] }}</td>
-              </tr>
+              @for (field of getFieldsForItemCategory(selectedCategory); track field.key) {
+                <tr
+                  class="hover:bg-base-100">
+                  <td>{{ field.key }}</td>
+                  <td>{{ item[field.key] }}</td>
+                </tr>
+              }
             </table>
 
+            <app-ship-model></app-ship-model>
 
             <p>Price in Cats: {{ item.priceCats }}</p>
             <p>Price in Thulium: {{ item.priceThulium }}</p>
