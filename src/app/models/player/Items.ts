@@ -13,6 +13,7 @@ export type SellableItems =
 export type SellableItem = InventoryItem & {
   priceCats: number;
   priceThulium: number;
+  [key: string]: any;
 };
 
 export type ShipItem = SellableItem & {

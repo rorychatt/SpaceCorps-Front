@@ -19,19 +19,21 @@ interface Item {
     styleUrls: ['./ship-yard.component.scss']
 })
 export class ShipYardComponent implements OnInit {
-  categories: string[] = [
-    'Ships',
-    'Lasers',
-    'Laser Amps',
-    'Shields',
-    'Shield Cells',
-    'Engines',
-    'Engine Thrusters',
-    'Laser Ammo',
+  categories: SellableItems['itemType'][] = [
+    'ShipItem',
+    'LaserItem',
+    'LaserAmpItem',
+    'ShieldItem',
+    'ShieldCellItem',
+    'EngineItem',
+    'ThrusterItem',
+    'LaserAmmoItem',
   ];
-  selectedCategory: string | null = null;
+  selectedCategory: SellableItems['itemType'] | null = null;
   items: SellableItems[] = [];
+
   playerBalance = { cats: 0, thulium: 0 };
+
   username: string | null = null;
 
   constructor (
@@ -44,15 +46,13 @@ export class ShipYardComponent implements OnInit {
     this.fetchPlayerData();
   }
 
-  selectCategory (category: string) {
+  selectCategory (category: SellableItems['itemType']) {
     this.selectedCategory = category;
     this.fetchItems(category);
   }
 
-  fetchItems (category: string) {
-    const categoryKey =
-      ItemTypeDictionary[category as keyof typeof ItemTypeDictionary];
-    this.apiService.getItemEntriesByCategory(categoryKey).subscribe((data) => {
+  fetchItems (category: SellableItems['itemType']) {
+    this.apiService.getItemEntriesByCategory(category).subscribe((data) => {
       console.log(data)
       this.items = data as SellableItems[];
     });
@@ -113,14 +113,3 @@ export class ShipYardComponent implements OnInit {
       );
   }
 }
-
-const ItemTypeDictionary = {
-  'Ships': 'ShipEntries',
-  'Lasers': 'LaserEntries',
-  'Laser Amps': 'LaserAmpEntries',
-  'Shields': 'ShieldEntries',
-  'Shield Cells': 'ShieldCellEntries',
-  'Engines': 'EngineEntries',
-  'Engine Thrusters': 'ThrusterEntries',
-  'Laser Ammo': 'LaserAmmoEntries',
-};

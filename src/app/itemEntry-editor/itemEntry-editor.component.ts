@@ -53,7 +53,7 @@ export class ItemEntryEditorComponent {
     }
   }
 
-  protected fetchItems(category: string) {
+  protected fetchItems(category: SellableItems['itemType']) {
     this.apiService.getItemEntriesByCategory(category).subscribe(
       {
         next: (data: any) => {
@@ -80,7 +80,7 @@ export class ItemEntryEditorComponent {
       this.newItem = null;
     }
   }
-  
+
   protected getFieldsForCategory(category: SellableItems['itemType']): { label: string, key: string }[] {
     const fieldsMap: { [K in SellableItems['itemType']]: { label: string, key: string }[] } = {
       'LaserAmmoItem': [

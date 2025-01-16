@@ -93,7 +93,7 @@ export class ApiService {
     );
   }
 
-  getItemEntriesByCategory (category: string) {
+  getItemEntriesByCategory (category: SellableItems['itemType']) {
     return this.http.get(`${this.url}/ItemEntries/${category}s`);
   }
 
