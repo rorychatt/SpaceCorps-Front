@@ -36,7 +36,10 @@
               }
             </table>
 
-            <app-ship-model></app-ship-model>
+            @if(selectedCategory === 'ShipItem') {
+              <app-ship-model [shipModelName]="item.name"
+              ></app-ship-model>
+            }
 
             <p>Price in Cats: {{ item.priceCats }}</p>
             <p>Price in Thulium: {{ item.priceThulium }}</p>

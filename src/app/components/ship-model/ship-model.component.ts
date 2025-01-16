@@ -1,5 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 
 @Component({
   selector: 'app-ship-model',
@@ -9,55 +10,57 @@ import * as THREE from 'three';
 export class ShipModelComponent implements OnInit {
   @ViewChild('rendererContainer', {static: true}) rendererContainer: ElementRef | undefined;
 
+  @Input({
+    required: true
+  }) shipModelName: string | undefined;
+
   private scene!: THREE.Scene | undefined;
   private camera!: THREE.PerspectiveCamera | undefined;
   private renderer!: THREE.WebGLRenderer | undefined;
-  private cube: THREE.Mesh | undefined;
+  private model: any;
 
   ngOnInit(): void {
     this.initThreeJS();
   }
 
   private initThreeJS(): void {
-
     if (!this.rendererContainer) {
       console.error('Renderer container not found');
       return;
     }
-    // Scene
+
+    if(!this.shipModelName) {
+      console.error('Ship model name not found');
+      return;
+    }
+
     this.scene = new THREE.Scene();
 
-    // Camera
     this.camera = new THREE.PerspectiveCamera(75, this.getAspectRatio(), 0.1, 1000);
-    this.camera.position.z = 5;
+    this.camera.position.z = 1; // Move the camera closer
 
-    // Renderer
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
     this.renderer.setSize(this.getContainerWidth(), this.getContainerHeight());
+    this.renderer.setClearColor(0x000000, 0);
     this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
 
-    // Cube
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-    this.cube = new THREE.Mesh(geometry, material);
-    this.scene.add(this.cube);
+    this.loadModel(this.shipModelName);
 
-    // Render the scene
     this.animate();
   }
 
   private animate = (): void => {
-
-    if(!this.renderer || !this.scene || !this.camera || !this.cube) {
+    if (!this.renderer || !this.scene || !this.camera) {
       console.error('Renderer, scene, camera or cube not found');
-      return
+      return;
     }
 
     requestAnimationFrame(this.animate);
 
-    // Rotate the cube
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
+    if (this.model) {
+      this.model.rotation.x += 0.001;
+      this.model.rotation.y += 0.001;
+    }
 
     this.renderer.render(this.scene, this.camera);
   };
@@ -67,7 +70,7 @@ export class ShipModelComponent implements OnInit {
   }
 
   private getContainerWidth(): number {
-    if(!this.rendererContainer) {
+    if (!this.rendererContainer) {
       console.error('Renderer container not found');
       return 0;
     }
@@ -75,10 +78,35 @@ export class ShipModelComponent implements OnInit {
   }
 
   private getContainerHeight(): number {
-    if(!this.rendererContainer) {
+    if (!this.rendererContainer) {
       console.error('Renderer container not found');
       return 0;
     }
     return this.rendererContainer.nativeElement.clientHeight;
+  }
+
+  private loadModel(modelName: string): void {
+    const loader = new GLTFLoader();
+
+    loader.load(
+      `models/ships/${modelName}/${modelName}.glb`,
+      (gltf) => {
+        this.model = gltf.scene;
+        this.model.traverse((child: any) => {
+          if (child.isMesh) {
+            child.material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+          }
+        });
+        this.scene!.add(this.model);
+      },
+      undefined,
+      (error) => {
+        console.warn('An error occurred while loading the model', error);
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        this.model = new THREE.Mesh(geometry, material);
+        this.scene!.add(this.model);
+      }
+    );
   }
 }
