@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { version } from '../../../../package.json';
+import { version, reqBackendVersion } from '../../../../package.json';
 import { AsyncPipe, NgIf } from "@angular/common";
+
 import { ApiService } from "../../services/api.service";
 
 @Component({
@@ -13,9 +14,11 @@ export class FooterComponent {
     clientVersion: string = version;
     serverVersion: string | null = null;
 
+    // minimalBackVersion: string = reqBackendVersion;
+
     apiService = inject(ApiService)
 
-    ngOnInit () {
+    ngOnInit() {
         this.apiService.getBackendVersion().subscribe({
             next: (serverInfo) => {
                 this.serverVersion = serverInfo.version
@@ -24,5 +27,9 @@ export class FooterComponent {
                 console.error(error)
             }
         });
+
+    }
+    getMinorVersion(vers: string): number {
+        return parseInt(vers.split('.')[1])
     }
 }
