@@ -36,8 +36,11 @@ export class ShipModelComponent implements OnInit {
 
     this.scene = new THREE.Scene();
 
+    this.scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    this.scene.add(new THREE.DirectionalLight(0xffffff, 0.5));
+
     this.camera = new THREE.PerspectiveCamera(75, this.getAspectRatio(), 0.1, 1000);
-    this.camera.position.z = 1; // Move the camera closer
+    this.camera.position.z = 1;
 
     this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
     this.renderer.setSize(this.getContainerWidth(), this.getContainerHeight());
@@ -92,11 +95,6 @@ export class ShipModelComponent implements OnInit {
       `models/ships/${modelName}/${modelName}.glb`,
       (gltf) => {
         this.model = gltf.scene;
-        this.model.traverse((child: any) => {
-          if (child.isMesh) {
-            child.material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-          }
-        });
         this.scene!.add(this.model);
       },
       undefined,
