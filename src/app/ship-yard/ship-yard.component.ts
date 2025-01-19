@@ -97,14 +97,17 @@ export class ShipYardComponent implements OnInit {
         itemId: item.id,
         itemType: item.itemType
       })
-      .subscribe(
-        (data) => {
+      .subscribe({
+        next: (data) => {
           console.log(data);
+          setTimeout(() => {
+            this.fetchPlayerData();
+          }, 200)
         },
-        (error) => {
+        error: (error) => {
           console.error('Error buying item', error);
         }
-      );
+      });
   }
 
   protected getFieldsForItemCategory(category: SellableItems['itemType']){
