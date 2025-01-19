@@ -1,11 +1,13 @@
-import {Component, inject} from '@angular/core';
-import {version, reqBackendVersion} from '../../../../package.json';
-import {ApiService} from "../../services/api.service";
+import { Component, inject } from '@angular/core';
+import { version, reqBackendVersion } from '../../../../package.json';
+import { ApiService } from "../../services/api.service";
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.scss',
+  imports: [NgClass]
 })
 export class FooterComponent {
 
