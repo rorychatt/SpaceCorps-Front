@@ -27,7 +27,15 @@ export class FooterComponent {
                 console.error(error)
             }
         });
-
+        let outDated = false;
+        if (this.serverVersion) {
+            if (
+                this.getMinorVersion(this.serverVersion) >
+                this.getMinorVersion(reqBackendVersion)
+            ) {
+                outDated = true;
+            }
+        }
     }
     getMinorVersion(vers: string): number {
         return parseInt(vers.split('.')[1])
