@@ -4,7 +4,15 @@
       <h2 class="card-title">
         Your Inventory
       </h2>
-      <app-inventory-active-ship></app-inventory-active-ship>
+      <app-inventory-active-ship
+        [activeShipItemName]="inventory!.activeShipName"
+      ></app-inventory-active-ship>
+      <h2 class="card-title">
+        All Items
+      </h2>
+      <app-inventory-all-items
+        [items]="inventory!.items">
+      </app-inventory-all-items>
     </div>
   </section>
 </div>

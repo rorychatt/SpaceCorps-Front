@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ShipModelComponent} from '../ship-model/ship-model.component';
 
 @Component({
@@ -10,5 +10,7 @@ import {ShipModelComponent} from '../ship-model/ship-model.component';
   styleUrl: './inventory-active-ship.component.scss'
 })
 export class InventoryActiveShipComponent {
-
+  @Input({
+    required: true
+  }) activeShipItemName?: string;
 }

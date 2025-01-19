@@ -25,12 +25,12 @@ export class ShipModelComponent implements OnInit {
 
   private initThreeJS(): void {
     if (!this.rendererContainer) {
-      console.error('Renderer container not found');
+      console.error('Renderer container not found', this.rendererContainer);
       return;
     }
 
     if(!this.shipModelName) {
-      console.error('Ship model name not found');
+      console.error('Ship model name not found', this.shipModelName);
       return;
     }
 
