@@ -1,29 +1,29 @@
-import { Component } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { FormsModule } from '@angular/forms';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
-import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
-import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
-import { StaticEntity } from '../models/entity/StaticEntity';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
+import {Component} from '@angular/core';
+import {ApiService} from '../services/api.service';
+import {FormsModule} from '@angular/forms';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {SpaceMapDataEntry} from '../models/dataEntries/SpaceMapDataEntry';
+import {UpdateSpaceMapDataEntryRequest} from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
+import {ErrorModalComponent} from '../components/error-modal/error-modal.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
+import {StaticEntity} from '../models/entity/StaticEntity';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CreateStaticEntityRequest} from '../models/entity/CreateStaticEntityRequest';
 
 @Component({
-    selector: 'app-spacemap-editor',
-    imports: [
-        FormsModule,
-        FontAwesomeModule,
-        NgForOf,
-        NgIf,
-        NgClass,
-        ErrorModalComponent,
-    ],
-    templateUrl: './spacemap-editor.component.html',
-    styleUrl: './spacemap-editor.component.scss'
+  selector: 'app-spacemap-editor',
+  imports: [
+    FormsModule,
+    FontAwesomeModule,
+    NgForOf,
+    NgIf,
+    NgClass,
+    ErrorModalComponent,
+  ],
+  templateUrl: './spacemap-editor.component.html',
+  styleUrl: './spacemap-editor.component.scss'
 })
 export class SpacemapEditorComponent {
 
@@ -33,24 +33,24 @@ export class SpacemapEditorComponent {
   newSpaceMapName: string | null = null;
   error: HttpErrorResponse | null = null;
 
-  constructor (
+  constructor(
     private apiService: ApiService,
     private router: Router,
     private route: ActivatedRoute
   ) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.fetchSpaceMapDataEntryNames();
   }
 
-  fetchSpaceMapDataEntryNames () {
+  fetchSpaceMapDataEntryNames() {
     this.apiService.getSpaceMapDataEntryNames().subscribe((data: string[]) => {
       this.spaceMapDataEntryNames = data;
     });
   }
 
-  selectSpaceMapDataEntry (name: string) {
+  selectSpaceMapDataEntry(name: string) {
     this.selectedSpaceMapDataEntryName = name;
     this.apiService.getSpaceMapDataEntry(name).subscribe({
       next: (data: SpaceMapDataEntry) => {
@@ -65,7 +65,7 @@ export class SpacemapEditorComponent {
     });
   }
 
-  postSpaceMapDataEntryByName (newName: string) {
+  postSpaceMapDataEntryByName(newName: string) {
     this.apiService.postSpaceMapDataEntry(newName).subscribe({
       next: () => {
         this.fetchSpaceMapDataEntryNames();
@@ -77,7 +77,7 @@ export class SpacemapEditorComponent {
     });
   }
 
-  updateSpaceMapDataEntry () {
+  updateSpaceMapDataEntry() {
     if (this.selectedSpaceMapDataEntry && this.selectedSpaceMapDataEntryName) {
       const updateRequest: UpdateSpaceMapDataEntryRequest = {
         size: this.selectedSpaceMapDataEntry.size,
@@ -94,15 +94,15 @@ export class SpacemapEditorComponent {
     }
   }
 
-  clearLoginError () {
+  clearLoginError() {
     this.error = null;
   }
 
-  createDefaultStarMap () {
+  createDefaultStarMap() {
 
     const m1Map: SpaceMapDataEntry = {
       name: 'M-1',
-      size: { width: 320, height: 180 },
+      size: {width: 320, height: 180},
       preferredColor: 'red',
       spawnableAliens: [],
       staticEntities: []
@@ -110,7 +110,7 @@ export class SpacemapEditorComponent {
 
     const t1Map: SpaceMapDataEntry = {
       name: 'T-1',
-      size: { width: 320, height: 180 },
+      size: {width: 320, height: 180},
       preferredColor: 'blue',
       spawnableAliens: [],
       staticEntities: []
@@ -118,7 +118,7 @@ export class SpacemapEditorComponent {
 
     const v1Map: SpaceMapDataEntry = {
       name: 'V-1',
-      size: { width: 320, height: 180 },
+      size: {width: 320, height: 180},
       preferredColor: 'green',
       spawnableAliens: [],
       staticEntities: []
@@ -128,10 +128,12 @@ export class SpacemapEditorComponent {
     this.createAndUpdateSpaceMapDataEntry(t1Map);
     this.createAndUpdateSpaceMapDataEntry(v1Map);
 
-    this.fetchSpaceMapDataEntryNames();
+    setTimeout(() => {
+      this.fetchSpaceMapDataEntryNames();
+    }, 300)
   }
 
-  deleteSpaceMap (name: string) {
+  deleteSpaceMap(name: string) {
     this.apiService.deleteSpaceMapDataEntry(name).subscribe({
       next: () => {
         this.fetchSpaceMapDataEntryNames();
@@ -139,7 +141,7 @@ export class SpacemapEditorComponent {
           this.selectedSpaceMapDataEntryName = null;
           void this.router.navigate([], {
             relativeTo: this.route,
-            queryParams: { map: null },
+            queryParams: {map: null},
             queryParamsHandling: 'merge'
           });
         }
@@ -152,7 +154,7 @@ export class SpacemapEditorComponent {
     });
   }
 
-  private createAndUpdateSpaceMapDataEntry (map: SpaceMapDataEntry) {
+  private createAndUpdateSpaceMapDataEntry(map: SpaceMapDataEntry) {
     this.apiService.postSpaceMapDataEntry(map.name).subscribe(() => {
       this.apiService.updateSpaceMapDataEntry(map.name, map).subscribe(() => {
         console.log(`${map.name} SpaceMapDataEntry created and updated successfully`);
@@ -160,15 +162,15 @@ export class SpacemapEditorComponent {
     });
   }
 
-  private async updateUrlWithMapName (name: string) {
+  private async updateUrlWithMapName(name: string) {
     await this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { map: name },
+      queryParams: {map: name},
       queryParamsHandling: 'merge'
     });
   }
 
-  protected deleteStaticEntity (staticEntity: StaticEntity) {
+  protected deleteStaticEntity(staticEntity: StaticEntity) {
     if (!this.selectedSpaceMapDataEntryName) {
       console.error("No map selected");
       return;
@@ -185,11 +187,11 @@ export class SpacemapEditorComponent {
     });
   }
 
-  protected saveStaticEntities () {
+  protected saveStaticEntities() {
     console.warn("Not implemented");
   }
 
-  protected addStaticEntityToMap () {
+  protected addStaticEntityToMap() {
     if (!this.selectedSpaceMapDataEntryName) {
       console.error("No map selected");
       return;
@@ -210,7 +212,7 @@ export class SpacemapEditorComponent {
 
   protected newStaticEntity: CreateStaticEntityRequest = {
     name: '',
-    position: { x: 0, y: 0, z: 0 },
+    position: {x: 0, y: 0, z: 0},
     locationName: '',
     safeZoneRadii: 0,
     destination: ''
