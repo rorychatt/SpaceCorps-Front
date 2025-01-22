@@ -13,7 +13,7 @@ export class LoginAsAdminBtnComponent {
 
   loginAsPredefinedAdmin () {
     const userCredentialsLoginRequest: UserCredentialsLoginRequest = {
-      email: 'tester@tester.com',
+      login: 'tester@tester.com',
       password: 'MegaGoodPassword123!',
     };
 
