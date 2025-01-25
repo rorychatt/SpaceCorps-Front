@@ -25,11 +25,10 @@
       <button
         class="btn max-w-32"
         [ngClass]="{
-    'btn-disabled':
-      !loginForm.get('email')?.value ||
-      !loginForm.get('password')?.value,
-    }"
-      >
+          'btn-disabled':
+            !loginForm.get('email')?.value ||
+            !loginForm.get('password')?.value,
+        }">
         Login
       </button>
 
