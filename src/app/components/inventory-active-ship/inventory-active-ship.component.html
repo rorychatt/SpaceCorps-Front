@@ -1,0 +1,12 @@
+<div class="p-4 flex flex-auto gap-4 justify-around">
+  <section class="card bg-base-200 shadow-xl max-w-screen-2xl">
+    <div class="card-body">
+      <h2 class="card-title">
+        Active Ship: {{ activeShipItemName }}
+        <app-ship-model
+          [shipModelName]="activeShipItemName"
+        ></app-ship-model>
+      </h2>
+    </div>
+  </section>
+</div>
