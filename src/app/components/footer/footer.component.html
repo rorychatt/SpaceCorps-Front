@@ -1,9 +1,13 @@
+
 <footer class="footer bg-base-300 flex flex-row justify-center">
     <div class="footer-title">
         Version: {{ clientVersion }}
     </div>
+
     @if (serverVersion) {
-        <div class="footer-title">
+        <div class="footer-title" [ngClass] = "{
+            'red-color': outDated
+        }">
             Server Version: {{ serverVersion }}
         </div>
     }
