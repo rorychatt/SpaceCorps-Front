@@ -10,14 +10,11 @@ import {InventoryItem} from '../../models/player/InventoryItem';
 export class InventoryAllItemsComponent {
   @Input({
     required: true
-  }) items: InventoryItem[] | undefined;
+  }) items: InventoryItem[] = [];
+
+
 
   ngOnInit() {
-
-    if (!this.items) {
-      console.warn('No items were provided to the InventoryAllItemsComponent');
-      this.items = [];
-    }
 
     // sort items by item type and then by item name
     this.items = this.items.sort((a, b) => {
@@ -27,5 +24,7 @@ export class InventoryAllItemsComponent {
         return a.itemType.localeCompare(b.itemType);
       }
     });
+
+    console.log("Items loaded and sorted in inventory: ", this.items);
   }
 }
