@@ -12,17 +12,24 @@ export class InventoryAllItemsComponent {
     required: true
   }) items: InventoryItem[] = [];
 
-
+  categorizedItems: Map<string, InventoryItem[]> =
+    new Map<string, InventoryItem[]>();
 
   ngOnInit() {
 
-    // sort items by item type and then by item name
-    this.items = this.items.sort((a, b) => {
-      if (a.itemType === b.itemType) {
-        return a.name.localeCompare(b.name);
+    // Categorize items
+    this.items.forEach(item => {
+      if(!this.categorizedItems.has(item.itemType)) {
+        this.categorizedItems.set(item.itemType, [item]);
       } else {
-        return a.itemType.localeCompare(b.itemType);
+        this.categorizedItems.get(item.itemType)!.push(item);
       }
+
+    });
+
+    // Sort items per category
+    this.categorizedItems.forEach((items, itemType) => {
+      items.sort((a, b) => a.name.localeCompare(b.name));
     });
 
     console.log("Items loaded and sorted in inventory: ", this.items);
