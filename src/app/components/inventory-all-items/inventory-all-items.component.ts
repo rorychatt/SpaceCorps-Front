@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {InventoryItem} from '../../models/player/InventoryItem';
 
 @Component({
@@ -7,7 +7,7 @@ import {InventoryItem} from '../../models/player/InventoryItem';
   templateUrl: './inventory-all-items.component.html',
   styleUrl: './inventory-all-items.component.scss'
 })
-export class InventoryAllItemsComponent {
+export class InventoryAllItemsComponent implements OnInit {
   @Input({
     required: true
   }) items: InventoryItem[] = [];
@@ -28,7 +28,7 @@ export class InventoryAllItemsComponent {
     });
 
     // Sort items per category
-    this.categorizedItems.forEach((items, itemType) => {
+    this.categorizedItems.forEach((items) => {
       items.sort((a, b) => a.name.localeCompare(b.name));
     });
 
