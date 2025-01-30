@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ItemEntryEditorComponent } from './itemEntry-editor.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ItemEntryEditorComponent} from './itemEntry-editor.component';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('ItemEditorComponent', () => {
   let component: ItemEntryEditorComponent;
@@ -8,9 +9,13 @@ describe('ItemEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ItemEntryEditorComponent]
+      imports: [ItemEntryEditorComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ItemEntryEditorComponent);
     component = fixture.componentInstance;

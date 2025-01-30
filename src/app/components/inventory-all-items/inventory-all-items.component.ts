@@ -10,7 +10,7 @@ import {InventoryItem} from '../../models/player/InventoryItem';
 export class InventoryAllItemsComponent implements OnInit {
   @Input({
     required: true
-  }) items: InventoryItem[] = [];
+  }) items?: InventoryItem[] = [];
 
   categorizedItems: Map<string, InventoryItem[]> =
     new Map<string, InventoryItem[]>();
@@ -18,7 +18,7 @@ export class InventoryAllItemsComponent implements OnInit {
   ngOnInit() {
 
     // Categorize items
-    this.items.forEach(item => {
+    this.items?.forEach(item => {
       if(!this.categorizedItems.has(item.itemType)) {
         this.categorizedItems.set(item.itemType, [item]);
       } else {
