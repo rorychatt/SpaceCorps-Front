@@ -157,6 +157,9 @@ export class SpacemapEditorComponent {
     });
   }
 
+  /**
+   * @deprecated This method is not used and should be removed
+   */
   private createAndUpdateSpaceMapDataEntry(map: SpaceMapDataEntry) {
     this.apiService.postSpaceMapDataEntry(map.name).subscribe(() => {
       this.apiService.updateSpaceMapDataEntry(map.name, map).subscribe(() => {
