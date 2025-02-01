@@ -4,7 +4,6 @@ import { RegisterFormComponent } from '../components/register-form/register-form
 import { AuthService } from '../services/auth.service';
 import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCreateRequest';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 import { Router } from '@angular/router';
 import { LoginAsAdminBtnComponent } from "../components/login-as-admin-btn/login-as-admin-btn.component";
@@ -14,7 +13,6 @@ import { LoginAsAdminBtnComponent } from "../components/login-as-admin-btn/login
   imports: [
     LoginFormComponent,
     RegisterFormComponent,
-    ErrorModalComponent,
     LoginAsAdminBtnComponent
   ],
   templateUrl: './login.component.html',
