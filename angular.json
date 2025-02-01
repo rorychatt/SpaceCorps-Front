@@ -20,6 +20,7 @@
             "outputPath": "dist/space-corps-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "baseHref": "/SpaceCorps-Front/",
             "polyfills": [
               "zone.js"
             ],
