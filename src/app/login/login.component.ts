@@ -7,16 +7,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 import { Router } from '@angular/router';
+import { LoginAsAdminBtnComponent } from "../components/login-as-admin-btn/login-as-admin-btn.component";
 
 @Component({
-    selector: 'app-login',
-    imports: [
-        LoginFormComponent,
-        RegisterFormComponent,
-        ErrorModalComponent
-    ],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+  selector: 'app-login',
+  imports: [
+    LoginFormComponent,
+    RegisterFormComponent,
+    ErrorModalComponent,
+    LoginAsAdminBtnComponent
+  ],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
@@ -25,16 +27,16 @@ export class LoginComponent {
   error: HttpErrorResponse | null = null;
   router = inject(Router);
 
-  clearLoginError () {
+  clearLoginError() {
     this.error = null;
   }
 
-  onToggleView () {
+  onToggleView() {
     this.isLoginView = !this.isLoginView;
     this.clearLoginError();
   }
 
-  onRegister ($event: UserCredentialsCreateRequest) {
+  onRegister($event: UserCredentialsCreateRequest) {
     const result = this.authService.register($event);
     result.subscribe({
       next: (response) => {
@@ -47,7 +49,7 @@ export class LoginComponent {
     });
   }
 
-  onLogin ($event: UserCredentialsLoginRequest) {
+  onLogin($event: UserCredentialsLoginRequest) {
     const result = this.authService.logIn($event);
     result.subscribe({
       next: (response) => {

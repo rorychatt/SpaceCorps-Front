@@ -2,23 +2,20 @@
   <nav class="flex justify-between w-full">
     <a routerLink="/">SpaceCorps Open Beta 2025</a>
     @if ((authState$ | async)?.isLoggedIn) {
-      <app-main-menu></app-main-menu>
+    <app-main-menu></app-main-menu>
     }
     <ul class="flex space-x-4">
       @if ((authState$ | async)?.isLoggedIn) {
-        <a class="btn btn-neutral bg-base-200" routerLink="/profile">
-          Welcome, {{ (authState$ | async)?.username }}!
-        </a>
-        <a class="btn btn-neutral bg-base-200" routerLink="/" (click)="logOut()">
-          Log Out
-        </a>
+      <a class="btn btn-neutral bg-base-200" routerLink="/profile">
+        Welcome, {{ (authState$ | async)?.username }}!
+      </a>
+      <a class="btn btn-neutral bg-base-200" routerLink="/" (click)="logOut()">
+        Log Out
+      </a>
       } @else {
-        <app-login-as-admin-btn
-          (toggleLoginEvent)="toggleLogin($event)"
-        ></app-login-as-admin-btn>
-        <a class="btn btn-neutral bg-base-200" routerLink="/login">
-          Log In / Sign Up
-        </a>
+      <a class="btn btn-neutral bg-base-200" routerLink="/login">
+        Log In / Sign Up
+      </a>
       }
     </ul>
 
