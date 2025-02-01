@@ -18,7 +18,7 @@ import { SellableItems } from '../models/player/Items';
 })
 export class ApiService {
 
-  private url = isDevMode() ? 'http://localhost:5274/api' : 'https://rorycraft.com/api';
+  private url = isDevMode() ? 'http://localhost:5274/api' : 'https://rorycraft.com:5274/api';
 
   constructor(private http: HttpClient) {
   }
