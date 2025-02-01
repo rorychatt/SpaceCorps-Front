@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCreateRequest';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
@@ -17,47 +17,48 @@ import { SellableItems } from '../models/player/Items';
   providedIn: 'root',
 })
 export class ApiService {
-  private url = 'http://localhost:5274/api';
 
-  constructor (private http: HttpClient) {
+  private url = isDevMode() ? 'http://localhost:5274/api' : 'https://rorycraft.com/api';
+
+  constructor(private http: HttpClient) {
   }
 
-  createNewUser (request: UserCredentialsCreateRequest) {
+  createNewUser(request: UserCredentialsCreateRequest) {
     return this.http.post(`${this.url}/UserCredentials/Create`, request);
   }
 
-  logIn (request: UserCredentialsLoginRequest) {
+  logIn(request: UserCredentialsLoginRequest) {
     return this.http.post(`${this.url}/UserCredentials/Verify`, request);
   }
 
-  getPlayerInfo (request: GetPlayerInfoRequest) {
+  getPlayerInfo(request: GetPlayerInfoRequest) {
     return this.http.get<PlayerData>(`${this.url}/Players/${request.username}`);
   }
 
-  getAllPlayers () {
+  getAllPlayers() {
     return this.http.get<PlayerData[]>(`${this.url}/Players/All`);
   }
 
-  getSpaceMapDataEntryNames () {
+  getSpaceMapDataEntryNames() {
     return this.http.get<string[]>(
       `${this.url}/SpaceMapDataEntries/GetAllNames`
     );
   }
 
-  getSpaceMapDataEntry (name: string) {
+  getSpaceMapDataEntry(name: string) {
     return this.http.get<SpaceMapDataEntry>(
       `${this.url}/SpaceMapDataEntries/Get/${name}`
     );
   }
 
-  postSpaceMapDataEntry (mapName: string) {
+  postSpaceMapDataEntry(mapName: string) {
     return this.http.post<SpaceMapDataEntry>(
       `${this.url}/SpaceMapDataEntries/Add`,
       { name: mapName }
     );
   }
 
-  updateSpaceMapDataEntry (
+  updateSpaceMapDataEntry(
     mapName: string,
     request: UpdateSpaceMapDataEntryRequest
   ) {
@@ -67,13 +68,13 @@ export class ApiService {
     );
   }
 
-  deleteSpaceMapDataEntry (mapName: string) {
+  deleteSpaceMapDataEntry(mapName: string) {
     return this.http.delete(
       `${this.url}/SpaceMapDataEntries/Delete/${mapName}`
     );
   }
 
-  addStaticEntityToMap (
+  addStaticEntityToMap(
     selectedSpaceMapDataEntryName: string,
     newStaticEntity: CreateStaticEntityRequest
   ) {
@@ -83,7 +84,7 @@ export class ApiService {
     );
   }
 
-  deleteStaticEntityFromMap (
+  deleteStaticEntityFromMap(
     mapName: string,
     staticEntity: DeleteStaticEntityRequest
   ) {
@@ -93,7 +94,7 @@ export class ApiService {
     );
   }
 
-  getItemEntriesByCategory (category: SellableItems['itemType']) {
+  getItemEntriesByCategory(category: SellableItems['itemType']) {
     return this.http.get(`${this.url}/ItemEntries/${category}s`);
   }
 
@@ -111,17 +112,17 @@ export class ApiService {
     );
   }
 
-  getBackendVersion () {
+  getBackendVersion() {
     return this.http.get<ServerInfo>(`${this.url}/Servers/Info`);
   }
 
-  buyItem (buyItemRequest: BuyItemRequest) {
+  buyItem(buyItemRequest: BuyItemRequest) {
     return this.http.post(`${this.url}/Shops/ShipYard/Buy`, buyItemRequest, {
       responseType: "text" as "json"
     });
   }
 
-  handleUserEditorCommand (command: string) {
+  handleUserEditorCommand(command: string) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<void>(
       `${this.url}/Players/UserEditorCommand`,
@@ -130,7 +131,7 @@ export class ApiService {
     );
   }
 
-  getUserInventory (username: string) {
+  getUserInventory(username: string) {
     return this.http.get<Inventory>(`${this.url}/Players/Inventory/${username}`);
   }
 }
