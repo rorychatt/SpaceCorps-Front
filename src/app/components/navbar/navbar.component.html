@@ -6,7 +6,7 @@
     }
     <ul class="flex space-x-4">
       @if ((authState$ | async)?.isLoggedIn) {
-      <a class="btn btn-neutral bg-base-200" routerLink="/profile">
+      <a class="btn btn-neutral bg-base-200" routerLink="/pilot-info">
         Welcome, {{ (authState$ | async)?.username }}!
       </a>
       <a class="btn btn-neutral bg-base-200" routerLink="/" (click)="logOut()">
