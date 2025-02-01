@@ -7,10 +7,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Inventory } from '../models/player/Inventory';
 
 @Component({
-    selector: 'app-users-editor',
-    templateUrl: './users-editor.component.html',
-    styleUrls: ['./users-editor.component.scss'],
-    imports: [FormsModule, NgFor, NgIf]
+  selector: 'app-users-editor',
+  templateUrl: './users-editor.component.html',
+  styleUrls: ['./users-editor.component.scss'],
+  imports: [FormsModule, NgIf]
 })
 export class UsersEditorComponent implements OnInit {
   users: PlayerData[] | null = null;
@@ -19,14 +19,14 @@ export class UsersEditorComponent implements OnInit {
   command: string = '';
   commandHistory: string[] = [];
 
-  constructor (private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.fetchUsers();
   }
 
-  private fetchUsers () {
+  private fetchUsers() {
     this.apiService.getAllPlayers().subscribe({
       next: (data: PlayerData[]) => {
         this.users = data;
@@ -38,7 +38,7 @@ export class UsersEditorComponent implements OnInit {
     });
   }
 
-  private getCurrentTime (): string {
+  private getCurrentTime(): string {
     const now = new Date();
     return `[${now.getHours().toString().padStart(2, '0')}:${now
       .getMinutes()
@@ -46,7 +46,7 @@ export class UsersEditorComponent implements OnInit {
       .padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
   }
 
-  executeCommand () {
+  executeCommand() {
     const timestamp = this.getCurrentTime();
 
     this.commandHistory.unshift(`${timestamp} ${this.command}`);
@@ -97,7 +97,7 @@ export class UsersEditorComponent implements OnInit {
     }, 300);
   }
 
-  onUserClick (username: string) {
+  onUserClick(username: string) {
     this.apiService.getUserInventory(username).subscribe({
       next: (response) => {
         this.selectedUserInventory = response;
