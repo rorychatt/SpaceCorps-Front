@@ -98,6 +98,9 @@ export class SpacemapEditorComponent {
     this.error = null;
   }
 
+  /**
+   * @deprecated This method is not used and should be removed
+   */
   createDefaultStarMap() {
 
     const m1Map: SpaceMapDataEntry = {
