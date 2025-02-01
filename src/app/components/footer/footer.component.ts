@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { version, reqBackendVersion } from '../../../../package.json';
-import { ApiService } from "../../services/api.service";
-import { NgClass } from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
+import packageJson from '../../../../package.json';
+import {ApiService} from "../../services/api.service";
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -9,9 +9,10 @@ import { NgClass } from '@angular/common';
   styleUrl: './footer.component.scss',
   imports: [NgClass]
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
 
-  clientVersion: string = version;
+  clientVersion: string = packageJson.version;
+  requiredBackendVersion: string = packageJson.reqBackendVersion;
   outDated: boolean = false;
   serverVersion: string | null = null;
 
@@ -25,7 +26,7 @@ export class FooterComponent {
         if (!this.serverVersion) return;
 
         this.outDated = this.getMinorVersion(this.serverVersion)
-          > this.getMinorVersion(reqBackendVersion);
+          > this.getMinorVersion(this.requiredBackendVersion);
       },
       error: (error) => {
         console.error(error)

@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UsersEditorComponent } from './users-editor.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {UsersEditorComponent} from './users-editor.component';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('UsersEditorComponent', () => {
   let component: UsersEditorComponent;
@@ -8,9 +9,13 @@ describe('UsersEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UsersEditorComponent]
+      imports: [UsersEditorComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(UsersEditorComponent);
     component = fixture.componentInstance;

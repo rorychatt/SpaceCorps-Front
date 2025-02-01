@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GithubTimelineComponent } from './github-timeline.component';
+import {GithubTimelineComponent} from './github-timeline.component';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('GithubTimelineComponent', () => {
   let component: GithubTimelineComponent;
@@ -8,9 +10,13 @@ describe('GithubTimelineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GithubTimelineComponent]
+      imports: [GithubTimelineComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(GithubTimelineComponent);
     component = fixture.componentInstance;

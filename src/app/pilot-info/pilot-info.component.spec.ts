@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PilotInfoComponent } from './pilot-info.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {PilotInfoComponent} from './pilot-info.component';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('PilotInfoComponent', () => {
   let component: PilotInfoComponent;
@@ -8,9 +9,13 @@ describe('PilotInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PilotInfoComponent]
+      imports: [PilotInfoComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PilotInfoComponent);
     component = fixture.componentInstance;

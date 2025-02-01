@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ShipYardComponent } from './ship-yard.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ShipYardComponent} from './ship-yard.component';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('ShipYardComponent', () => {
   let component: ShipYardComponent;
@@ -8,9 +9,13 @@ describe('ShipYardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShipYardComponent]
+      imports: [ShipYardComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ShipYardComponent);
     component = fixture.componentInstance;

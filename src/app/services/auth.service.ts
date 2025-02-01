@@ -1,10 +1,12 @@
-import { inject, Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
-import { AuthState } from '../models/auth/AuthState';
-import { UserCredentialsCreateRequest } from '../models/auth/UserCredentialsCreateRequest';
-import { ApiService } from './api.service';
-import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
-import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
+import {inject, Injectable} from '@angular/core';
+import {ComponentStore} from '@ngrx/component-store';
+import {AuthState} from '../models/auth/AuthState';
+import {UserCredentialsCreateRequest} from '../models/auth/UserCredentialsCreateRequest';
+import {ApiService} from './api.service';
+import {UserCredentialsLoginRequest} from '../models/auth/UserCredentialsLoginRequest';
+import {GetPlayerInfoRequest} from '../models/player/GetPlayerInfoRequest';
+import {SessionService} from './session.service';
+import {tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +14,46 @@ import { GetPlayerInfoRequest } from '../models/player/GetPlayerInfoRequest';
 export class AuthService extends ComponentStore<AuthState> {
 
   apiService = inject(ApiService);
+  sessionService = inject(SessionService);
 
-  constructor () {
+  constructor() {
     super(new AuthState());
+    this.initializeSession();
   }
 
   readonly authState$ = this.select((state) => state);
 
-  logIn (userCredentialsLoginRequest: UserCredentialsLoginRequest) {
-    return this.apiService.logIn(userCredentialsLoginRequest);
+  initializeSession() {
+    const session = this.sessionService.getSession();
+    if (session) {
+      this.fetchUserAfterSuccessfulLogin(session);
+    }
   }
 
-  logOut () {
+  logIn(userCredentialsLoginRequest: UserCredentialsLoginRequest) {
+    return this.apiService.logIn(userCredentialsLoginRequest).pipe(
+      tap(response => {
+        this.sessionService.setSession(response);
+        this.fetchUserAfterSuccessfulLogin(response);
+      })
+    );
+  }
+
+  logOut() {
+    this.sessionService.clearSession();
     this.patchState(new AuthState());
   }
 
-  register (userCredentialsCreateRequest: UserCredentialsCreateRequest) {
-    return this.apiService.createNewUser(userCredentialsCreateRequest);
+  register(userCredentialsCreateRequest: UserCredentialsCreateRequest) {
+    return this.apiService.createNewUser(userCredentialsCreateRequest).pipe(
+      tap(response => {
+        this.sessionService.setSession(response);
+        this.fetchUserAfterSuccessfulLogin(response);
+      })
+    );
   }
 
-  fetchUserAfterSuccessfulLogin (response: any) {
-
+  fetchUserAfterSuccessfulLogin(response: any) {
     const getPlayerInfoRequest: GetPlayerInfoRequest = {
       username: response.username
     }
@@ -51,7 +72,7 @@ export class AuthService extends ComponentStore<AuthState> {
     });
   }
 
-  getPlayerData(){
+  getPlayerData() {
     return this.state().playerData;
   }
 }

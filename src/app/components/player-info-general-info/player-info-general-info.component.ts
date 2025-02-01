@@ -1,15 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { AsyncPipe, NgClass } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
-import { ApiService } from '../../services/api.service';
+import {Component, inject, OnInit} from '@angular/core';
+import {AsyncPipe, NgClass} from '@angular/common';
+import {AuthService} from '../../services/auth.service';
+import {ApiService} from '../../services/api.service';
 
 @Component({
-    selector: 'app-player-info-general-info',
-    imports: [NgClass, AsyncPipe],
-    templateUrl: './player-info-general-info.component.html',
-    styleUrl: './player-info-general-info.component.scss'
+  selector: 'app-player-info-general-info',
+  imports: [NgClass, AsyncPipe],
+  templateUrl: './player-info-general-info.component.html',
+  styleUrl: './player-info-general-info.component.scss'
 })
-export class PlayerInfoGeneralInfoComponent {
+export class PlayerInfoGeneralInfoComponent implements OnInit {
   authService = inject(AuthService);
   apiService = inject(ApiService);
 
@@ -17,8 +17,11 @@ export class PlayerInfoGeneralInfoComponent {
 
   ngOnInit() {
     const authPlayerData = this.authService.getPlayerData();
-    if (!authPlayerData) console.error('Error: Missing PlayerData');
-    const username = authPlayerData!.username;
+    if (!authPlayerData) {
+      console.error('Error: Missing PlayerData');
+      return;
+    }
+    const username = authPlayerData.username;
 
     this.getPlayerInfo(username).subscribe({
       next: (response) => {

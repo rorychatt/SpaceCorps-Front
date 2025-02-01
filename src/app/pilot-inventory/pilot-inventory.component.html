@@ -5,13 +5,13 @@
         Your Inventory
       </h2>
       <app-inventory-active-ship
-        [activeShipItemName]="inventory!.activeShipName"
+        [activeShipItemName]="inventory?.activeShipName"
       ></app-inventory-active-ship>
       <h2 class="card-title">
         All Items
       </h2>
       <app-inventory-all-items
-        [items]="inventory!.items">
+        [items]="inventory?.items">
       </app-inventory-all-items>
     </div>
   </section>

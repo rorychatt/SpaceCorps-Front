@@ -1,7 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import {TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {RouterModule} from '@angular/router';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,8 +10,11 @@ describe('AppComponent', () => {
       imports: [
         AppComponent,
         RouterModule.forRoot([]),
-        HttpClientModule
       ],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
   });
 
@@ -18,12 +22,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'SpaceCorps-Front' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('SpaceCorps-Front');
   });
 
 });

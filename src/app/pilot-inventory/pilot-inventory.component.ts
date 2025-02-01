@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InventoryActiveShipComponent} from '../components/inventory-active-ship/inventory-active-ship.component';
 import {ApiService} from '../services/api.service';
 import {AuthService} from '../services/auth.service';
@@ -14,7 +14,7 @@ import {InventoryAllItemsComponent} from '../components/inventory-all-items/inve
   templateUrl: './pilot-inventory.component.html',
   styleUrl: './pilot-inventory.component.scss'
 })
-export class PilotInventoryComponent {
+export class PilotInventoryComponent implements OnInit {
 
   protected inventory?: Inventory;
 
@@ -25,7 +25,7 @@ export class PilotInventoryComponent {
     const playerData = this.authService.getPlayerData();
     if (!playerData) return console.error('No player data found thus cannot get username and load inventory');
 
-    this.apiService.getUserInventory(playerData!.username).subscribe((inventory: Inventory) => {
+    this.apiService.getUserInventory(playerData?.username).subscribe((inventory: Inventory) => {
       this.inventory = inventory;
     });
 
