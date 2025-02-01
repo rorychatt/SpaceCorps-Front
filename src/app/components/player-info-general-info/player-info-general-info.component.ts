@@ -17,8 +17,11 @@ export class PlayerInfoGeneralInfoComponent implements OnInit {
 
   ngOnInit() {
     const authPlayerData = this.authService.getPlayerData();
-    if (!authPlayerData) console.error('Error: Missing PlayerData');
-    const username = authPlayerData!.username;
+    if (!authPlayerData) {
+      console.error('Error: Missing PlayerData');
+      return;
+    }
+    const username = authPlayerData.username;
 
     this.getPlayerInfo(username).subscribe({
       next: (response) => {
