@@ -3,13 +3,12 @@
         <h1 class="text-4xl font-bold">SpaceCorps Lore</h1>
     </header>
 
-    <!-- Navigation between chapters using DaisyUI tabs -->
     <nav class="mb-6">
-        <ul class="tabs">
+        <ul class="tabs bg-base-200">
             @for(chapter of chapters; track chapter.title) {
             <li>
                 <button (click)="selectChapter($index)"
-                    class="tab tab-lg @if(selectedChapterIndex === i){ tab-active }">
+                    class="tab tab-lg @if(selectedChapterIndex === $index){ tab-active }">
                     {{ chapter.title }}
                 </button>
             </li>
@@ -22,8 +21,9 @@
         <h2 class="text-2xl font-semibold mb-4">
             {{ chapters[selectedChapterIndex].title }}
         </h2>
-        <div>
-            <p>{{ chapters[selectedChapterIndex].content }}</p>
-        </div>
+        @for(paragraph of chapters[selectedChapterIndex].content; track paragraph.toString()) {
+        <p class="mb-6">{{ paragraph }}</p>
+        }
     </article>
+
 </main>

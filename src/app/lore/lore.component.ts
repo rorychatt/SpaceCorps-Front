@@ -4,29 +4,46 @@ import { Component } from '@angular/core';
   selector: 'app-lore',
   imports: [],
   templateUrl: './lore.component.html',
-  styleUrl: './lore.component.scss'
+  styleUrls: ['./lore.component.scss']
 })
 export class LoreComponent {
   chapters = [
     {
-      title: 'ГЛАВА 1 - История',
-      content: `История берет свое начало из далекого 2036 года, после исторического кризиса, поставившего человечество перед вопросом – “Стоит ли воевать и истребить все человечество, или объединится и восстановить мир из руин, что война оставила за собой?” После месяцев тяжелых переговоров, опросов и референдумов желание жить переголосило желание уничтожить. Так началась новая глава в истории человечества…`
+      title: 'CHAPTER 1 - History',
+      content: [
+        `History begins in the distant year 2036, after a historic crisis that forced humanity to confront the question – "Should we wage war and annihilate all of mankind, or unite and rebuild a world from the ruins left by war?" After months of bitter negotiations, surveys, and referenda, the desire to live overwhelmed the will to destroy, and a new chapter in human history began.`,
+        `Humanity formed a council called the "Council of Earth Leaders" with the goal of uniting the world to fight against nature itself and ensure the continuation of the human race. Borders were erased; politics and strife gave way to seven continents, seven unions, and seven democratic leaders who lived in harmony. Corruption disappeared, poverty rates dropped to almost negligible levels, and crime remained at record lows. Cooperation, honesty, and mutual understanding became the guiding principles of this new era.`
+      ]
     },
     {
-      title: 'ГЛАВА 2 - Космическая гонка',
-      content: `Во время кризиса человечество лишилось большинства информации о космосе. Совет лидеров Земли поставил перед собой задачу – экспансия в космос, что стало первым шагом к освоению Вселенной. “Дорогие граждане, разве данный опыт не может быть использован за пределами Земли?” – так звучали первые вдохновляющие слова.`
+      title: 'CHAPTER 2 - The Space Race',
+      content: [
+        `During the crisis, humanity lost much of the accumulated knowledge about space. As a result, expanding into space became the foremost priority. When asked why, the Council of Earth Leaders responded: "Dear citizens, in just two years since the crisis ended, we achieved a utopia by working cooperatively. The radiation problems our ancestors deemed unsolvable were overcome within a year. Now, having reached our zenith on Earth, why shouldn’t we extend our experience beyond?"`,
+        `In 2039, the first breakthrough in a new cosmic program occurred. A scientist named Davidski presented a theory that "dark matter" could be harvested and used in everyday technologies. His hypothesis that hypervelocity engines could be powered by dark matter captured the public’s imagination and spurred further theories, including one proposing the construction of cosmic engines based on dark matter.`
+      ]
     },
     {
-      title: 'ГЛАВА 3 - Синтез темной материи',
-      content: `В течении следующего года группа астрофизиков и инженеров, совместно с руководящим советом, искали ответ на главный вопрос – безопасен ли двигатель на основе темной материи? После множества тестов и симуляций был сделан выбор в пользу разработки новых технологий, способных кардинально изменить космическую программу.`
+      title: 'CHAPTER 3 - Dark Matter Synthesis',
+      content: [
+        `Over the following year, a team of astrophysicists and engineers, together with the council, sought to answer the crucial question: is a dark matter–powered engine safe? More than 50 simulations were conducted, modeling various scenarios and potential outcomes of using such engines both on Earth and in space. This cautious approach was reminiscent of exploring the depths of the Mariana Trench.`,
+        `A turning point came in 2042, when the council decided to build the first test ships powered by dark matter engines. This decision was deeply influenced by a laboratory established by the Mars Colonization Corporation (MCC), led by Ennet “Courage” Willis. The laboratory was capable of generating and containing dark matter for extended periods – a key requirement for making practical use of the theory.`
+      ]
     },
     {
-      title: 'ГЛАВА 4 - Первые испытания',
-      content: `01.02.2043 – самая узнаваемая дата в истории космической программы. Ракета, запущенная по команде, буквально за 5 минут вышла за пределы атмосферы, а спустя несколько дней достигла орбиты Луны. Экспедиция оказалась успешной, хотя и выявила скрытые проблемы, требующие дальнейших исследований.`
+      title: 'CHAPTER 4 - The First Trials',
+      content: [
+        `On February 1, 2043, an unforgettable moment in space exploration occurred. At 14:00, the order was given to launch a rocket. In a matter of five minutes, the rocket burst beyond the atmosphere, igniting its main engines. By the following morning, it had covered half the distance to the Moon, and on the third day, it was already in lunar orbit.`,
+        `The test expedition exceeded all expectations. Within just seven days, the shuttle successfully landed in the Indian Ocean. All crew members underwent immediate diagnostics, and the engines demonstrated their true potential. Although the initial medical exams showed no anomalies, further analysis revealed a genetic predisposition to skin cancer in three of the four astronauts – a discovery that forced the council to impose additional tests and simulations. As a result, a new unit of speed measurement, "units" (U), was introduced to quantify cosmic velocities.`
+      ]
     },
     {
-      title: 'ГЛАВА 6 - Безопасность превыше всего',
-      content: `Основной задачей, обозначенной советом, было принятие всемирного решения: улучшить существующую систему двигателей или создать новую, независимую от предыдущей систему. Давидски и его коллеги утверждали, что проблема скоростей и квантов ультрафиолета требует кардинального пересмотра подходов к космическим технологиям.`
+      title: 'CHAPTER 6 - Safety Above All',
+      content: [
+        `The central issue for the council was to reach a global decision: should the existing engine system be improved, or should a completely new, independent system be developed? While many scientists argued that one cannot improve what is scarcely understood, Davidski contended that regardless of the approach, humanity inevitably faced issues beyond mere technology – namely, the challenges posed by extreme speeds and the behavior of ultraviolet quanta.`,
+        `Davidski explained that the problem was not solely with the engines but with the fact that ultraviolet quanta travel more slowly than 100 units and tend to disregard solid materials. Earth's magnetic field, generated by the planet's rotating core, had long served as the natural shield against ultraviolet radiation. Ultimately, the council decided to either create a magnetic field generator capable of protecting against both radiation and ultraviolet quanta or develop a medicine/vaccine to confer immunity to the harmful effects of ultraviolet radiation.`,
+        `For two more years, the brightest minds grappled with this complex puzzle. Most models fell short, and the rocket production program was indefinitely postponed until a solution could be found. In late 2046, during an annual council meeting, a radical idea was proposed – to replace human pilots with autonomous robots. This argument was based on the simple logic that, rather than wasting time on uncertain pharmaceutical developments, it might be more prudent to explore other planets using advanced autopilot technology.`,
+        `By the end of 2066, the first group of 100 pioneers successfully established the inaugural settlement under a "Dome." They built the necessary structures and even managed to terraform a portion of the terrain into fertile soil, enabling the cultivation of essential crops. Artificial incubators were also set up to breed specific types of animals and birds, ensuring a stable supply of resources for survival.`
+      ]
     }
   ];
 
