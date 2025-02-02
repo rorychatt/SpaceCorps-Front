@@ -24,11 +24,11 @@
   </table>
 
   <!-- Command input -->
-  <div class="mockup-code p-4">
+  <div class="mockup-code p-4 bg-base-200">
     <div class="command-history">
       <pre class="max-h-[600px] flex overflow-y-auto flex-col-reverse whitespace-pre-wrap">
         @for(command of commandHistory; track command) {
-        <code>{{ command }}</code>
+          <code>{{ command }}</code>
         }
       </pre>
     </div>
@@ -37,7 +37,8 @@
   </div>
 
   <!-- User inventory -->
-  <div *ngIf="selectedUserInventory" class="mt-4">
+  @if(selectedUserInventory) {
+  <div class="mt-4">
     <h2 class="text-xl font-bold mb-2">User Items</h2>
     <table class="table w-full">
       <thead>
@@ -58,4 +59,5 @@
       </tbody>
     </table>
   </div>
+  }
 </div>
