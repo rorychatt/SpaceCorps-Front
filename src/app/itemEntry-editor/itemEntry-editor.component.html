@@ -21,7 +21,8 @@
     </nav>
 
     <!-- Section: Create new Item Entry in selected category -->
-    <section *ngIf="selectedCategory" aria-labelledby="create-new-item">
+    @if(selectedCategory){
+    <section aria-labelledby="create-new-item" class="mb-4">
       <header>
         <h2 id="create-new-item" class="sr-only">Create New Item</h2>
       </header>
@@ -35,23 +36,27 @@
                 <fa-icon [icon]="faArrowsRotate"></fa-icon>
               </button>
             </div>
-            <form (ngSubmit)="createNewItem()">
-              <div *ngFor="let field of getFieldsForItemCategory(selectedCategory); trackBy: trackByKey">
-                <div *ngIf="field.key !== 'id'" class="flex flex-col gap-2">
-                  <label for="{{field.key}}">{{ field.label }}</label>
-                  <input id="{{field.key}}" [(ngModel)]="newItem![field.key]" [name]="field.key"
-                    class="input input-bordered" />
-                </div>
+            <form class="flex flex-col gap-2" (ngSubmit)="createNewItem()">
+              @for(field of getFieldsForItemCategory(selectedCategory); track field.key){
+              @if(field.key !== 'id'){
+              <div class="flex flex-col gap-2">
+                <label for="{{field.key}}">{{ field.label }}</label>
+                <input id="{{field.key}}" [(ngModel)]="newItem![field.key]" [name]="field.key"
+                  class="input input-bordered" />
               </div>
+              }
+              }
               <button type="submit" class="btn bg-base-300 mt-4">Add</button>
             </form>
           </div>
         </div>
       </article>
     </section>
+    }
 
     <!-- Section: Display Item Entries in selected category -->
-    <section *ngIf="selectedCategory" aria-labelledby="item-entries">
+    @if(selectedCategory){
+    <section aria-labelledby="item-entries">
       <header class="flex flex-row items-center p-4 gap-4">
         <h2 id="item-entries">{{ selectedCategory }} Items</h2>
         <button class="btn bg-base-300 my-auto" (click)="generateDefaultItemsForCategory(selectedCategory)">
@@ -85,6 +90,7 @@
         </div>
       </article>
     </section>
+    }
 
   </section>
 </main>
