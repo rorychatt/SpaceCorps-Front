@@ -1,10 +1,6 @@
 <ul class="menu menu-horizontal bg-base-200 rounded-box gap-2 min-w-[430px]" (mouseleave)="closeAllItems()">
   <li>
-    <details
-      [open]="openItem === 'pilot'"
-      (click)="toggleItem('pilot')"
-      (mouseenter)="openItemOnHover('pilot')"
-    >
+    <details [open]="openItem === 'pilot'" (click)="toggleItem('pilot')" (mouseenter)="openItemOnHover('pilot')">
       <summary>Pilot</summary>
       <ul class="bg-base-200">
         <li><a routerLink="/pilot-info">√Pilot Info</a></li>
@@ -14,11 +10,7 @@
     </details>
   </li>
   <li>
-    <details
-      [open]="openItem === 'shop'"
-      (click)="toggleItem('shop')"
-      (mouseenter)="openItemOnHover('shop')"
-    >
+    <details [open]="openItem === 'shop'" (click)="toggleItem('shop')" (mouseenter)="openItemOnHover('shop')">
       <summary>Shop</summary>
       <ul class="bg-base-200">
         <li><a routerLink="/ship-yard">√Ship Yard</a></li>
@@ -29,11 +21,7 @@
     </details>
   </li>
   <li>
-    <details
-      [open]="openItem === 'company'"
-      (click)="toggleItem('company')"
-      (mouseenter)="openItemOnHover('company')"
-    >
+    <details [open]="openItem === 'company'" (click)="toggleItem('company')" (mouseenter)="openItemOnHover('company')">
       <summary>Company</summary>
       <ul class="bg-base-200">
         <li><a>Message Box</a></li>
@@ -44,25 +32,17 @@
     </details>
   </li>
   <li>
-    <details
-      [open]="openItem === 'wiki'"
-      (click)="toggleItem('wiki')"
-      (mouseenter)="openItemOnHover('wiki')"
-    >
+    <details [open]="openItem === 'wiki'" (click)="toggleItem('wiki')" (mouseenter)="openItemOnHover('wiki')">
       <summary>Wiki</summary>
       <ul class="bg-base-200">
         <li><a>√How to Play</a></li>
-        <li><a>√Lore</a></li>
+        <li><a routerLink="/lore">√Lore</a></li>
         <li><a>√FAQ</a></li>
       </ul>
     </details>
   </li>
   <li>
-    <details
-      [open]="openItem === 'admin'"
-      (click)="toggleItem('admin')"
-      (mouseenter)="openItemOnHover('admin')"
-    >
+    <details [open]="openItem === 'admin'" (click)="toggleItem('admin')" (mouseenter)="openItemOnHover('admin')">
       <summary>Admin</summary>
       <ul class="bg-base-200">
         <li><a routerLink="/users-editor">√Users</a></li>
