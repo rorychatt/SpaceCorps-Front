@@ -70,5 +70,12 @@ export const routes: Routes = [{
       const module = await import('./pilot-inventory/pilot-inventory.component');
       return module.PilotInventoryComponent;
     }
+  },
+  {
+    path: 'lore',
+    loadComponent: async () => {
+      const module = await import('./lore/lore.component');
+      return module.LoreComponent;
+    }
   }
 ];

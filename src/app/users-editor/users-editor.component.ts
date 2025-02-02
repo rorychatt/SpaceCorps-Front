@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
 import { PlayerData } from '../models/player/PlayerData';
 import { ApiService } from '../services/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +9,7 @@ import { Inventory } from '../models/player/Inventory';
   selector: 'app-users-editor',
   templateUrl: './users-editor.component.html',
   styleUrls: ['./users-editor.component.scss'],
-  imports: [FormsModule, NgIf]
+  imports: [FormsModule]
 })
 export class UsersEditorComponent implements OnInit {
   users: PlayerData[] | null = null;

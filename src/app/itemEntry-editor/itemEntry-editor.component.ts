@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
 import {ApiService} from '../services/api.service';
 import {FormsModule} from '@angular/forms';
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
@@ -30,8 +29,6 @@ import {
 @Component({
   selector: 'app-itemEntry-editor',
   imports: [
-    NgForOf,
-    NgIf,
     FormsModule,
     FaIconComponent
   ],

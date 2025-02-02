@@ -1,24 +1,22 @@
-import {Component} from '@angular/core';
-import {ApiService} from '../services/api.service';
-import {FormsModule} from '@angular/forms';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
-import {SpaceMapDataEntry} from '../models/dataEntries/SpaceMapDataEntry';
-import {UpdateSpaceMapDataEntryRequest} from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
-import {ErrorModalComponent} from '../components/error-modal/error-modal.component';
-import {HttpErrorResponse} from '@angular/common/http';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
-import {StaticEntity} from '../models/entity/StaticEntity';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CreateStaticEntityRequest} from '../models/entity/CreateStaticEntityRequest';
+import { Component } from '@angular/core';
+import { ApiService } from '../services/api.service';
+import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { SpaceMapDataEntry } from '../models/dataEntries/SpaceMapDataEntry';
+import { UpdateSpaceMapDataEntryRequest } from '../models/dataEntries/UpdateSpaceMapDataEntryRequest';
+import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
+import { StaticEntity } from '../models/entity/StaticEntity';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CreateStaticEntityRequest } from '../models/entity/CreateStaticEntityRequest';
 
 @Component({
   selector: 'app-spacemap-editor',
   imports: [
     FormsModule,
     FontAwesomeModule,
-    NgForOf,
-    NgIf,
     NgClass,
     ErrorModalComponent,
   ],
@@ -105,7 +103,7 @@ export class SpacemapEditorComponent {
 
     const m1Map: SpaceMapDataEntry = {
       name: 'M-1',
-      size: {width: 320, height: 180},
+      size: { width: 320, height: 180 },
       preferredColor: 'red',
       spawnableAliens: [],
       staticEntities: []
@@ -113,7 +111,7 @@ export class SpacemapEditorComponent {
 
     const t1Map: SpaceMapDataEntry = {
       name: 'T-1',
-      size: {width: 320, height: 180},
+      size: { width: 320, height: 180 },
       preferredColor: 'blue',
       spawnableAliens: [],
       staticEntities: []
@@ -121,7 +119,7 @@ export class SpacemapEditorComponent {
 
     const v1Map: SpaceMapDataEntry = {
       name: 'V-1',
-      size: {width: 320, height: 180},
+      size: { width: 320, height: 180 },
       preferredColor: 'green',
       spawnableAliens: [],
       staticEntities: []
@@ -144,7 +142,7 @@ export class SpacemapEditorComponent {
           this.selectedSpaceMapDataEntryName = null;
           void this.router.navigate([], {
             relativeTo: this.route,
-            queryParams: {map: null},
+            queryParams: { map: null },
             queryParamsHandling: 'merge'
           });
         }
@@ -171,7 +169,7 @@ export class SpacemapEditorComponent {
   private async updateUrlWithMapName(name: string) {
     await this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: {map: name},
+      queryParams: { map: name },
       queryParamsHandling: 'merge'
     });
   }
@@ -218,7 +216,7 @@ export class SpacemapEditorComponent {
 
   protected newStaticEntity: CreateStaticEntityRequest = {
     name: '',
-    position: {x: 0, y: 0, z: 0},
+    position: { x: 0, y: 0, z: 0 },
     locationName: '',
     safeZoneRadii: 0,
     destination: ''
