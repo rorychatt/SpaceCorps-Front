@@ -7,15 +7,14 @@
       <h3 class="card-title">{{ category }}</h3>
 
       @for (item of categorizedItems.get(category); track item.id) {
-
-        <div class="card bg-base-100">
+        <div class="card bg-base-100"
+        (click)="itemSelected.emit(item)">
           <div class="card-body">
             <div class="card-title">
               {{ item.name }}
             </div>
           </div>
         </div>
-
       }
 
     </li>

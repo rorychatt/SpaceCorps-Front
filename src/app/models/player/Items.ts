@@ -1,5 +1,3 @@
-import { InventoryItem } from "./InventoryItem";
-
 export type SellableItems =
   ShipItem |
   LaserItem |
@@ -9,6 +7,12 @@ export type SellableItems =
   EngineItem |
   ThrusterItem |
   LaserAmmoItem;
+
+export type InventoryItem = {
+  id: number;
+  name: string;
+  itemType: string;
+}
 
 export type SellableItem = InventoryItem & {
   priceCats: number;
@@ -23,14 +27,20 @@ export type ShipItem = SellableItem & {
   shieldSlots: number;
   laserSlots: number;
   itemType: 'ShipItem';
+  engines?: EngineItem[];
+  shields?: ShieldItem[];
+  lasers?: LaserItem[];
 }
+
 
 export type LaserItem = SellableItem & {
   baseDamage: number;
   criticalChance: number;
   laserAmpSlots: number;
   itemType: 'LaserItem';
+  laserAmps?: LaserAmpItem[];
 }
+
 
 export type LaserAmpItem = SellableItem & {
   addBaseDamage: number;
@@ -39,6 +49,7 @@ export type LaserAmpItem = SellableItem & {
   itemType: 'LaserAmpItem';
 }
 
+
 export type ShieldItem = SellableItem & {
   absorbance: number;
   capacity: number;
@@ -46,6 +57,7 @@ export type ShieldItem = SellableItem & {
   rechargeRate: number;
   shieldCellSlots: number;
   itemType: 'ShieldItem';
+  shieldCells?: ShieldCellItem[];
 }
 
 export type ShieldCellItem = SellableItem & {
@@ -60,7 +72,9 @@ export type EngineItem = SellableItem & {
   baseSpeed: number;
   thrusterSlots: number;
   itemType: 'EngineItem';
+  thruster?: ThrusterItem;
 }
+
 
 export type ThrusterItem = SellableItem & {
   addBaseSpeed: number;

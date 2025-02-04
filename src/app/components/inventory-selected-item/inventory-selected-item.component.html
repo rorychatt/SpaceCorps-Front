@@ -1,0 +1,31 @@
+<div class="card bg-base-100 shadow-md p-4">
+  <div class="card-body">
+    <h2 class="card-title">Selected Item</h2>
+    <ng-container *ngIf="selectedItem; else noItemSelected">
+      <p><strong>ID:</strong> {{ selectedItem.id }}</p>
+      <p><strong>Name:</strong> {{ selectedItem.name }}</p>
+      
+      <!-- Loop over each group of children (or slots) based on item type -->
+      <div *ngFor="let mapping of getChildMapping(selectedItem)" class="mb-4">
+        <h3>{{ mapping.title }}</h3>
+        <div class="flex gap-2">
+          <!-- If actual children exist, display them -->
+          <ng-container *ngIf="selectedItem[mapping.childrenKey] && selectedItem[mapping.childrenKey].length > 0; else emptySlots">
+            <div *ngFor="let child of selectedItem[mapping.childrenKey]" class="child-item border p-2">
+              <p>{{ child.name }}</p>
+            </div>
+          </ng-container>
+          <!-- Otherwise, show empty slot entries equal to the available number of slots -->
+          <ng-template #emptySlots>
+            <div *ngFor="let slot of createSlots(mapping.slots)" class="empty-slot border p-2">
+              <p>Empty Slot</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noItemSelected>
+      <p>No item selected.</p>
+    </ng-template>
+  </div>
+</div>

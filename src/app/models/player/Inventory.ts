@@ -1,8 +1,8 @@
-import { InventoryItem } from './InventoryItem';
+import { SellableItems } from './Items';
 
 export type Inventory = {
   cats: number;
   thulium: number;
   activeShipName: string;
-  items: InventoryItem[];
+  items: SellableItems[];
 }

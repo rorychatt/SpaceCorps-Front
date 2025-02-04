@@ -4,14 +4,14 @@
       <h2 class="card-title">
         Your Inventory
       </h2>
-      <app-inventory-active-ship
-        [activeShipItemName]="inventory?.activeShipName"
-      ></app-inventory-active-ship>
+      <div class="flex flex-row gap-4">
+        <app-inventory-active-ship [activeShipItemName]="inventory?.activeShipName"></app-inventory-active-ship>
+        <app-inventory-selected-item [selectedItem]="selectedItem"></app-inventory-selected-item>
+      </div>
       <h2 class="card-title">
         All Items
       </h2>
-      <app-inventory-all-items
-        [items]="inventory?.items">
+      <app-inventory-all-items [items]="inventory?.items" (itemSelected)="handleItemSelection($event)">
       </app-inventory-all-items>
     </div>
   </section>
