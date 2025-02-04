@@ -35,8 +35,8 @@ export class PilotInventoryComponent implements OnInit {
 
   }
 
-  handleItemSelection($event: Event) {
-    this.selectedItem = $event as unknown as SellableItems;
+  handleItemSelection($event: SellableItems) {
+    this.selectedItem = $event;
   }
 
 }
