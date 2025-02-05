@@ -100,14 +100,14 @@ export class ApiService {
 
   createNewItemEntry<T extends SellableItems>(newItem: T) {
     return this.http.post<T>(
-      `${this.url}/ItemEntries/${newItem.itemType}s/Add`,
+      `${this.url}/ItemEntries/${newItem.itemType.replace('Entrie', '')}s/Add`,
       newItem
     );
   }
 
   deleteItemEntry<T extends SellableItems>(item: T) {
     return this.http.delete(
-      `${this.url}/ItemEntries/${item.itemType}s/Delete`,
+      `${this.url}/ItemEntries/${item.itemType.replace('Entrie', '')}s/Delete`,
       { body: { id: item.id } }
     );
   }

@@ -1,22 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {InventoryActiveShipComponent} from '../components/inventory-active-ship/inventory-active-ship.component';
-import {ApiService} from '../services/api.service';
-import {AuthService} from '../services/auth.service';
-import {Inventory} from '../models/player/Inventory';
-import {InventoryAllItemsComponent} from '../components/inventory-all-items/inventory-all-items.component';
+import { Component, OnInit } from '@angular/core';
+import { InventoryActiveShipComponent } from '../components/inventory-active-ship/inventory-active-ship.component';
+import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
+import { Inventory } from '../models/player/Inventory';
+import { InventoryAllItemsComponent } from '../components/inventory-all-items/inventory-all-items.component';
+import { SellableItem, SellableItems } from '../models/player/Items';
+import { InventorySelectedItemComponent } from "../components/inventory-selected-item/inventory-selected-item.component";
 
 @Component({
   selector: 'app-pilot-inventory',
   imports: [
     InventoryActiveShipComponent,
-    InventoryAllItemsComponent
-  ],
+    InventoryAllItemsComponent,
+    InventorySelectedItemComponent
+],
   templateUrl: './pilot-inventory.component.html',
   styleUrl: './pilot-inventory.component.scss'
 })
 export class PilotInventoryComponent implements OnInit {
 
   protected inventory?: Inventory;
+  selectedItem: SellableItems | null = null;
 
   constructor(private apiService: ApiService, private authService: AuthService) {
   }
@@ -29,6 +33,10 @@ export class PilotInventoryComponent implements OnInit {
       this.inventory = inventory;
     });
 
+  }
+
+  handleItemSelection($event: SellableItems) {
+    this.selectedItem = $event;
   }
 
 }
