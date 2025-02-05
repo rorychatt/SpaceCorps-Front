@@ -1,12 +1,12 @@
 export type SellableItems =
-  ShipItem |
-  LaserItem |
-  LaserAmpItem |
-  ShieldItem |
-  ShieldCellItem |
-  EngineItem |
-  ThrusterItem |
-  LaserAmmoItem;
+  Ship |
+  Laser |
+  LaserAmp |
+  Shield |
+  ShieldCell |
+  Engine |
+  Thruster |
+  LaserAmmo;
 
 export type InventoryItem = {
   id: number;
@@ -20,83 +20,83 @@ export type SellableItem = InventoryItem & {
   [key: string]: any;
 };
 
-export type ShipItem = SellableItem & {
+export type Ship = SellableItem & {
   baseHealth: number;
   baseSpeed: number;
   engineSlots: number;
   shieldSlots: number;
   laserSlots: number;
-  itemType: 'ShipItem';
-  engines?: EngineItem[];
-  shields?: ShieldItem[];
-  lasers?: LaserItem[];
+  itemType: 'Ship';
+  engines?: Engine[];
+  shields?: Shield[];
+  lasers?: Laser[];
 }
 
 
-export type LaserItem = SellableItem & {
+export type Laser = SellableItem & {
   baseDamage: number;
   criticalChance: number;
   laserAmpSlots: number;
-  itemType: 'LaserItem';
-  laserAmps?: LaserAmpItem[];
+  itemType: 'Laser';
+  laserAmps?: LaserAmp[];
 }
 
 
-export type LaserAmpItem = SellableItem & {
+export type LaserAmp = SellableItem & {
   addBaseDamage: number;
   addCriticalChance: number;
   addLaserDamageMultiplier: number;
-  itemType: 'LaserAmpItem';
+  itemType: 'LaserAmp';
 }
 
 
-export type ShieldItem = SellableItem & {
+export type Shield = SellableItem & {
   absorbance: number;
   capacity: number;
   passiveRechargeRate: number;
   rechargeRate: number;
   shieldCellSlots: number;
-  itemType: 'ShieldItem';
-  shieldCells?: ShieldCellItem[];
+  itemType: 'Shield';
+  shieldCells?: ShieldCell[];
 }
 
-export type ShieldCellItem = SellableItem & {
+export type ShieldCell = SellableItem & {
   addAbsorbance: number;
   addCapacity: number;
   addPassiveRechargeRate: number;
   addRechargeRate: number;
-  itemType: 'ShieldCellItem';
+  itemType: 'ShieldCell';
 }
 
-export type EngineItem = SellableItem & {
+export type Engine = SellableItem & {
   baseSpeed: number;
   thrusterSlots: number;
-  itemType: 'EngineItem';
-  thruster?: ThrusterItem;
+  itemType: 'Engine';
+  thruster?: Thruster;
 }
 
 
-export type ThrusterItem = SellableItem & {
+export type Thruster = SellableItem & {
   addBaseSpeed: number;
   baseSpeedMultiplier: number;
-  itemType: 'ThrusterItem';
+  itemType: 'Thruster';
 }
 
-export type LaserAmmoItem = SellableItem & {
+export type LaserAmmo = SellableItem & {
   baseDamageMultiplier: number;
-  itemType: 'LaserAmmoItem';
+  itemType: 'LaserAmmo';
 }
 
 export function getFieldsForItemCategory(category: SellableItems['itemType']): { label: string, key: string }[] {
   const fieldsMap: { [K in SellableItems['itemType']]: { label: string, key: string }[] } = {
-    'LaserAmmoItem': [
+    'LaserAmmo': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Base Damage Multiplier', key: 'baseDamageMultiplier'},
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'LaserAmpItem': [
+    'LaserAmp': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Add Base Damage', key: 'addBaseDamage'},
@@ -105,7 +105,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'LaserItem': [
+    'Laser': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Base Damage', key: 'baseDamage'},
@@ -114,7 +114,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'ShieldItem': [
+    'Shield': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Capacity', key: 'capacity'},
@@ -125,7 +125,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'ShieldCellItem': [
+    'ShieldCell': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Add Capacity', key: 'addCapacity'},
@@ -135,7 +135,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'ShipItem': [
+    'Ship': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Base Health', key: 'baseHealth'},
@@ -146,7 +146,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'EngineItem': [
+    'Engine': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Base Speed', key: 'baseSpeed'},
@@ -154,7 +154,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
-    'ThrusterItem': [
+    'Thruster': [
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Add Base Speed', key: 'addBaseSpeed'},

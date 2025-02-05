@@ -14,50 +14,60 @@ export class InventorySelectedItemComponent {
     required: true
   }) selectedItem: SellableItems | null = null;
 
-  getChildMapping(item: SellableItems): { childrenKey: string, slots: number, title: string }[] {
+
+  /**
+   * Returns an array of mapping objects for the selected item's slot groups.
+   * Each mapping includes:
+   *  - childrenKey: the property name for the children array (e.g. 'thrusters')
+   *  - maxSlots: the corresponding integer property for the max allowed slots (e.g. thrusterSlots)
+   *  - title: a descriptive title for that slot group.
+   */
+  getChildMapping(item: SellableItems): { childrenKey: string, maxSlots: number, title: string }[] {
     switch (item.itemType) {
-      case 'ShipItem':
+      case 'Ship':
         return [
-          { childrenKey: 'engines', slots: (item as any).engineSlots, title: 'Engines' },
-          { childrenKey: 'shields', slots: (item as any).shieldSlots, title: 'Shields' },
-          { childrenKey: 'lasers', slots: (item as any).laserSlots, title: 'Lasers' }
+          { childrenKey: 'engines', maxSlots: (item as any).engineSlots, title: 'Engines' },
+          { childrenKey: 'shields', maxSlots: (item as any).shieldSlots, title: 'Shields' },
+          { childrenKey: 'lasers', maxSlots: (item as any).laserSlots, title: 'Lasers' }
         ];
-      case 'LaserItem':
+      case 'Laser':
         return [
-          { childrenKey: 'laserAmps', slots: (item as any).laserAmpSlots, title: 'Laser Amps' }
+          { childrenKey: 'laserAmps', maxSlots: (item as any).laserAmpSlots, title: 'Laser Amps' }
         ];
-      case 'ShieldItem':
+      case 'Shield':
         return [
-          { childrenKey: 'shieldCells', slots: (item as any).shieldCellSlots, title: 'Shield Cells' }
+          { childrenKey: 'shieldCells', maxSlots: (item as any).shieldCellSlots, title: 'Shield Cells' }
         ];
-      case 'EngineItem':
+      case 'Engine':
         return [
-          { childrenKey: 'thrusters', slots: (item as any).thrusterSlots, title: 'Thrusters' }
+          { childrenKey: 'thrusters', maxSlots: (item as any).thrusterSlots, title: 'Thrusters' }
         ];
       default:
         return [];
     }
   }
+
   /**
-   * Given an item and a mapping, returns an array to iterate over for the remaining empty slots.
+   * Returns an array of indices from 0 to (maxSlots - 1) so that the template
+   * always renders exactly maxSlots slots.
    */
-  getEmptySlots(item: SellableItems, mapping: { childrenKey: string, slots: number, title: string }): any[] {
-    const currentCount = item[mapping.childrenKey] ? item[mapping.childrenKey].length : 0;
-    const emptyCount = mapping.slots - currentCount;
-    return new Array(emptyCount);
+  getSlots(maxSlots: number): number[] {
+    return Array.from({ length: maxSlots }, (_, i) => i);
   }
 
   /**
-   * Allows an item to be dropped into an empty slot.  
+   * Prevents the default behavior to allow dropping an item.
    */
   onDragOver(event: DragEvent) {
     event.preventDefault();
   }
 
-  onDrop(event: DragEvent, mapping: { childrenKey: string, slots: number, title: string }, index: number) {
+  /**
+   * Called when an item is dropped into an empty slot.
+   */
+  onDrop(event: DragEvent, mapping: { childrenKey: string, maxSlots: number, title: string }, slotIndex: number) {
     event.preventDefault();
-    console.log("Dropped an item into", mapping.title, "slot index:", index);
-    // Implement your logic for handling the dropped item here.
+    console.log(`Dropped an item into ${mapping.title} at slot index: ${slotIndex}`);
+    // TODO: Add logic here to handle the dropped item and assign it to the appropriate slot.
   }
-  
 }

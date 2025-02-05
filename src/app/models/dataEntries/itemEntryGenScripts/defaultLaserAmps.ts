@@ -1,9 +1,9 @@
-import { LaserAmpItem } from "../../player/Items";
+import { LaserAmp } from "../../player/Items";
 
-export const defaultLaserAmps: LaserAmpItem[] = [
+export const defaultLaserAmps: LaserAmp[] = [
   {
     name: "Laser Amp 1",
-    itemType: "LaserAmpItem",
+    itemType: "LaserAmp",
     id: 1,
     addBaseDamage: 10,
     addLaserDamageMultiplier: 0,

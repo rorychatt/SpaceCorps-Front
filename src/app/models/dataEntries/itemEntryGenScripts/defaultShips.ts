@@ -1,9 +1,9 @@
-import { ShipItem } from "../../player/Items";
+import { Ship } from "../../player/Items";
 
-export const defaultShips: ShipItem[] = [
+export const defaultShips: Ship[] = [
   {
     name: "Protos",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 1,
     baseHealth: 8000,
     baseSpeed: 150,
@@ -15,7 +15,7 @@ export const defaultShips: ShipItem[] = [
   },
   {
     name: "Ostrion",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 2,
     baseHealth: 32000,
     baseSpeed: 180,
@@ -27,7 +27,7 @@ export const defaultShips: ShipItem[] = [
   },
   {
     name: "Paragon",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 3,
     baseHealth: 96000,
     baseSpeed: 200,
@@ -39,7 +39,7 @@ export const defaultShips: ShipItem[] = [
   },
   {
     name: "Echelon",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 4,
     baseHealth: 128000,
     baseSpeed: 210,
@@ -51,7 +51,7 @@ export const defaultShips: ShipItem[] = [
   },
   {
     name: "Specter",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 5,
     baseHealth: 196000,
     baseSpeed: 185,
@@ -63,7 +63,7 @@ export const defaultShips: ShipItem[] = [
   },
   {
     name: "Orionix",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 6,
     baseHealth: 256000,
     baseSpeed: 225,
@@ -75,7 +75,7 @@ export const defaultShips: ShipItem[] = [
   },
   {
     name: "Wraith",
-    itemType: "ShipItem",
+    itemType: "Ship",
     id: 7,
     baseHealth: 324000,
     baseSpeed: 210,

@@ -5,27 +5,30 @@
       <p><strong>ID:</strong> {{ selectedItem.id }}</p>
       <p><strong>Name:</strong> {{ selectedItem.name }}</p>
       
-      <!-- Loop over each group (slot type) based on the selected item's type -->
+      <!-- Loop through each slot group for the selected item -->
       <div *ngFor="let mapping of getChildMapping(selectedItem)" class="mb-4">
         <h3 class="mb-2">{{ mapping.title }}</h3>
         <div class="flex gap-2">
-          <!-- Render populated child items as squares -->
-          <div *ngFor="let child of selectedItem[mapping.childrenKey]" 
-               class="child-item border p-2 w-16 h-16 aspect-square flex items-center justify-center"
-               draggable="true">
-            <p class="text-xs text-center">{{ child.name }}</p>
-          </div>
-          <!-- Render empty slot drop targets as squares -->
-          <div *ngFor="let empty of getEmptySlots(selectedItem, mapping); index as i" 
-               class="empty-slot border p-2 w-16 h-16 aspect-square flex items-center justify-center cursor-pointer bg-gray-100"
-               (dragover)="onDragOver($event)"
-               (drop)="onDrop($event, mapping, i)">
-            <p class="text-xs">Empty Slot</p>
+          <!-- Always render exactly maxSlots squares -->
+          <div *ngFor="let slotIndex of getSlots(mapping.maxSlots); let i = index" class="w-16 h-16 aspect-square">
+            <ng-container *ngIf="selectedItem[mapping.childrenKey] && selectedItem[mapping.childrenKey][i] as child; else emptySlot">
+              <div class="child-item border p-2 w-full h-full flex items-center justify-center"
+                   draggable="true">
+                <p class="text-xs text-center">{{ child.name }}</p>
+              </div>
+            </ng-container>
+            <ng-template #emptySlot>
+              <div class="empty-slot border p-2 w-full h-full flex items-center justify-center cursor-pointer bg-gray-100"
+                   (dragover)="onDragOver($event)"
+                   (drop)="onDrop($event, mapping, i)">
+                <p class="text-xs">Empty Slot</p>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
     </ng-container>
-
+    
     <ng-template #noItemSelected>
       <p>No item selected.</p>
     </ng-template>
