@@ -38,8 +38,26 @@ export class InventorySelectedItemComponent {
         return [];
     }
   }
-
-  createSlots(count: number): any[] {
-    return new Array(count);
+  /**
+   * Given an item and a mapping, returns an array to iterate over for the remaining empty slots.
+   */
+  getEmptySlots(item: SellableItems, mapping: { childrenKey: string, slots: number, title: string }): any[] {
+    const currentCount = item[mapping.childrenKey] ? item[mapping.childrenKey].length : 0;
+    const emptyCount = mapping.slots - currentCount;
+    return new Array(emptyCount);
   }
+
+  /**
+   * Allows an item to be dropped into an empty slot.  
+   */
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDrop(event: DragEvent, mapping: { childrenKey: string, slots: number, title: string }, index: number) {
+    event.preventDefault();
+    console.log("Dropped an item into", mapping.title, "slot index:", index);
+    // Implement your logic for handling the dropped item here.
+  }
+  
 }
