@@ -4,7 +4,7 @@
       <h3 class="card-title">{{ category }}</h3>
       <div class="grid grid-cols-4 gap-2 overflow-y-auto max-h-64">
         @for (item of categorizedItems.get(category); track item.id) {
-          <div class="card bg-base-100 hover:cursor-grab"
+          <div class="card bg-base-100 hover:cursor-grab hover:bg-base-300 dragstart:cursor-grabbing"
                (click)="itemSelected.emit(item)"
                draggable="true">
             <div class="card-body">
