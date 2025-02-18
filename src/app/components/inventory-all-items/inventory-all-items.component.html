@@ -1,14 +1,11 @@
 <ul class="flex flex-wrap gap-4">
-
   @for (category of categorizedItems.keys(); track category) {
-
     <li class="card bg-base-200 flex flex-wrap gap-4 card-body">
-
       <h3 class="card-title">{{ category }}</h3>
-
       @for (item of categorizedItems.get(category); track item.id) {
-        <div class="card bg-base-100"
-        (click)="itemSelected.emit(item)">
+        <div class="card bg-base-100 draggable"
+             (click)="itemSelected.emit(item)"
+             draggable="true">
           <div class="card-body">
             <div class="card-title">
               {{ item.name }}
@@ -16,9 +13,6 @@
           </div>
         </div>
       }
-
     </li>
-
   }
-
 </ul>
