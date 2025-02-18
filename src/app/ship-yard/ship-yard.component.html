@@ -30,7 +30,7 @@
               @for (field of getFieldsForItemCategory(selectedCategory); track field.key) {
                 <tr
                   class="hover:bg-base-100">
-                  <td>{{ field.key }}</td>
+                  <td>{{ field.label }}</td>
                   <td>{{ item[field.key] }}</td>
                 </tr>
               }

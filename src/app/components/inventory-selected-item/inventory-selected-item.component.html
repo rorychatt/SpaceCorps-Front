@@ -1,36 +1,33 @@
-<div class="card bg-base-100 shadow-md p-4">
+<div class="card bg-base-200 shadow-md p-4">
   <div class="card-body">
     <h2 class="card-title">Selected Item</h2>
-    <ng-container *ngIf="selectedItem; else noItemSelected">
+    @if (selectedItem) {
       <p><strong>ID:</strong> {{ selectedItem.id }}</p>
       <p><strong>Name:</strong> {{ selectedItem.name }}</p>
-      
+
       <!-- Loop through each slot group for the selected item -->
-      <div *ngFor="let mapping of getChildMapping(selectedItem)" class="mb-4">
+      @for (mapping of getChildMapping(selectedItem); track mapping.title) {
         <h3 class="mb-2">{{ mapping.title }}</h3>
-        <div class="flex gap-2">
-          <!-- Always render exactly maxSlots squares -->
-          <div *ngFor="let slotIndex of getSlots(mapping.maxSlots); let i = index" class="w-16 h-16 aspect-square">
-            <ng-container *ngIf="selectedItem[mapping.childrenKey] && selectedItem[mapping.childrenKey][i] as child; else emptySlot">
-              <div class="child-item border p-2 w-full h-full flex items-center justify-center"
-                   draggable="true">
-                <p class="text-xs text-center">{{ child.name }}</p>
+        <div class="grid grid-cols-4 gap-2">
+          @for (slot of getSlots(mapping.maxSlots); track $index) {
+            @if (selectedItem[mapping.childrenKey] && selectedItem[mapping.childrenKey][$index]) {
+              <div class="w-16 h-16 aspect-square child-item draggable"
+                   draggable="true"
+                   (dragstart)="onDragStart($event, selectedItem[mapping.childrenKey][$index])">
+                <p class="text-xs text-center">{{ selectedItem[mapping.childrenKey][$index].name }}</p>
               </div>
-            </ng-container>
-            <ng-template #emptySlot>
-              <div class="empty-slot border p-2 w-full h-full flex items-center justify-center cursor-pointer bg-gray-100"
+            } @else {
+              <div class="w-16 h-16 aspect-square empty-slot cursor-pointer bg-base-300"
                    (dragover)="onDragOver($event)"
-                   (drop)="onDrop($event, mapping, i)">
+                   (drop)="onDrop($event, mapping, $index)">
                 <p class="text-xs">Empty Slot</p>
               </div>
-            </ng-template>
-          </div>
+            }
+          }
         </div>
-      </div>
-    </ng-container>
-    
-    <ng-template #noItemSelected>
-      <p>No item selected.</p>
-    </ng-template>
+      }
+    } @else {
+      <p class="text-center">No item selected</p>
+    }
   </div>
 </div>

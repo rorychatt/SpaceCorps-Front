@@ -6,7 +6,7 @@ export const defaultEngines: Engine[]= [
     itemType: "Engine",
     baseSpeed: 100,
     id: 1,
-    thrusterSlots: 2,
+    thrusterSlotCount: 2,
     priceCats: 1000,
     priceThulium: 0
   }

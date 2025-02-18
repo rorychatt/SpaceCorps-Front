@@ -1,0 +1,15 @@
+.grid {
+  @apply grid grid-cols-4 gap-2;
+}
+
+.draggable:hover {
+  @apply cursor-grab;
+}
+
+.draggable:active {
+  @apply cursor-grabbing;
+}
+
+.empty-slot {
+  @apply border border-dashed border-gray-300 flex items-center justify-center;
+}

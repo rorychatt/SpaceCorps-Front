@@ -23,9 +23,9 @@ export type SellableItem = InventoryItem & {
 export type Ship = SellableItem & {
   baseHealth: number;
   baseSpeed: number;
-  engineSlots: number;
-  shieldSlots: number;
-  laserSlots: number;
+  engineSlotCount: number;
+  shieldSlotCount: number;
+  laserSlotCount: number;
   itemType: 'Ship';
   engines?: Engine[];
   shields?: Shield[];
@@ -36,7 +36,7 @@ export type Ship = SellableItem & {
 export type Laser = SellableItem & {
   baseDamage: number;
   criticalChance: number;
-  laserAmpSlots: number;
+  laserAmpSlotCount: number;
   itemType: 'Laser';
   laserAmps?: LaserAmp[];
 }
@@ -55,7 +55,7 @@ export type Shield = SellableItem & {
   capacity: number;
   passiveRechargeRate: number;
   rechargeRate: number;
-  shieldCellSlots: number;
+  shieldCellSlotCount: number;
   itemType: 'Shield';
   shieldCells?: ShieldCell[];
 }
@@ -70,9 +70,9 @@ export type ShieldCell = SellableItem & {
 
 export type Engine = SellableItem & {
   baseSpeed: number;
-  thrusterSlots: number;
+  thrusterSlotCount: number;
   itemType: 'Engine';
-  thruster?: Thruster;
+  thrusters?: Thruster[];
 }
 
 
@@ -110,7 +110,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'ID', key: 'id'},
       {label: 'Base Damage', key: 'baseDamage'},
       {label: 'Critical Chance', key: 'criticalChance'},
-      {label: 'Laser Amp Slots', key: 'laserAmpSlots'},
+      {label: 'Laser Amp Slots', key: 'laserAmpSlotCount'},
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
@@ -121,7 +121,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Recharge Rate', key: 'rechargeRate'},
       {label: 'Passive Recharge Rate', key: 'passiveRechargeRate'},
       {label: 'Absorbance', key: 'absorbance'},
-      {label: 'Shield Cell Slots', key: 'shieldCellSlots'},
+      {label: 'Shield Cell Slots', key: 'shieldCellSlotCount'},
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
@@ -140,9 +140,9 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'ID', key: 'id'},
       {label: 'Base Health', key: 'baseHealth'},
       {label: 'Base Speed', key: 'baseSpeed'},
-      {label: 'Engine Slots', key: 'engineSlots'},
-      {label: 'Shield Slots', key: 'shieldSlots'},
-      {label: 'Laser Slots', key: 'laserSlots'},
+      {label: 'Engine Slots', key: 'engineSlotCount'},
+      {label: 'Shield Slots', key: 'shieldSlotCount'},
+      {label: 'Laser Slots', key: 'laserSlotCount'},
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
@@ -150,7 +150,7 @@ export function getFieldsForItemCategory(category: SellableItems['itemType']): {
       {label: 'Name', key: 'name'},
       {label: 'ID', key: 'id'},
       {label: 'Base Speed', key: 'baseSpeed'},
-      {label: 'Thruster Slots', key: 'thrusterSlots'},
+      {label: 'Thruster Slots', key: 'thrusterSlotCount'},
       {label: 'Price in Cats', key: 'priceCats'},
       {label: 'Price in Thulium', key: 'priceThulium'}
     ],
