@@ -3,7 +3,7 @@
     <li class="card bg-base-200 flex flex-wrap gap-4 card-body">
       <h3 class="card-title">{{ category }}</h3>
       @for (item of categorizedItems.get(category); track item.id) {
-        <div class="card bg-base-100 draggable"
+        <div class="card bg-base-100 hover:cursor-grab"
              (click)="itemSelected.emit(item)"
              draggable="true">
           <div class="card-body">
