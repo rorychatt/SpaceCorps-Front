@@ -1,10 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { SellableItem, SellableItems } from '../../models/player/Items';
-import { NgFor, NgIf } from '@angular/common';
+import { SellableItems } from '../../models/player/Items';
 
 @Component({
   selector: 'app-inventory-selected-item',
-  imports: [NgIf, NgFor],
   templateUrl: './inventory-selected-item.component.html',
   styleUrl: './inventory-selected-item.component.scss'
 })
