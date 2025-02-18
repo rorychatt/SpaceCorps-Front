@@ -17,7 +17,7 @@
                 <p class="text-xs text-center">{{ selectedItem[mapping.childrenKey][$index].name }}</p>
               </div>
             } @else {
-              <div class="w-16 h-16 aspect-square empty-slot cursor-pointer bg-gray-100"
+              <div class="w-16 h-16 aspect-square empty-slot cursor-pointer bg-base-300"
                    (dragover)="onDragOver($event)"
                    (drop)="onDrop($event, mapping, $index)">
                 <p class="text-xs">Empty Slot</p>
