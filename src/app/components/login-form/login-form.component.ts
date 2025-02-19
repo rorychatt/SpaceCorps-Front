@@ -11,7 +11,7 @@ import { UserCredentialsLoginRequest } from '../../models/auth/UserCredentialsLo
 })
 export class LoginFormComponent {
   loginForm = new FormGroup({
-    email: new FormControl(''),
+    login: new FormControl(''),
     password: new FormControl(''),
   });
 
@@ -23,11 +23,20 @@ export class LoginFormComponent {
   }
 
   handleLogin() {
-    const userCredentialsLoginRequest: UserCredentialsLoginRequest = {
-      email: this.loginForm.get('email')!.value!,
+    let userCredentialsLoginRequest: UserCredentialsLoginRequest;
+    
+     userCredentialsLoginRequest = {
+      username: this.loginForm.get('login')!.value!,
       password: this.loginForm.get('password')!.value!,
     };
+    if (this.loginForm.get('login')!.value!.includes('@')) {
+        userCredentialsLoginRequest = {
+          email: this.loginForm.get('login')!.value!,
+          password: this.loginForm.get('password')!.value!,
+        };
+      }
+    
     this.toggleLoginEvent.emit(userCredentialsLoginRequest);
   }
+  }
 
-}
