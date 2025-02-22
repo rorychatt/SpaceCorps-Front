@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { InventoryItem } from '../../models/player/InventoryItem';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { firstValueFrom } from 'rxjs';
+import { SellableItems } from '../../models/player/Items';
 
 @Component({
   selector: 'app-inventory-all-items',
@@ -14,14 +14,18 @@ export class InventoryAllItemsComponent implements OnInit {
 
   @Input({
     required: true
-  }) items?: InventoryItem[] = [];
+  }) items?: SellableItems[] = [];
+
+  @Output() itemSelected: EventEmitter<SellableItems> = new EventEmitter<SellableItems>();
+
 
   constructor(private apiService: ApiService, private authService: AuthService) {
 
   }
 
-  categorizedItems: Map<string, InventoryItem[]> =
-    new Map<string, InventoryItem[]>();
+  categorizedItems: Map<string, SellableItems[]> =
+    new Map<string, SellableItems[]>();
+
 
   async ngOnInit() {
 

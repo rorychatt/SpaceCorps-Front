@@ -1,7 +1,7 @@
 {
   "name": "space-corps-front",
-  "version": "0.1.5-preview2-dumacukLoreChanges",
-  "reqBackendVersion": "0.1.0",
+  "version": "0.2.1",
+  "reqBackendVersion": "0.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

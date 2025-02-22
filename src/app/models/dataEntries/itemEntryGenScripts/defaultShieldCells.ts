@@ -1,9 +1,9 @@
-import { ShieldCellItem } from "../../player/Items";
+import { ShieldCell } from "../../player/Items";
 
-export const defaultShieldCells: ShieldCellItem[] = [
+export const defaultShieldCells: ShieldCell[] = [
   {
     name: 'Basic Shield Cell',
-    itemType: 'ShieldCellItem',
+    itemType: 'ShieldCell',
     id: 1,
     addCapacity: 1000,
     addRechargeRate: 0,

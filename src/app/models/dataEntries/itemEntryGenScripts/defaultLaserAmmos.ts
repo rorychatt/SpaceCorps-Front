@@ -1,9 +1,9 @@
-import { LaserAmmoItem } from "../../player/Items";
+import { LaserAmmo } from "../../player/Items";
 
-export const defaultLaserAmmos: LaserAmmoItem[] = [
+export const defaultLaserAmmos: LaserAmmo[] = [
   {
     name: "Laser Ammo 1",
-    itemType: "LaserAmmoItem",
+    itemType: "LaserAmmo",
     baseDamageMultiplier: 1,
     id: 1,
     priceCats: 100,

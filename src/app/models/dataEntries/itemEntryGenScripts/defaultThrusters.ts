@@ -1,10 +1,10 @@
-import { ThrusterItem } from "../../player/Items";
+import { Thruster } from "../../player/Items";
 
 
-export const defaultThrusters: ThrusterItem[] = [
+export const defaultThrusters: Thruster[] = [
   {
     name: "Thruster 1",
-    itemType: "ThrusterItem",
+    itemType: "Thruster",
     id: 1,
     addBaseSpeed: 5,
     baseSpeedMultiplier: 1,

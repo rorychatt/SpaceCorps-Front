@@ -5,15 +5,15 @@ import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons/faArrowsRotate';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {firstValueFrom} from 'rxjs';
 import {
-  EngineItem, getFieldsForItemCategory,
-  LaserAmmoItem,
-  LaserAmpItem,
-  LaserItem,
+  Engine, getFieldsForItemCategory,
+  LaserAmmo,
+  LaserAmp,
+  Laser,
   SellableItems,
-  ShieldCellItem,
-  ShieldItem,
-  ShipItem,
-  ThrusterItem
+  ShieldCell,
+  Shield,
+  Ship,
+  Thruster
 } from '../models/player/Items';
 import {
   defaultEngines,
@@ -39,14 +39,14 @@ export class ItemEntryEditorComponent {
 
   protected selectedCategory: SellableItems['itemType'] | null = null;
   protected itemCategories: SellableItems['itemType'][] = [
-    'EngineItem',
-    'ThrusterItem',
-    'LaserItem',
-    'LaserAmpItem',
-    'ShieldItem',
-    'ShieldCellItem',
-    'ShipItem',
-    'LaserAmmoItem'
+    'Engine',
+    'Thruster',
+    'Laser',
+    'LaserAmp',
+    'LaserAmmo',
+    'Shield',
+    'ShieldCell',
+    'Ship',
   ]
 
   protected items: SellableItems[] = [];
@@ -127,28 +127,28 @@ export class ItemEntryEditorComponent {
 
   generateDefaultItemsForCategory(selectedCategory: SellableItems['itemType']) {
     switch (selectedCategory) {
-      case 'EngineItem':
+      case 'Engine':
         this.generateDefaultEngineItems();
         break;
-      case 'ThrusterItem':
+      case 'Thruster':
         this.generateDefaultThrusterItems();
         break;
-      case 'LaserItem':
+      case 'Laser':
         this.generateDefaultLaserItems();
         break;
-      case 'LaserAmpItem':
+      case 'LaserAmp':
         this.generateDefaultLaserAmpItems();
         break;
-      case 'ShieldItem':
+      case 'Shield':
         this.generateDefaultShieldItems();
         break;
-      case 'ShieldCellItem':
+      case 'ShieldCell':
         this.generateDefaultShieldCellItems();
         break;
-      case 'ShipItem':
+      case 'Ship':
         this.generateDefaultShipItems();
         break;
-      case 'LaserAmmoItem':
+      case 'LaserAmmo':
         this.generateDefaultLaserAmmoItems();
         break;
       default:
@@ -160,49 +160,49 @@ export class ItemEntryEditorComponent {
   }
 
   private generateDefaultEngineItems() {
-    defaultEngines.map(async (engine: EngineItem) => {
+    defaultEngines.map(async (engine: Engine) => {
       await firstValueFrom(this.apiService.createNewItemEntry(engine))
     });
   }
 
   private generateDefaultThrusterItems() {
-    defaultThrusters.map(async (thruster: ThrusterItem) => {
+    defaultThrusters.map(async (thruster: Thruster) => {
       await firstValueFrom(this.apiService.createNewItemEntry(thruster))
     });
   }
 
   private generateDefaultLaserItems() {
-    defaultLasers.map(async (laser: LaserItem) => {
+    defaultLasers.map(async (laser: Laser) => {
       await firstValueFrom(this.apiService.createNewItemEntry(laser))
     });
   }
 
   private generateDefaultLaserAmpItems() {
-    defaultLaserAmps.map(async (laserAmp: LaserAmpItem) => {
+    defaultLaserAmps.map(async (laserAmp: LaserAmp) => {
       await firstValueFrom(this.apiService.createNewItemEntry(laserAmp))
     });
   }
 
   private generateDefaultShieldItems() {
-    defaultShields.map(async (shield: ShieldItem) => {
+    defaultShields.map(async (shield: Shield) => {
       await firstValueFrom(this.apiService.createNewItemEntry(shield))
     });
   }
 
   private generateDefaultShieldCellItems() {
-    defaultShieldCells.map(async (shieldCell: ShieldCellItem) => {
+    defaultShieldCells.map(async (shieldCell: ShieldCell) => {
       await firstValueFrom(this.apiService.createNewItemEntry(shieldCell))
     });
   }
 
   private generateDefaultShipItems() {
-    defaultShips.map(async (ship: ShipItem) => {
+    defaultShips.map(async (ship: Ship) => {
       await firstValueFrom(this.apiService.createNewItemEntry(ship))
     });
   }
 
   private generateDefaultLaserAmmoItems() {
-    defaultLaserAmmos.map(async (laserAmmo: LaserAmmoItem) => {
+    defaultLaserAmmos.map(async (laserAmmo: LaserAmmo) => {
       await firstValueFrom(this.apiService.createNewItemEntry(laserAmmo))
     });
   }

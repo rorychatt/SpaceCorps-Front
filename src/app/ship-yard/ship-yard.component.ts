@@ -14,14 +14,14 @@ import {ShipModelComponent} from '../components/ship-model/ship-model.component'
 export class ShipYardComponent implements OnInit {
 
   categories: SellableItems['itemType'][] = [
-    'ShipItem',
-    'LaserItem',
-    'LaserAmpItem',
-    'ShieldItem',
-    'ShieldCellItem',
-    'EngineItem',
-    'ThrusterItem',
-    'LaserAmmoItem',
+    'Ship',
+    'Laser',
+    'LaserAmp',
+    'Shield',
+    'ShieldCell',
+    'Engine',
+    'Thruster',
+    'LaserAmmo'
   ];
 
   selectedCategory: SellableItems['itemType'] | null = null;

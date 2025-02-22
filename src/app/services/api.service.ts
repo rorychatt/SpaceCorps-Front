@@ -18,7 +18,7 @@ import { SellableItems } from '../models/player/Items';
 })
 export class ApiService {
 
-  private url = isDevMode() ? 'http://localhost:5274/api' : 'http://rorycraft.com:5274/api';
+  private url = isDevMode() ? 'http://localhost:5274/api' : 'http://179.61.190.125:5274/api';
 
   constructor(private http: HttpClient) {
   }
@@ -100,14 +100,14 @@ export class ApiService {
 
   createNewItemEntry<T extends SellableItems>(newItem: T) {
     return this.http.post<T>(
-      `${this.url}/ItemEntries/${newItem.itemType}s/Add`,
+      `${this.url}/ItemEntries/${newItem.itemType.replace('Entrie', '')}s/Add`,
       newItem
     );
   }
 
   deleteItemEntry<T extends SellableItems>(item: T) {
     return this.http.delete(
-      `${this.url}/ItemEntries/${item.itemType}s/Delete`,
+      `${this.url}/ItemEntries/${item.itemType.replace('Entrie', '')}s/Delete`,
       { body: { id: item.id } }
     );
   }

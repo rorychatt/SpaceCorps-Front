@@ -1,12 +1,12 @@
-import { EngineItem } from "../../player/Items";
+import { Engine } from "../../player/Items";
 
-export const defaultEngines: EngineItem[]= [
+export const defaultEngines: Engine[]= [
   {
     name: "DarkSun V100",
-    itemType: "EngineItem",
+    itemType: "Engine",
     baseSpeed: 100,
     id: 1,
-    thrusterSlots: 2,
+    thrusterSlotCount: 2,
     priceCats: 1000,
     priceThulium: 0
   }

@@ -1,15 +1,15 @@
-import { ShieldItem } from '../../player/Items';
+import { Shield } from '../../player/Items';
 
-export const defaultShields: ShieldItem[] = [
+export const defaultShields: Shield[] = [
   {
     name: "Default Shield",
-    itemType: "ShieldItem",
+    itemType: "Shield",
     id: 1,
     capacity: 10000,
     rechargeRate: 600,
     passiveRechargeRate: 0,
     absorbance: 0.8,
-    shieldCellSlots: 2,
+    shieldCellSlotCount: 2,
     priceCats: 60000,
     priceThulium: 0
   }
