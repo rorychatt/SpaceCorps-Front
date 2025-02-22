@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-lore',
-  imports: [],
+  imports: [
+    FormsModule,
+    NgForOf
+  ],
   templateUrl: './lore.component.html',
   styleUrls: ['./lore.component.scss']
 })
@@ -438,4 +443,17 @@ TSG следили за ситуацией, пытаясь манипулиро�
   selectChapter(index: number): void {
     this.selectedChapterIndex = index;
   }
+
+  navigateToPrevious(): void {
+    if (this.selectedChapterIndex > 0) {
+      this.selectedChapterIndex--;
+    }
+  }
+
+  navigateToNext(): void {
+    if (this.selectedChapterIndex < this.chapters.length - 1) {
+      this.selectedChapterIndex++;
+    }
+  }
+
 }

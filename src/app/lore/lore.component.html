@@ -1,29 +1,48 @@
 <main class="container mx-auto p-6">
-    <header class="mb-6">
-        <h1 class="text-4xl font-bold">SpaceCorps Lore</h1>
-    </header>
+  <header class="mb-6">
+    <h1 class="text-4xl font-bold">SpaceCorps Lore</h1>
+  </header>
 
-    <nav class="mb-6">
-        <ul class="tabs bg-base-200">
-            @for(chapter of chapters; track chapter.title) {
-            <li>
-                <button (click)="selectChapter($index)"
-                    class="tab tab-lg @if(selectedChapterIndex === $index){ tab-active }">
-                    {{ chapter.title }}
-                </button>
-            </li>
-            }
-        </ul>
-    </nav>
+  <nav class="mb-6">
+    <!-- Dropdown for selecting chapter -->
+    <label for="chapter-select" class="block mb-2 text-lg font-medium">Choose a Chapter:</label>
+    <select
+      id="chapter-select"
+      class="select select-bordered w-full max-w-xs"
+      [(ngModel)]="selectedChapterIndex"
+      (change)="selectChapter(selectedChapterIndex)"
+    >
+      <option *ngFor="let chapter of chapters; let i = index" [value]="i">
+        {{ chapter.title }}
+      </option>
+    </select>
+  </nav>
 
-    <!-- Chapter content -->
-    <article class="prose bg-base-200 p-6 rounded-lg shadow">
-        <h2 class="text-2xl font-semibold mb-4">
-            {{ chapters[selectedChapterIndex].title }}
-        </h2>
-        @for(paragraph of chapters[selectedChapterIndex].content; track paragraph.toString()) {
-        <p class="mb-6">{{ paragraph }}</p>
-        }
-    </article>
+  <!-- Chapter content -->
+  <article class="chapter-content prose bg-base-200 p-6 rounded-lg shadow">
+    <h2 class="text-2xl font-semibold mb-4">
+      {{ chapters[selectedChapterIndex].title }}
+    </h2>
+    <p *ngFor="let paragraph of chapters[selectedChapterIndex].content" class="mb-6">
+      {{ paragraph }}
+    </p>
+  </article>
 
+  <!-- Navigation buttons -->
+  <div class="flex justify-between mt-6">
+    <button
+      class="btn "
+      [disabled]="selectedChapterIndex === 0"
+      (click)="navigateToPrevious()"
+    >
+      Previous
+    </button>
+    <button
+      class="btn"
+      [disabled]="selectedChapterIndex === chapters.length - 1"
+      (click)="navigateToNext()"
+    >
+      Next
+    </button>
+  </div>
 </main>
