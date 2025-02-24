@@ -91,5 +91,9 @@ export class GameComponent implements OnInit {
     hubService.on('logEntities', (entities) => {
       console.log('HubMessage: Entities:', entities);
     });
+
+    hubService.on('spacemapUpdate', (spaceMapData: SpaceMapData) => {
+      console.log('HubMessage: Spacemap update:', spaceMapData);
+    });
   }
 }
