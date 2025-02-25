@@ -6,9 +6,8 @@ import {SpaceMapData} from './types/SpaceMapData';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {
   initializeThreeJs,
-  clearScene,
-  loadMapEnvironment,
-  updateEntities
+  updateEntities,
+  loadNewSpacemap, loadPlayers
 } from './game.utils';
 import {EntityDTO} from './types/Entity';
 import {KeyboardService} from './services/keyboard.service';
@@ -27,6 +26,7 @@ export class GameComponent implements OnInit {
   public controls?: OrbitControls
   public entities: Map<string, THREE.Mesh> = new Map();
 
+  public currentMapName?: string;
   public playerData: PlayerData | undefined;
 
   constructor(
@@ -41,7 +41,8 @@ export class GameComponent implements OnInit {
       const username = params['username'];
       await this.hubService.initializeSignalR(username);
       this.setupSignalREvents(this.hubService, this.updateEntities.bind(this));
-      initializeThreeJs(this);
+      await initializeThreeJs(this);
+      await this.keyboardService.setScene(this.scene);
     });
 
     document.body.style.overflow = 'hidden';
@@ -52,11 +53,6 @@ export class GameComponent implements OnInit {
     this.renderer!.setSize(window.innerWidth, window.innerHeight);
     this.camera!.aspect = window.innerWidth / window.innerHeight;
     this.camera!.updateProjectionMatrix();
-  }
-
-  public async loadNewSpaceMap(spaceMapData: SpaceMapData) {
-    await clearScene(this);
-    await loadMapEnvironment(this, spaceMapData);
   }
 
   public updateEntities(entities: EntityDTO[]): void {
@@ -92,8 +88,11 @@ export class GameComponent implements OnInit {
       console.log('HubMessage: Entities:', entities);
     });
 
-    hubService.on('spacemapUpdate', (spaceMapData: SpaceMapData) => {
-      console.log('HubMessage: Spacemap update:', spaceMapData);
+    hubService.on('spacemapUpdate', async (spaceMapData: SpaceMapData) => {
+      if (this.currentMapName != spaceMapData.mapName) {
+        await loadNewSpacemap(this, spaceMapData);
+        await loadPlayers(spaceMapData.mapObject.players);
+      }
     });
   }
 }
