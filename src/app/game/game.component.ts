@@ -1,12 +1,17 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import * as THREE from 'three';
-import { HubService } from './services/hub.service';
-import { ActivatedRoute } from '@angular/router';
-import { SpaceMapData } from './types/SpaceMapData';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { initializeThreeJs, loadNewSpaceMap, clearScene, loadMapEnvironment, createEntity, updateEntities } from './game.utils';
-import { EntityDTO } from './types/Entity';
-import { KeyboardService } from './services/keyboard.service';
+import {HubService} from './services/hub.service';
+import {ActivatedRoute} from '@angular/router';
+import {PlayerDto, SpaceMapData} from './types/SpaceMapData';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {
+  initializeThreeJs,
+  loadNewSpacemap, loadPlayers,
+  updateSpacemap
+} from './game.utils';
+import {EntityDTO} from './types/Entity';
+import {KeyboardService} from './services/keyboard.service';
+import {PlayerData} from '../models/player/PlayerData';
 
 @Component({
   selector: 'app-game',
@@ -19,20 +24,25 @@ export class GameComponent implements OnInit {
   public renderer?: THREE.WebGLRenderer;
   public scene?: THREE.Scene;
   public controls?: OrbitControls
-  public entities: Map<string, THREE.Mesh> = new Map();
+  public entities: Map<string, PlayerDto> = new Map();
+
+  public currentMapName?: string;
+  public playerData: PlayerData | undefined;
 
   constructor(
     private hubService: HubService,
     private route: ActivatedRoute,
     private keyboardService: KeyboardService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(async params => {
       const username = params['username'];
-      this.hubService.initializeSignalR(username);
-      this.setupSignalREvents(this.hubService, this.updateEntities.bind(this));
-      initializeThreeJs(this);
+      await this.hubService.initializeSignalR(username);
+      this.setupSignalREvents(this.hubService);
+      await initializeThreeJs(this);
+      await this.keyboardService.setScene(this.scene);
     });
 
     document.body.style.overflow = 'hidden';
@@ -45,38 +55,35 @@ export class GameComponent implements OnInit {
     this.camera!.updateProjectionMatrix();
   }
 
-  public async loadNewSpaceMap(spaceMapData: SpaceMapData) {
-    await clearScene(this);
-    await loadMapEnvironment(this, spaceMapData);
-  }
-
-  public updateEntities(entities: EntityDTO[]): void {
-    updateEntities(this, entities);
-  }
-
-  public setupSignalREvents(hubService: HubService, updateEntities: (entities: { id: string, position: THREE.Vector3 }[]) => void): void {
+  public setupSignalREvents(hubService: HubService): void {
     hubService.on('server-side-log', (data) => {
-      console.log('Received data:', data);
+      console.log('HubMessage: Received data:', data);
     });
 
     hubService.on('server-side-error', (error) => {
-      console.warn('Received error:', error);
-    });
-  
-    hubService.on('update-entities', (entities) => {
-      updateEntities(entities);
+      console.warn('HubMessage: Received error:', error);
     });
 
-    hubService.on('loginSuccessful', (response) => {
-      console.log('Login successful:', response);
+    hubService.on('loginSuccessful', (response: PlayerData) => {
+      console.log('HubMessage: Login successful:', response);
+      this.playerData = response;
     })
 
     hubService.on('loginFailed', (response: string) => {
-      console.error('Login failed:', response);
+      console.error('HubMessage: Login failed:', response);
     });
 
     hubService.on('logEntities', (entities) => {
-      console.log('Entities:', entities);
-    })
+      console.log('HubMessage: Entities:', entities);
+    });
+
+    hubService.on('spacemapUpdate', async (spaceMapData: SpaceMapData) => {
+      if (this.currentMapName != spaceMapData.mapName) {
+        await loadNewSpacemap(this, spaceMapData);
+        await loadPlayers(spaceMapData.mapObject.players);
+      } else {
+        await updateSpacemap(this, spaceMapData);
+      }
+    });
   }
 }
