@@ -1,0 +1,12 @@
+<fieldset class="fieldset">
+  <legend class="fieldset-legend"></legend>
+  <select
+    id="theme-select"
+    [value]="selectedTheme"
+    (change)="onThemeChange($event)"
+    class="select">
+    @for (theme of themes; track theme) {
+      <option value="{{ theme }}">{{ theme }}</option>
+    }
+  </select>
+</fieldset>

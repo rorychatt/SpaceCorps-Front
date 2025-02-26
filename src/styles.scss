@@ -1,2 +1,5 @@
 @use "tailwindcss";
-@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes: dark --default, light, black, dracula, night, sunset, business
+};
