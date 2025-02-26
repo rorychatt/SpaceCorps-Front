@@ -7,14 +7,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserCredentialsLoginRequest } from '../models/auth/UserCredentialsLoginRequest';
 import { Router } from '@angular/router';
 import { LoginAsAdminBtnComponent } from "../components/login-as-admin-btn/login-as-admin-btn.component";
+import { ErrorModalComponent } from "../components/error-modal/error-modal.component";
 
 @Component({
   selector: 'app-login',
   imports: [
     LoginFormComponent,
     RegisterFormComponent,
-    LoginAsAdminBtnComponent
-  ],
+    LoginAsAdminBtnComponent,
+    ErrorModalComponent
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -49,6 +51,7 @@ export class LoginComponent {
 
   onLogin($event: UserCredentialsLoginRequest) {
     const result = this.authService.logIn($event);
+    //disable button
     result.subscribe({
       next: (response) => {
         this.clearLoginError();
@@ -63,7 +66,11 @@ export class LoginComponent {
       error: (err: HttpErrorResponse) => {
         this.error = err;
         console.log(err);
+      },
+      complete: () => {
+        //enable button
       }
+      
     });
   }
 }
