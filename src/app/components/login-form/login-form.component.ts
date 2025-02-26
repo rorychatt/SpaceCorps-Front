@@ -4,10 +4,10 @@ import { NgClass } from '@angular/common';
 import { UserCredentialsLoginRequest } from '../../models/auth/UserCredentialsLoginRequest';
 
 @Component({
-    selector: 'app-login-form',
-    imports: [ReactiveFormsModule, NgClass],
-    templateUrl: './login-form.component.html',
-    styleUrl: './login-form.component.scss'
+  selector: 'app-login-form',
+  imports: [ReactiveFormsModule, NgClass],
+  templateUrl: './login-form.component.html',
+  styleUrl: './login-form.component.scss'
 })
 export class LoginFormComponent {
   loginForm = new FormGroup({
@@ -24,19 +24,18 @@ export class LoginFormComponent {
 
   handleLogin() {
     let userCredentialsLoginRequest: UserCredentialsLoginRequest;
-    
-     userCredentialsLoginRequest = {
-      username: this.loginForm.get('login')!.value!,
+    userCredentialsLoginRequest = {
+      email: this.loginForm.get('login')!.value!,
       password: this.loginForm.get('password')!.value!,
     };
-    if (this.loginForm.get('login')!.value!.includes('@')) {
-        userCredentialsLoginRequest = {
-          email: this.loginForm.get('login')!.value!,
-          password: this.loginForm.get('password')!.value!,
-        };
-      }
-    
+
+    if (!this.loginForm.get('login')!.value!.includes('@')) {
+      userCredentialsLoginRequest = {
+        username: this.loginForm.get('login')!.value!,
+        password: this.loginForm.get('password')!.value!,
+      };
+    }
     this.toggleLoginEvent.emit(userCredentialsLoginRequest);
   }
-  }
+}
 
