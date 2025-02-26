@@ -10,11 +10,14 @@ export class ThemePickerComponent implements OnInit {
   themes = [
     "dark",
     "light",
+    "abyss",
+    "acid",
     "black",
     "dracula",
     "night",
     "sunset",
-    "business"
+    "business",
+    "winter"
   ]
 
   selectedTheme = "dark";
