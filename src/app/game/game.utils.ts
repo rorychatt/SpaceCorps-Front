@@ -4,7 +4,6 @@ import {PlayerDto, SpaceMapData} from './types/SpaceMapData';
 import {GameComponent} from './game.component';
 import {EntityDTO} from './types/Entity';
 import {SpaceshipManager} from './SpaceshipManager';
-import {PlayerData} from '../models/player/PlayerData';
 
 let spaceshipManager: SpaceshipManager;
 
@@ -108,21 +107,6 @@ export async function createStaticEntities(component: GameComponent): Promise<vo
   // Implementation here
 }
 
-export function createEntity(component: GameComponent, id: string, position: THREE.Vector3): THREE.Mesh {
-  throw new Error('Method not implemented.');
-}
-
-export function updateEntities(component: GameComponent, entities: EntityDTO[]): void {
-  throw new Error('Method not implemented.');
-  // spaceshipManager.updatePlayerPosition(
-  //   'player1',
-  //   new THREE.Vector3(10, 5, 0),
-  //   new THREE.Euler(0, Math.PI / 2, 0)
-  // );
-
-  // spaceshipManager.removePlayer('player1');
-}
-
 function parsePositionDTOtoVector3(position: { x: number, y: number, z: number }): THREE.Vector3 {
   return new THREE.Vector3(position.x, position.y, position.z);
 }
@@ -147,5 +131,45 @@ export async function loadPlayers(playerDtos: PlayerDto[]) {
       new THREE.Euler(0, 0, 0)
     )
   }
+}
+
+export async function updateSpacemap(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
+  const entities = component.entities;
+  const entitiesIn = spaceMapData.mapObject.players;
+
+  for(const entity of entitiesIn) {
+    if (entities.has(entity.id)) {
+      const oldEntity = entities.get(entity.id)!;
+      const newEntity = entity;
+
+      //TODO: better check later, for now only based on position
+      if(oldEntity.position.x !== newEntity.position.x || oldEntity.position.y !== newEntity.position.y || oldEntity.position.z !== newEntity.position.z) {
+        await spaceshipManager.updatePlayerPosition(
+          entity.id,
+          parsePositionDTOtoVector3(entity.position),
+          new THREE.Euler(0, 0, 0)
+        )
+      }
+
+      oldEntity.position = newEntity.position;
+    } else {
+      entities.set(entity.id, entity);
+      await spaceshipManager.addPlayer(
+        entity.id,
+        entity.activeShipName,
+        parsePositionDTOtoVector3(entity.position),
+        new THREE.Euler(0, 0, 0)
+      )
+    }
+  }
+
+  for(const entity of entities) {
+    if (!entitiesIn.find(e => e.id === entity[0])) {
+      await spaceshipManager.removePlayer(entity[0]);
+      entities.delete(entity[0]);
+    }
+  }
+
+
 }
 

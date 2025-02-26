@@ -2,12 +2,12 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import * as THREE from 'three';
 import {HubService} from './services/hub.service';
 import {ActivatedRoute} from '@angular/router';
-import {SpaceMapData} from './types/SpaceMapData';
+import {PlayerDto, SpaceMapData} from './types/SpaceMapData';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {
   initializeThreeJs,
-  updateEntities,
-  loadNewSpacemap, loadPlayers
+  loadNewSpacemap, loadPlayers,
+  updateSpacemap
 } from './game.utils';
 import {EntityDTO} from './types/Entity';
 import {KeyboardService} from './services/keyboard.service';
@@ -24,7 +24,7 @@ export class GameComponent implements OnInit {
   public renderer?: THREE.WebGLRenderer;
   public scene?: THREE.Scene;
   public controls?: OrbitControls
-  public entities: Map<string, THREE.Mesh> = new Map();
+  public entities: Map<string, PlayerDto> = new Map();
 
   public currentMapName?: string;
   public playerData: PlayerData | undefined;
@@ -40,7 +40,7 @@ export class GameComponent implements OnInit {
     this.route.queryParams.subscribe(async params => {
       const username = params['username'];
       await this.hubService.initializeSignalR(username);
-      this.setupSignalREvents(this.hubService, this.updateEntities.bind(this));
+      this.setupSignalREvents(this.hubService);
       await initializeThreeJs(this);
       await this.keyboardService.setScene(this.scene);
     });
@@ -55,24 +55,13 @@ export class GameComponent implements OnInit {
     this.camera!.updateProjectionMatrix();
   }
 
-  public updateEntities(entities: EntityDTO[]): void {
-    updateEntities(this, entities);
-  }
-
-  public setupSignalREvents(hubService: HubService, updateEntities: (entities: {
-    id: string,
-    position: THREE.Vector3
-  }[]) => void): void {
+  public setupSignalREvents(hubService: HubService): void {
     hubService.on('server-side-log', (data) => {
       console.log('HubMessage: Received data:', data);
     });
 
     hubService.on('server-side-error', (error) => {
       console.warn('HubMessage: Received error:', error);
-    });
-
-    hubService.on('update-entities', (entities) => {
-      updateEntities(entities);
     });
 
     hubService.on('loginSuccessful', (response: PlayerData) => {
@@ -92,6 +81,8 @@ export class GameComponent implements OnInit {
       if (this.currentMapName != spaceMapData.mapName) {
         await loadNewSpacemap(this, spaceMapData);
         await loadPlayers(spaceMapData.mapObject.players);
+      } else {
+        await updateSpacemap(this, spaceMapData);
       }
     });
   }

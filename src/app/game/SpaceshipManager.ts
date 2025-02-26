@@ -128,7 +128,7 @@ export class SpaceshipManager {
 
 
   /** Update the position and rotation of a player's ship */
-  public updatePlayerPosition(playerId: string, position: THREE.Vector3, rotation: THREE.Euler): void {
+  public async updatePlayerPosition(playerId: string, position: THREE.Vector3, rotation: THREE.Euler): Promise<void> {
     const playerData = this.playerDictionary.get(playerId);
     if (!playerData) return;
 
@@ -154,7 +154,7 @@ export class SpaceshipManager {
 
 
   /** Remove a player and free up the instance slot */
-  public removePlayer(playerId: string): void {
+  public async removePlayer(playerId: string): Promise<void> {
     const playerData = this.playerDictionary.get(playerId);
     if (!playerData) return;
 
@@ -195,7 +195,7 @@ export class SpaceshipManager {
 
   async removeAllPlayers() {
     for (const playerId of this.playerDictionary.keys()) {
-      this.removePlayer(playerId);
+      await this.removePlayer(playerId);
     }
   }
 }
