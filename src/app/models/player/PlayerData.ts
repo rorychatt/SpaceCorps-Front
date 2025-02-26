@@ -8,4 +8,5 @@ export type PlayerData = {
   totalPlayTime: number;
   cats: number;
   thulium: number;
+  currentMap: string;
 }

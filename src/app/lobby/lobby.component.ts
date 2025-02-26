@@ -1,12 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { MainMenuComponent } from '../components/main-menu/main-menu.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import {ThemePickerComponent} from '../components/theme-picker/theme-picker.component';
 
 @Component({
-    selector: 'app-lobby',
-    templateUrl: './lobby.component.html',
-    styleUrl: './lobby.component.scss'
+  selector: 'app-lobby',
+  templateUrl: './lobby.component.html',
+  imports: [
+  ],
+  styleUrl: './lobby.component.scss'
 })
 export class LobbyComponent {
 

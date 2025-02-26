@@ -1,11 +1,13 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { SpaceMapData } from './types/SpaceMapData';
-import { HubService } from './services/hub.service';
-import { GameComponent } from './game.component';
-import { EntityDTO } from './types/Entity';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {PlayerDto, SpaceMapData} from './types/SpaceMapData';
+import {GameComponent} from './game.component';
+import {EntityDTO} from './types/Entity';
+import {SpaceshipManager} from './SpaceshipManager';
 
-export function initializeThreeJs(component: GameComponent): void {
+let spaceshipManager: SpaceshipManager;
+
+export async function initializeThreeJs(component: GameComponent): Promise<void> {
   component.scene = new THREE.Scene();
   component.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   component.renderer = new THREE.WebGLRenderer();
@@ -22,8 +24,9 @@ export function initializeThreeJs(component: GameComponent): void {
   );
 
   component.controls.enableDamping = true;
-
   component.camera.position.z = 5;
+
+  await createSpaceshipManager(component);
 
   const animate = () => {
     requestAnimationFrame(animate);
@@ -31,29 +34,23 @@ export function initializeThreeJs(component: GameComponent): void {
   };
 
   animate();
-
-  void component.loadNewSpaceMap({
-    mapname: 'G-1',
-    id: "1"
-  });
 }
 
-export async function loadNewSpaceMap(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
+export async function loadNewSpacemap(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
+  console.log('Loading new space map: ', spaceMapData);
+  component.currentMapName = spaceMapData.mapName;
   await clearScene(component);
   await loadMapEnvironment(component, spaceMapData);
 }
 
 export async function clearScene(component: GameComponent): Promise<void> {
-  component.entities.forEach(entity => {
-    component.scene!.remove(entity);
-  });
-  component.entities.clear();
+  await spaceshipManager.removeAllPlayers();
 }
 
-export async function loadMapEnvironment(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
+async function loadMapEnvironment(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
   await createStars(component);
   await createLighting(component);
-  await createSkybox(component, spaceMapData.mapname);
+  await createSkybox(component, spaceMapData.mapName);
   await createStaticEntities(component);
 }
 
@@ -110,27 +107,69 @@ export async function createStaticEntities(component: GameComponent): Promise<vo
   // Implementation here
 }
 
-export function createEntity(component: GameComponent, id: string, position: THREE.Vector3): THREE.Mesh {
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const entity = new THREE.Mesh(geometry, material);
-  entity.position.copy(position);
-  component.scene!.add(entity);
-  component.entities.set(id, entity);
-  return entity;
-}
-
-export function updateEntities(component: GameComponent, entities: EntityDTO[]): void {
-  entities.forEach(entityData => {
-    const entity = component.entities.get(entityData.id);
-    if (entity) {
-      entity.position.copy(entityData.position);
-    } else {
-      createEntity(component, entityData.id, parsePositionDTOtoVector3(entityData.position));
-    }
-  });
-}
-
 function parsePositionDTOtoVector3(position: { x: number, y: number, z: number }): THREE.Vector3 {
   return new THREE.Vector3(position.x, position.y, position.z);
 }
+
+async function createSpaceshipManager(component: GameComponent): Promise<void> {
+  if (component.scene === undefined) {
+    console.error('Scene not initialized');
+    return;
+  }
+  spaceshipManager = new SpaceshipManager(component.scene, 100)
+}
+
+export async function loadPlayers(playerDtos: PlayerDto[]) {
+  if (spaceshipManager === undefined) {
+    console.error('Spaceship manager not initialized');
+  }
+  for (const player of playerDtos) {
+    await spaceshipManager.addPlayer(
+      player.id,
+      player.activeShipName,
+      parsePositionDTOtoVector3(player.position),
+      new THREE.Euler(0, 0, 0)
+    )
+  }
+}
+
+export async function updateSpacemap(component: GameComponent, spaceMapData: SpaceMapData): Promise<void> {
+  const entities = component.entities;
+  const entitiesIn = spaceMapData.mapObject.players;
+
+  for(const entity of entitiesIn) {
+    if (entities.has(entity.id)) {
+      const oldEntity = entities.get(entity.id)!;
+      const newEntity = entity;
+
+      //TODO: better check later, for now only based on position
+      if(oldEntity.position.x !== newEntity.position.x || oldEntity.position.y !== newEntity.position.y || oldEntity.position.z !== newEntity.position.z) {
+        await spaceshipManager.updatePlayerPosition(
+          entity.id,
+          parsePositionDTOtoVector3(entity.position),
+          new THREE.Euler(0, 0, 0)
+        )
+      }
+
+      oldEntity.position = newEntity.position;
+    } else {
+      entities.set(entity.id, entity);
+      await spaceshipManager.addPlayer(
+        entity.id,
+        entity.activeShipName,
+        parsePositionDTOtoVector3(entity.position),
+        new THREE.Euler(0, 0, 0)
+      )
+    }
+  }
+
+  for(const entity of entities) {
+    if (!entitiesIn.find(e => e.id === entity[0])) {
+      await spaceshipManager.removePlayer(entity[0]);
+      entities.delete(entity[0]);
+    }
+  }
+
+
+}
+
